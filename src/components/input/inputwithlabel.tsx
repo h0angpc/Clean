@@ -18,10 +18,10 @@ export function InputWithLabel({
 }: InputWithLabelProps) {
     return (
         <div className="grid max-w-sm items-center gap-1.5">
-            <Label className="text-[14px] font-semibold text-[#9FA7B0]" htmlFor={inputId}>
+            <Label className="text-[14px] font-Averta-Semibold text-[#9FA7B0]" htmlFor={inputId}>
                 {labelText}
             </Label>
-            <Input className={`${inputWidth} h-[50px] text-[16px] text-[#5f6367] border-2`} type={inputType} id={inputId} placeholder={inputPlaceholder} />
+            <Input className={`${inputWidth} font-Averta-Regular h-[50px] text-[16px] text-[#5f6367] border-2`} type={inputType} id={inputId} placeholder={inputPlaceholder} />
         </div>
     );
 }
