@@ -19,7 +19,9 @@ const Step_3 = () => {
         </div>
     </div>
     <div className="flex justify-center gap-4 my-[20px]">
-      <Image className='hover:cursor-pointer' src="/img/Left_Arrow.svg" alt="arrow-left" width={20} height={20} />
+      <button>
+        <Image src="/img/Left_Arrow.svg" alt="arrow-left" width={20} height={20} />
+      </button>
       <Button className="bg-white h-[55px] w-[132px] rounded-[10px] font-semibold text-xl text-[#4f6071] border border-[#d3d8dd] hover:text-white">22</Button>
       <Button className="bg-white h-[55px] w-[132px] rounded-[10px] font-semibold text-xl text-[#4f6071] border border-[#d3d8dd] hover:text-white">23</Button>
       <Button className="bg-white h-[55px] w-[132px] rounded-[10px] font-semibold text-xl text-blue-500 border border-blue-500 hover:text-white">24</Button>
@@ -27,8 +29,9 @@ const Step_3 = () => {
       <Button className="bg-white h-[55px] w-[132px] rounded-[10px] font-semibold text-xl text-[#4f6071] border border-[#d3d8dd] hover:text-white">26</Button>
       <Button className="bg-white h-[55px] w-[132px] rounded-[10px] font-semibold text-xl text-[#4f6071] border border-[#d3d8dd] hover:text-white">27</Button>
       <Button className="bg-white h-[55px] w-[132px] rounded-[10px] font-semibold text-xl text-[#4f6071] border border-[#d3d8dd] hover:text-white">28</Button>
-      <Image className='hover:cursor-pointer' src="/img/Right_Arrow.svg" alt="arrow-left" width={20} height={20} />
-
+      <button>
+        <Image src="/img/Right_Arrow.svg" alt="arrow-right" width={20} height={20} />
+      </button>
     </div>
 
     <div className="grid w-3/4 m-auto justify-center gap-4 mt-[40px]">
