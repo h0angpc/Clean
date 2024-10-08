@@ -11,6 +11,52 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 
+const days = [
+  { dayInMonth: "1", active: true },
+  { dayInMonth: "2", active: false },
+  { dayInMonth: "3", active: false },
+  { dayInMonth: "4", active: false },
+  { dayInMonth: "5", active: false },
+  { dayInMonth: "6", active: false },
+  { dayInMonth: "7", active: false },
+  { dayInMonth: "8", active: false },
+  { dayInMonth: "9", active: false },
+  { dayInMonth: "10", active: false },
+  { dayInMonth: "11", active: false },
+  { dayInMonth: "12", active: false },
+  { dayInMonth: "13", active: false },
+  { dayInMonth: "14", active: false },
+  { dayInMonth: "15", active: false },
+  { dayInMonth: "16", active: false },
+  { dayInMonth: "17", active: false },
+  { dayInMonth: "18", active: false },
+  { dayInMonth: "19", active: false },
+  { dayInMonth: "20", active: false },
+  { dayInMonth: "21", active: false },
+  { dayInMonth: "22", active: false },
+  { dayInMonth: "23", active: false },
+  { dayInMonth: "24", active: false },
+  { dayInMonth: "25", active: false },
+  { dayInMonth: "26", active: false },
+  { dayInMonth: "27", active: false },
+  { dayInMonth: "28", active: false },
+  { dayInMonth: "29", active: false },
+  { dayInMonth: "30", active: false },
+  { dayInMonth: "31", active: false },
+]
+
+const displayDays = days.map((day) => {
+  return (
+    <CarouselItem className="basis-1/7 pl-4" key={day.dayInMonth}>  
+      <Card>
+        <CardContent className={`flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl border ${day.active ? "text-[#1A78F2] border-[#1A78F2]" : "text-[#4f6071] border-[#d3d8dd]"} hover:text-white hover:bg-[#1A78F2]`}>
+          {day.dayInMonth}
+        </CardContent>
+      </Card>
+    </CarouselItem>
+  )
+})
+
 
 const Step_3 = () => {
   return (
@@ -27,76 +73,14 @@ const Step_3 = () => {
     </div>
     <Carousel className="w-full max-w-6xl mx-auto" opts={{ loop: true }}>
       <CarouselContent>
-        <CarouselItem className="basis-1/7 pl-4">  
-          <Card>
-              <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
-                22
-              </CardContent>
-          </Card>
-        </CarouselItem>
-        <CarouselItem className="basis-1/7 pl-4">
-          <Card>
-            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
-              23
-            </CardContent>
-          </Card>
-        </CarouselItem>
-        <CarouselItem className="basis-1/7 pl-4">
-          <Card>
-            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-blue-500 border border-blue-500">
-              24
-            </CardContent>
-          </Card>
-        </CarouselItem>
-        <CarouselItem className="basis-1/7 pl-4">
-          <Card>
-            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
-              25
-            </CardContent>
-          </Card>
-        </CarouselItem>
-        <CarouselItem className="basis-1/7 pl-4">
-          <Card>
-            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
-              26
-            </CardContent>
-          </Card>
-        </CarouselItem>
-        <CarouselItem className="basis-1/7 pl-4">
-          <Card>
-            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
-              27
-            </CardContent>
-          </Card>
-        </CarouselItem>
-        <CarouselItem className="basis-1/7 pl-4">
-          <Card>
-            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
-              28
-            </CardContent>
-          </Card>
-        </CarouselItem>
-        <CarouselItem className="basis-1/7 pl-4">
-          <Card>
-            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
-              29
-            </CardContent>
-          </Card>
-        </CarouselItem>
-        <CarouselItem className="basis-1/7 pl-4">
-          <Card>
-            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
-              30
-            </CardContent>
-          </Card>
-        </CarouselItem>     
+        {displayDays}
       </CarouselContent>
       <CarouselPrevious />
       <CarouselNext />
     </Carousel>
 
     <div className="grid w-3/4 m-auto justify-center gap-4 mt-[40px]">
-      <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-xl text-blue-500 border border-blue-500 hover:text-white">
+      <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-xl text-[#1A78F2] border border-[#1A78F2] hover:text-white">
         <div className="grid grid-cols-2">
             <p className="text-base font-Averta-Semibold leading-[23px] tracking-tight text-left">Flexible</p>
             <p className="text-xs font-Averta-Semibold leading-[14px] tracking-tight text-right self-center">Save $8.10 off</p>
@@ -105,7 +89,7 @@ const Step_3 = () => {
       </Button>
       <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-[#4f6071] border border-[#d3d8dd] hover:text-white">08:00am</Button>
       <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-[#4f6071] border border-[#d3d8dd] hover:text-white">08:30am</Button>
-      <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-blue-500 border border-blue-500 hover:text-white">09:00am</Button>
+      <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-[#1A78F2] border border-[#1A78F2] hover:text-white">09:00am</Button>
       <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-[#4f6071] border border-[#d3d8dd] hover:text-white">09:30am</Button>
       <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-[#4f6071] border border-[#d3d8dd] hover:text-white">10:00am</Button>
     </div>
