@@ -2,7 +2,14 @@
 
 import React from 'react'
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
+import { Card, CardContent } from "@/components/ui/card"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 
 const Step_3 = () => {
@@ -18,21 +25,75 @@ const Step_3 = () => {
           </p>
         </div>
     </div>
-    <div className="flex justify-center gap-4 my-[20px]">
-      <button>
-        <Image src="/img/Left_Arrow.svg" alt="arrow-left" width={20} height={20} />
-      </button>
-      <Button className="bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd] hover:text-white">22</Button>
-      <Button className="bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd] hover:text-white">23</Button>
-      <Button className="bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-blue-500 border border-blue-500 hover:text-white">24</Button>
-      <Button className="bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd] hover:text-white">25</Button>
-      <Button className="bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd] hover:text-white">26</Button>
-      <Button className="bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd] hover:text-white">27</Button>
-      <Button className="bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd] hover:text-white">28</Button>
-      <button>
-        <Image src="/img/Right_Arrow.svg" alt="arrow-right" width={20} height={20} />
-      </button>
-    </div>
+    <Carousel className="w-full max-w-6xl mx-auto" opts={{ loop: true }}>
+      <CarouselContent>
+        <CarouselItem className="basis-1/7 pl-4">  
+          <Card>
+              <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
+                22
+              </CardContent>
+          </Card>
+        </CarouselItem>
+        <CarouselItem className="basis-1/7 pl-4">
+          <Card>
+            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
+              23
+            </CardContent>
+          </Card>
+        </CarouselItem>
+        <CarouselItem className="basis-1/7 pl-4">
+          <Card>
+            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-blue-500 border border-blue-500">
+              24
+            </CardContent>
+          </Card>
+        </CarouselItem>
+        <CarouselItem className="basis-1/7 pl-4">
+          <Card>
+            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
+              25
+            </CardContent>
+          </Card>
+        </CarouselItem>
+        <CarouselItem className="basis-1/7 pl-4">
+          <Card>
+            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
+              26
+            </CardContent>
+          </Card>
+        </CarouselItem>
+        <CarouselItem className="basis-1/7 pl-4">
+          <Card>
+            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
+              27
+            </CardContent>
+          </Card>
+        </CarouselItem>
+        <CarouselItem className="basis-1/7 pl-4">
+          <Card>
+            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
+              28
+            </CardContent>
+          </Card>
+        </CarouselItem>
+        <CarouselItem className="basis-1/7 pl-4">
+          <Card>
+            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
+              29
+            </CardContent>
+          </Card>
+        </CarouselItem>
+        <CarouselItem className="basis-1/7 pl-4">
+          <Card>
+            <CardContent className="flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl text-[#4f6071] border border-[#d3d8dd]">
+              30
+            </CardContent>
+          </Card>
+        </CarouselItem>     
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
 
     <div className="grid w-3/4 m-auto justify-center gap-4 mt-[40px]">
       <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-xl text-blue-500 border border-blue-500 hover:text-white">
