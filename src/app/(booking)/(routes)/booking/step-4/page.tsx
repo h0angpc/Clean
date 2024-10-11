@@ -1,139 +1,122 @@
-'use client'
+import { ToggleButton } from '@/components/button/togglebutton'
+import { ToggleButtonGroup } from '@/components/button/togglebuttongroup'
+import { InputWithLabel } from '@/components/input/inputwithlabel'
+import { MultiLineInput } from '@/components/input/multiplelineinput'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import React from 'react'
 
-import React from 'react';
-import { InputWithLabel } from '@/components/input/inputwithlabel';
-import { Separator } from "@/components/ui/separator"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { CheckboxWithText } from '@/components/checkbox/checkboxwithtext';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+const getInOpitonsButtons = [
+  { id: 1, contentText: "Someone in Home" },
+  { id: 2, contentText: "Doorman" },
+  { id: 3, contentText: "Hidden Key" },
+  { id: 4, contentText: "Others" }
+]
 
-const Step_4: React.FC = () => {
+const deepCleanOptionsButtons = [
+  { contentText: "Inside fridge", price: "35", imageSrc: "/img/Fridge.svg", imageSrc2: "/img/FridgeBlue.svg" },
+  { contentText: "Inside oven", price: "35", imageSrc: "/img/Oven.svg", imageSrc2: "/img/OvenBlue.svg" },
+  { contentText: "Inside cabinets", price: "35", imageSrc: "/img/Cabinets.svg", imageSrc2: "/img/CabinetsBlue.svg" }
+]
+
+const yesNoOptionsButtons = [
+  { id: 5, contentText: "Yes" },
+  { id: 6, contentText: "No" }
+]
+
+const Step_4 = () => {
   return (
-    <div className="flex flex-col md:flex-row h-full relative min-h-screen">
-      {/* Section Left */}
-      <div className="w-full md:w-2/3 p-4 bg-white h-full min-h-screen">
-        <div className="grid justify-center h-min">
+    <div className="min-h-screen w-full">
+      <div className="w-1/2 m-auto p-4">
+        <div className="justify-center h-max">
           <p className="text-4xl text-center font-Averta-Bold mb-2 mt-[50px] ">
-            Payment Details
+            Add Your Address & Details
           </p>
           <p className="text-[20px] text-center text-[#88939D] font-Averta-Regular leading-[25px]">
-            Add in your payment details through our secure gateway
+            Be specific of any additional details we might need from you
           </p>
         </div>
+      </div>
 
-        <div className="grid justify-center mt-[50px]">
-          <div className="flex flex-col md:flex-row mt-[30px]">
+      <div className="mt-[50px]">
+        <div className="justify-center flex md:flex-row">
+          <InputWithLabel
+            labelText="ADDRESS" inputType="text"
+            inputPlaceholder="Enter a Location" inputId="location"
+            inputWidth="w-full md:w-[40vw]" />
+          <div className="md:ml-2 mt-2 md:mt-0">
             <InputWithLabel
-              labelText="FULL NAME" inputType="text"
-              inputPlaceholder="Enter Full Name" inputId="name"
-              inputWidth="w-full md:w-[340px]" />
-            <div className="md:ml-2 mt-2 md:mt-0">
-              <InputWithLabel
-                labelText="EMAIL ADDRESS" inputType="email"
-                inputPlaceholder="Enter your email address" inputId="email"
-                inputWidth="w-full md:w-[340px]" />
+              labelText="APT.NUMBER" inputType="text"
+              inputPlaceholder="" inputId="aptNum"
+              inputWidth="w-full md:w-[13.125vw]" />
+          </div>
+        </div>
+
+        <div className="grid justify-center items-center mt-[45px]">
+          <p className="text-[14px] text-center text-[#88939D] font-Averta-Semibold leading-[25px]">
+            HOW DO WE GET IN?
+          </p>
+          <div className="flex md:flex-row mt-[14px]">
+            <ToggleButtonGroup
+              buttons={getInOpitonsButtons}
+              classNameCommon="bg-white h-[55px] md:w-[16.67vw] rounded-[10px]
+              font-Averta-Semibold text-lg leading-[23px] tracking-tight
+              text-[#4f6071] border-2 border-[#d3d8dd] hover:bg-accent"
+            />
+          </div>
+        </div>
+
+        <div className="grid justify-center items-center mt-[45px]">
+          <p className="text-[14px] text-center text-[#88939D] font-Averta-Semibold leading-[25px] ">
+            WANT TO GIVE ANY SPECIFIC SPOTS A DEEP CLEAN?
+          </p>
+          <div className="flex md:flex-row mt-[14px]">
+            <div className="space-x-2">
+              {deepCleanOptionsButtons.map((button) => (
+                <ToggleButton
+                  contentText={button.contentText} price={button.price}
+                  imageSrc={button.imageSrc} imageSrc2={button.imageSrc2}
+                  className="bg-white md:h-[12.5vw] md:w-[16.67vw] rounded-[10px]
+                  font-Averta-Semibold text-base leading-[23px] tracking-tight
+                text-[#4f6071] border-2 border-[#d3d8dd] hover:bg-accent"
+                />
+              ))}
             </div>
           </div>
-          <div className="flex flex-col md:flex-row mt-[30px]">
-            <InputWithLabel
-              labelText="PHONE NUMBER" inputType="text"
-              inputPlaceholder="Enter a Phone number" inputId="phoneNum"
-              inputWidth="w-full md:w-[340px]" />
-            <div className="md:ml-2 mt-2 md:mt-0">
-              <InputWithLabel
-                labelText="HOW DO WE CONTACT YOU" inputType="email"
-                inputPlaceholder="" inputId="contactEmail"
-                inputWidth="w-full md:w-[340px]" />
+        </div>
+
+        <div className="grid justify-center items-center mt-[45px]">
+          <p className="text-[14px] text-center text-[#88939D] font-Averta-Semibold leading-[25px] ">
+            ANY PET?
+          </p>
+          <div className="flex md:flex-row mt-[14px]">
+            <div className="space-x-2">
+              <ToggleButtonGroup
+                buttons={yesNoOptionsButtons}
+                classNameCommon="bg-white h-[55px] md:w-[16.67vw] rounded-[10px]
+                font-Averta-Semibold text-lg leading-[23px] tracking-tight
+                text-[#4f6071] border-2 border-[#d3d8dd] hover:bg-accent"/>
             </div>
           </div>
+        </div>
 
-          <div className='mt-[30px]'>
-            <ScrollArea className="h-[170px] font-Averta-Regular w-full md:w-[688px] rounded-md border p-3">
-              Jokester began sneaking into the castle in the middle of the night and leaving
-              jokes all over the place: under the king's pillow, in his soup, even in the
-              royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
-              then, one day, the people of the kingdom discovered that the jokes left by
-              Jokester were so funny that they couldn't help but laugh. And once they
-              started laughing, they couldn't stop. Jokester began sneaking into the castle in the middle of the night and leaving
-              jokes all over the place: under the king's pillow, in his soup, even in the
-              royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
-              then, one day, the people of the kingdom discovered that the jokes left by
-              Jokester were so funny that they couldn't help but laugh. And once they
-              started laughing, they couldn't stop.
-            </ScrollArea>
-            <CheckboxWithText />
+        <div className="grid justify-center items-center mt-[45px]">
+          <Input type="text" placeholder="What types of pets? Some of our cleaners have pet allergies."
+            className="md:w-[56.25vw] h-[55px] text-base font-Averta-Regular" />
+          <div className="mt-[30px]">
+            <MultiLineInput
+              labelText="ADDITIONAL NOTES"
+              inputPlaceholder="I would like Sophie to be my cleaner. Please change my sheets 
+            (fresh bedding is on the bed) and empty the dishwasher."
+              inputId="notes" inputHeight="h-[80px]" inputWidth="md:w-[56.25vw]" />
+          </div>
+
+          <div className="flex justify-center items-center mt-[55px] pb-[50px]">
+            <Button className="md:w-[12.5vw] h-[60px] bg-[#1A78F2] font-Averta-Semibold text-[16px]">Place order</Button>
           </div>
         </div>
       </div>
-
-      {/* Section Right */}
-      <div className="w-full md:w-1/3 p-4 bg-gray-100 h-full min-h-screen">
-        <p className="text-4xl mx-auto font-Averta-Bold mb-4 mt-[50px]">Billing</p>
-        <div className="my-4 border-gray-300 rounded-lg">
-          <div className="p-6 bg-white rounded-lg">
-            <div className="flex justify-between ">
-              <div className="text-gray-600 font-Averta-Regular">Studio</div>
-              <Separator orientation='vertical' className='border-gray-300 mx-4 h-9' />
-              <div className="text-gray-600 font-Averta-Regular">3 Bathrooms</div>
-              <Separator orientation='vertical' className='border-gray-300 mx-4 h-9' />
-              <div className="text-gray-600 font-Averta-Regular">Standard</div>
-            </div>
-            <div className="mb-4 border-t pt-4 flex">
-              {/* <p className=" text-gray-600 font-semibold">Every 2 weeks</p> */}
-              <p className="text-gray-600 font-Averta-Semibold">Tuesday, July 17, 2018 at 2.30pm</p>
-            </div>
-            <div className="mb-4 border-t pt-4">
-              <p className=" text-gray-600 font-Averta-Semibold">114 Broadway Newyork, NY 10005</p>
-            </div>
-            <div className="border-t border-gray-200 pt-4">
-              <p className=" text-gray-600 font-Averta-Semibold">Add-on: Inside oven</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex mt-[40px]">
-          <Input type="text" placeholder="Discount" className="bg-white border-gray-300 h-[50px] font-Averta-Regular" />
-          <Button className="bg-[#1A78F2] h-[50px] md:w-1/3 ml-[8px] text-[16px]">Apply</Button>
-        </div>
-
-        <div className=" my-[40px] border-gray-300 rounded-lg">
-          <div className="p-6 bg-white rounded-lg">
-            <div className="mb-4 flex justify-between items-center">
-              <div className="flex">
-                <p className="text-gray-600 font-Averta-Semibold">Appointment Value</p>
-                <p className="text-blue-600 font-Averta-Semibold ml-[10px]">- Details</p>
-              </div>
-              <p className="text-gray-600 font-Averta-Semibold ">$ 125.99</p>
-            </div>
-            <div className="mb-4 flex justify-between items-center">
-              <div className="flex">
-                <p className=" text-gray-600 font-Averta-Semibold">Discounts</p>
-                <p className="text-blue-600 font-Averta-Semibold ml-[10px]">- Details</p>
-              </div>
-              <p className="text-gray-600 font-Averta-Semibold ">-$ 15.89</p>
-            </div>
-            <div className="mb-4 border-t pt-4 flex justify-between items-center">
-              <p className=" text-gray-600 font-Averta-Semibold">Subtotal</p>
-              <p className="text-gray-600 font-Averta-Semibold ">$ 110.01</p>
-            </div>
-            <div className="mb-4 border-t pt-4 flex justify-between items-center">
-              <p className=" text-gray-600 font-Averta-Semibold">Tax</p>
-              <p className="text-gray-600 font-Averta-Semibold">+$ 5.20</p>
-            </div>
-            <div className="border-t pt-4 justify-between items-center flex">
-              <p className=" text-gray-600 text-[18px] font-Averta-Bold">Total</p>
-              <p className=" text-gray-600 text-[18px] font-Averta-Bold">$610.00</p>
-            </div>
-
-          </div>
-        </div>
-
-        <div className="flex justify-center items-center ">
-          <Button className="md:w-1/3 h-[60px] bg-[#1A78F2] text-[16px]">Place order</Button>
-        </div>
-      </div>
-    </div >
+    </div>
   )
 }
 
