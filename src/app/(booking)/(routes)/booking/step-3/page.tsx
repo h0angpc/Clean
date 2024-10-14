@@ -49,7 +49,7 @@ const displayDays = days.map((day) => {
   return (
     <CarouselItem className="basis-1/7 pl-4" key={day.dayInMonth}>  
       <Card>
-        <CardContent className={`flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl border ${day.active ? "text-[#1A78F2] border-[#1A78F2]" : "text-[#4f6071] border-[#d3d8dd]"} hover:text-white hover:bg-[#1A78F2]`}>
+        <CardContent className={`flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl border transition duration-300 ${day.active ? "text-[#1A78F2] border-[#1A78F2]" : "text-[#4f6071] border-[#d3d8dd]"} hover:text-white hover:bg-[#1A78F2]`}>
           {day.dayInMonth}
         </CardContent>
       </Card>
