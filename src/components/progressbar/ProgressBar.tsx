@@ -15,7 +15,7 @@ interface ServiceDetails {
 }
 //Other Services | Home Cleaning
 const serviceDetails: ServiceDetails = {
-  step: 3,
+  step: 4,
   serviceType: 'Other Services',
   bedrooms: '',
   bathrooms: '',
@@ -28,14 +28,14 @@ const serviceDetails: ServiceDetails = {
 const ProgressBar = () => {
   return (
     <div className='w-full h-[75px] flex flex-row shadow-xl'>
-      <div className='h-full w-[100px]'>
+      <div className='h-full w-[5.2%]'>
         <div className='h-full w-full flex justify-center items-center'>
           <Image src='/images/ProgressBar/Group.svg' alt='exitButton' width={20} height={20}/>
         </div>
       </div>
-      <div className='relative'>
-        <div className='h-full w-[1650px] flex flex-row'>
-          <div className={`h-full ${serviceDetails.serviceType === 'Home Cleaning' ? 'w-[267px]' : 'w-[320px]'}`}>
+      <div className='relative h-full w-[90%] flex flex-row'>
+        {/* <div className='h-full w-[90%] flex flex-row'> */}
+          <div className={`h-full ${serviceDetails.serviceType === 'Home Cleaning' ? 'w-1/6' : 'w-1/5'}`}>
             <div className='h-full w-full flex justify-center items-center'>
               <div className='flex flex-row gap-2'>
                 <div>
@@ -50,7 +50,7 @@ const ProgressBar = () => {
           </div>
           {serviceDetails.serviceType === 'Home Cleaning' &&(
           <>
-          <div className='h-full w-[267px]'>
+          <div className='h-full w-1/6'>
             <div className='h-full w-full flex justify-center items-center'>
               <div className='flex flex-row gap-2'>
                 <div>
@@ -63,7 +63,7 @@ const ProgressBar = () => {
               </div>    
             </div>
           </div>
-          <div className='h-full w-[267px]'>
+          <div className='h-full w-1/6'>
             <div className='h-full w-full flex justify-center items-center'>
               <div className='flex flex-row gap-2'>
                 <div>
@@ -76,7 +76,7 @@ const ProgressBar = () => {
               </div> 
             </div>
           </div>
-          <div className='h-full w-[267px]'>
+          <div className='h-full w-1/6'>
             <div className='h-full w-full flex justify-center items-center'>
               <div className='flex flex-row gap-2'>
                 <div>
@@ -93,7 +93,7 @@ const ProgressBar = () => {
           )}
           {serviceDetails.serviceType === 'Other Services' &&(
           <>
-          <div className='h-full w-[320px]'>
+          <div className='h-full w-1/5'>
             <div className='h-full w-full flex justify-center items-center'>
               <div className='flex flex-row gap-2'>
                 <div>
@@ -106,7 +106,7 @@ const ProgressBar = () => {
               </div>    
             </div>
           </div>
-          <div className='h-full w-[320px]'>
+          <div className='h-full w-1/5'>
             <div className='h-full w-full flex justify-center items-center'>
               <div className='flex flex-row gap-2'>
                 <div>
@@ -121,7 +121,7 @@ const ProgressBar = () => {
           </div>
           </>   
           )}
-          <div className={`h-full ${serviceDetails.serviceType === 'Home Cleaning' ? 'w-[267px]' : 'w-[320px]'}`}>
+          <div className={`h-full ${serviceDetails.serviceType === 'Home Cleaning' ? 'w-1/6' : 'w-1/5'}`}>
             <div className='h-full w-full flex justify-center items-center'>
               <div className='flex flex-row gap-2'>
                 <div>
@@ -134,7 +134,7 @@ const ProgressBar = () => {
               </div>
             </div>
           </div>
-          <div className={`h-full ${serviceDetails.serviceType === 'Home Cleaning' ? 'w-[267px]' : 'w-[320px]'}`}>
+          <div className={`h-full ${serviceDetails.serviceType === 'Home Cleaning' ? 'w-1/6' : 'w-1/5'}`}>
             <div className='h-full w-full flex justify-center items-center'>
               <div className='flex flex-row gap-2'>
                 <div>
@@ -147,30 +147,30 @@ const ProgressBar = () => {
               </div>
             </div>
           </div>
-        </div>
+        {/* </div> */}
         {(serviceDetails.step === 1 && serviceDetails.serviceType === 'Home Cleaning') && (
-          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[960px]`}></div>
+          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[0.5]`}></div>
         )}
         {(serviceDetails.step === 2 && serviceDetails.serviceType === 'Home Cleaning') && (
-          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[1250px]`}></div>
+          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[0.65]`}></div>
         )}
         {(serviceDetails.step === 3 && serviceDetails.serviceType === 'Home Cleaning') && (
-          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[1500px]`}></div>
+          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[0.78]`}></div>
         )}
         {(serviceDetails.step === 1 && serviceDetails.serviceType === 'Other Services') && (
-          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[820px]`}></div>
+          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[0.427]`}></div>
         )}
         {(serviceDetails.step === 2 && serviceDetails.serviceType === 'Other Services') && (
-          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[1150px]`}></div>
+          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[0.6]`}></div>
         )}
         {(serviceDetails.step === 3 && serviceDetails.serviceType === 'Other Services') && (
-          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[1450px]`}></div>
+          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[0.75]`}></div>
         )}
         {serviceDetails.step === 4 && (
           <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-full`}></div>
         )}
       </div>
-      <div className='h-full w-[200px] bg-[#2B3641]'>
+      <div className='h-full w-[12%] bg-[#2B3641]'>
         <div className='h-full w-full flex justify-center items-center'>
           <div className='flex flex-col'>
             <div className='flex flex-row m-auto'>
