@@ -17,7 +17,7 @@ export function InputWithLabel({
     inputWidth = "w-full"
 }: InputWithLabelProps) {
     return (
-        <div className="grid max-w-sm items-center gap-1.5">
+        <div className="grid max-w-max items-center gap-1.5">
             <Label className="text-[14px] font-Averta-Semibold text-[#9FA7B0]" htmlFor={inputId}>
                 {labelText}
             </Label>
