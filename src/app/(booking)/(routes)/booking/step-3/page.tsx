@@ -49,7 +49,7 @@ const displayDays = days.map((day) => {
   return (
     <CarouselItem className="basis-1/7 pl-4" key={day.dayInMonth}>  
       <Card>
-        <CardContent className={`flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl border ${day.active ? "text-[#1A78F2] border-[#1A78F2]" : "text-[#4f6071] border-[#d3d8dd]"} hover:text-white hover:bg-[#1A78F2]`}>
+        <CardContent className={`flex justify-center items-center pt-[23px] bg-white h-[55px] w-[132px] rounded-[10px] font-Averta-Semibold text-xl border transition duration-300 ${day.active ? "text-[#1A78F2] border-[#1A78F2]" : "text-[#4f6071] border-[#d3d8dd]"} hover:text-white hover:bg-[#1A78F2]`}>
           {day.dayInMonth}
         </CardContent>
       </Card>
@@ -61,8 +61,8 @@ const displayDays = days.map((day) => {
 const Step_3 = () => {
   return (
     <div className="h-full w-full">
-      <div className="w-1/2 m-auto p-4">
-        <div className="justify-center h-max">
+      <div className="w-1/2 m-auto">
+        <div className="justify-center h-[80px]">
           <p className="text-4xl text-center font-Averta-Bold mb-2 mt-[50px] ">
             Book Timing
           </p>
@@ -87,11 +87,11 @@ const Step_3 = () => {
             <p className="text-sm font-Averta-Regular leading-[19px] tracking-tight text-left">Cleaner will arrive between 9am-4pm</p>
         </div>
       </Button>
-      <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-[#4f6071] border border-[#d3d8dd] hover:text-white">08:00am</Button>
-      <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-[#4f6071] border border-[#d3d8dd] hover:text-white">08:30am</Button>
+      <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-[#88929c] border border-[#d3d8dd] hover:text-white">08:00am</Button>
+      <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-[#88929c] border border-[#d3d8dd] hover:text-white">08:30am</Button>
       <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-[#1A78F2] border border-[#1A78F2] hover:text-white">09:00am</Button>
-      <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-[#4f6071] border border-[#d3d8dd] hover:text-white">09:30am</Button>
-      <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-[#4f6071] border border-[#d3d8dd] hover:text-white">10:00am</Button>
+      <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-[#88929c] border border-[#d3d8dd] hover:text-white">09:30am</Button>
+      <Button className="bg-white h-[73px] w-[400px] rounded-[10px] font-Averta-Semibold text-base leading-[23px] tracking-tight text-[#88929c] border border-[#d3d8dd] hover:text-white">10:00am</Button>
     </div>
     
     <div className="flex justify-center items-center mt-[35px]">
