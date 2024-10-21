@@ -12,9 +12,9 @@ const DashboardLayout = (props: {
         <Sidebar />
         <main className="flex flex-col ml-5 w-[84%] max-md:ml-0 max-md:w-full">
           <div className="flex overflow-hidden flex-col grow items-center px-8 pt-5 pb-40 w-full bg-slate-100 min-h-[970px] max-md:px-5 max-md:pb-24 max-md:max-w-full">
-            {/* <div className="flex flex-col w-full max-w-[1141px] max-md:max-w-full"> */}
+            <div className="flex flex-col w-full max-w-[1141px] max-md:max-w-full">
               {props.children}
-            {/* </div> */}
+            </div>
           </div>
         </main>
       </div>
