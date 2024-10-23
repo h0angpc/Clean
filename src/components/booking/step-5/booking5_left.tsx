@@ -20,29 +20,29 @@ const Booking5Left = () => {
           <InputWithLabel
             labelText="FULL NAME" inputType="text"
             inputPlaceholder="Enter Full Name" inputId="name"
-            inputWidth="w-full md:w-[340px]" />
+            inputWidth="25vw" />
           <div className="md:ml-2 mt-2 md:mt-0">
             <InputWithLabel
               labelText="EMAIL ADDRESS" inputType="email"
               inputPlaceholder="Enter your email address" inputId="email"
-              inputWidth="w-full md:w-[340px]" />
+              inputWidth="25vw" />
           </div>
         </div>
         <div className="flex flex-col md:flex-row mt-[30px]">
           <InputWithLabel
             labelText="PHONE NUMBER" inputType="text"
             inputPlaceholder="Enter a Phone number" inputId="phoneNum"
-            inputWidth="w-full md:w-[340px]" />
+            inputWidth="25vw" />
           <div className="md:ml-2 mt-2 md:mt-0">
             <InputWithLabel
               labelText="HOW DO WE CONTACT YOU" inputType="email"
               inputPlaceholder="" inputId="contactEmail"
-              inputWidth="w-full md:w-[340px]" />
+              inputWidth="25vw" />
           </div>
         </div>
 
         <div className='mt-[30px]'>
-          <ScrollArea className="h-[170px] font-Averta-Regular w-full md:w-[688px] rounded-md border p-3">
+          <ScrollArea style={{width: `calc(50vw + 8px)`}} className="h-[170px] font-Averta-Regular rounded-md border p-3">
             Jokester began sneaking into the castle in the middle of the night and leaving
             jokes all over the place: under the king's pillow, in his soup, even in the
             royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
