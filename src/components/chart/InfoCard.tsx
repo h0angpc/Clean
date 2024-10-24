@@ -17,7 +17,7 @@ export const InfoCard:React.FC<InfoCardProps> = ({titleInfo, dataInfo, urliconIn
     const urlTrend = trend === "up" ? "/images/Chart/up.svg" : "/images/Chart/down.svg";
     const textColorTrend = trend === "up" ? "text-[#00B69B]" : "text-[#B60000]";
   return (
-    <div className='inline-flex flex-col justify-center items-center w-[24%] bg-white py-[15px] px-[15px] gap-[32px] rounded-xl'>
+    <div className='flex flex-col justify-center items-center w-fit bg-white py-[20px] px-[25px] gap-[32px] rounded-xl'>
         <div className='inline-flex w-full justify-between'>
             <div className='text-left'>
                 <div className='opacity-70 text-[#202224] text-base font-gilroy-regular text-[16px] font-bold mb-[10px]'>{titleInfo}</div>
@@ -27,7 +27,7 @@ export const InfoCard:React.FC<InfoCardProps> = ({titleInfo, dataInfo, urliconIn
                 <Image src={urliconInfo} alt='totalUser' width={35} height={30}/>
             </div>
         </div>
-        <div className='flex flex-row w-full justify-center items-center'>
+        <div className='flex flex-row w-full items-start'>
             <Image src={`${urlTrend}`} alt='down' width={24} height={24} className='pr-[8px]'/>
             <p className='text-[#606060] text-[15px] not-italic font-[600] leading-normal'><span className={`${textColorTrend}}`}>{percentageChangeInfo}</span> {changeInfo}</p>
         </div>
