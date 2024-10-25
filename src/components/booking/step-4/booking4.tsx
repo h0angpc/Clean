@@ -44,12 +44,12 @@ const Booking4 = () => {
             <InputWithLabel
               labelText="ADDRESS" inputType="text"
               inputPlaceholder="Enter a Location" inputId="location"
-              inputWidth="w-full md:w-[40vw]" />
+              inputWidth="40vw" />
             <div className="md:ml-2 mt-2 md:mt-0">
               <InputWithLabel
                 labelText="APT.NUMBER" inputType="text"
                 inputPlaceholder="" inputId="aptNum"
-                inputWidth="w-full md:w-[13.125vw]" />
+                inputWidth="13.125vw" />
             </div>
           </div>
 
