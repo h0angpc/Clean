@@ -35,8 +35,8 @@ export function ToggleButton({
                 src={isToggled ? imageSrc2 : imageSrc}
 
                 alt={contentText}
-                width={32} // 32px width
-                height={32} // 32px height
+                width={32} 
+                height={32} 
                 className="mb-2 m-auto md:h-[3.89vw] md:w-[3.89vw]"
             />
             <span className={`text-lg`}>{contentText}</span>
