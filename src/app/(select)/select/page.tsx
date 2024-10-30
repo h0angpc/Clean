@@ -30,18 +30,26 @@ const Select = () => {
           </h5>
         </div>
         <div className='w-[80%] h-[450px] flex flex-row items-center justify-center divide-x-2 divide-dashed m-auto border-2 rounded-2xl p-[20px] shadow-xl'>
-            <div className='w-[50%] h-full flex flex-col items-center justify-center gap-[10px] hover:cursor-pointer' onClick={() => setSelectService(selectService === 'Home Service' ? '' : 'Home Service')}>
+            <div 
+              className='w-[50%] h-full flex flex-col items-center justify-center gap-[10px] hover:cursor-pointer'
+              onMouseEnter={() => setSelectService('Home Service')}
+              onMouseLeave={() => setSelectService('')}
+            >
               <Image src={`${selectService !== 'Home Service' ? '/images/BookingStep0/house_unselect.png' : '/images/BookingStep0/house_select.png'}`} alt='home_service' width={200} height={200}/>
               <div className='w-full h-[40%] flex flex-col items-center gap-[5px]'>
-                <div className='text-[#1d2c4c] text-[34px] font-Averta-Semibold leading-[42px]'>Home Cleaning</div>
-                <div className='text-[#12153a] text-base font-Averta-Regular leading-[23px] tracking-tight text-center'>
-                  Professional home cleaning services take the burden off your shoulders, 
-                  <br /> ensuring every corner shines while you focus on what matters most.
-                  <br /><span className='font-Averta-Semibold'> It's not just cleaning; it’s peace of mind delivered.</span>
-                </div>
+              <div className='text-[#1d2c4c] text-[34px] font-Averta-Semibold leading-[42px]'>Home Cleaning</div>
+              <div className='text-[#12153a] text-base font-Averta-Regular leading-[23px] tracking-tight text-center'>
+                Professional home cleaning services take the burden off your shoulders, 
+                <br /> ensuring every corner shines while you focus on what matters most.
+                <br /><span className='font-Averta-Semibold'> It's not just cleaning; it’s peace of mind delivered.</span>
+              </div>
               </div>
             </div>
-            <div className='w-[50%] h-full flex flex-col items-center justify-center gap-[10px] hover:cursor-pointer' onClick={() => setSelectService(selectService === 'Other Service' ? '' : 'Other Service')}>
+            <div 
+              className='w-[50%] h-full flex flex-col items-center justify-center gap-[10px] hover:cursor-pointer'
+              onMouseEnter={() => setSelectService('Other Service')}
+              onMouseLeave={() => setSelectService('')}  
+            >
               <div className='relative h-[200px] w-[280px]'>
                 <Image src={`${selectService !== 'Other Service' ? '/images/BookingStep0/other1_unselect.png' : '/images/BookingStep0/other1_select.png'}`} alt='other_service_01' width={133.3} height={133.3} className='absolute top-0 left-0'/>
                 <Image src={`${selectService !== 'Other Service' ? '/images/BookingStep0/other2_unselect.png' : '/images/BookingStep0/other2_select.png'}`} alt='other_service_02' width={133.3} height={133.3} className='absolute bottom-0 right-0'/>
