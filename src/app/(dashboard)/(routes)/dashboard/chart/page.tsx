@@ -15,7 +15,7 @@ const chartkData = [
 const ChartPage = () => {
   return (
     <div className='flex flex-col gap-[30px] h-full w-full'>
-      <div className='flex justify-between gap-[16px] h-fit'>
+      <div className='flex justify-between h-fit'>
         {chartkData.map((chart) => (
           <InfoCard key={chart.titleInfo} {...chart} />
         ))}
