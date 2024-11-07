@@ -42,9 +42,9 @@ const QuickPopupHelper: React.FC<QuickPopupHelper> = ({ toggle }) => {
           <div className='w-[50%] h-full flex flex-col gap-[32px] content-between'>
             <div className='w-full h-full flex flex-col gap-[8px]'>
               <p className='text-[#12153a] text-lg font-Averta-Semibold uppercase leading-snug tracking-tight'>helper selection</p>
-              <div className='flex flex-col p-[16px] gap-[11px] bg-[#f3f6f9] rounded-lg'>
+              <div className='flex flex-col p-[16px] gap-[11px] rounded-lg'>
                 <p className='text-[#9ea7af] text-sm font-Averta-Semibold uppercase leading-[17px] tracking-tight'>helper</p>
-                <div className='flex flex-row justify-between p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-white'>
+                <div className='flex flex-row justify-between p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-[#F4F7F9]'>
                   <div className='flex flex-row h-fit gap-[10px]'>
                     <Image src='/images/About/Google.png' alt='avatar' width={20} height={20}/>
                     <p className='text-[#4f6071] text-base font-Averta-Semibold leading-[23px] tracking-tight'>Long Nhat dep trai</p>
@@ -58,22 +58,22 @@ const QuickPopupHelper: React.FC<QuickPopupHelper> = ({ toggle }) => {
             </div>
             <div className='w-full h-full flex flex-col gap-[8px]'>
               <p className='text-[#12153a] text-lg font-Averta-Semibold uppercase leading-snug tracking-tight'>service details</p>
-              <div className='flex flex-col h-full px-[16px] pt-[16px] bg-[#f3f6f9] rounded-lg gap-5 pb-7'>
+              <div className='flex flex-col h-full px-[16px] pt-[16px] rounded-lg gap-5 pb-7'>
                 <div className='flex flex-col w-full h-fit gap-[11px]'>
                   <p className='text-[#9ea7af] text-sm font-Averta-Semibold uppercase leading-[17px] tracking-tight'>service type</p>
-                  <div className='flex flex-row h-fit justify-between p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-white'>
+                  <div className='flex flex-row h-fit justify-between p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-[#F4F7F9]'>
                     <p className='text-[#4f6071] text-base font-Averta-Semibold leading-[23px] tracking-tight'>Other Services</p>
                   </div>
                 </div>
                 <div className='flex flex-col w-full h-fit gap-[11px]'>
                   <p className='text-[#9ea7af] text-sm font-Averta-Semibold uppercase leading-[17px] tracking-tight'>other service type</p>
-                  <div className='flex flex-row h-fit justify-between p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-white'>
+                  <div className='flex flex-row h-fit justify-between p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-[#F4F7F9]'>
                     <p className='text-[#4f6071] text-base font-Averta-Semibold leading-[23px] tracking-tight'>Baby-Sitting</p>
                   </div>
                 </div>
                 <div className='flex flex-col w-full h-fit gap-[11px]'>
                   <p className='text-[#9ea7af] text-sm font-Averta-Semibold uppercase leading-[17px] tracking-tight'>duration type</p>
-                  <div className='flex flex-row h-fit justify-between p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-white'>
+                  <div className='flex flex-row h-fit justify-between p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-[#F4F7F9]'>
                     <p className='text-[#4f6071] text-base font-Averta-Semibold leading-[23px] tracking-tight'>1-3 hours</p>
                   </div>
                 </div>
@@ -82,30 +82,30 @@ const QuickPopupHelper: React.FC<QuickPopupHelper> = ({ toggle }) => {
           </div>
           <div className='w-[50%] h-full flex flex-col gap-[8px]'>
             <p className='text-[#12153a] text-lg font-Averta-Semibold uppercase leading-snug tracking-tight'>customer-related info</p>
-            <div className='w-full h-full flex flex-col p-[16px] bg-[#f3f6f9] rounded-lg gap-6'>
+            <div className='w-full h-full flex flex-col p-[16px] rounded-lg gap-6'>
               <div className='flex flex-col w-full h-fit gap-[11px]'>
                 <p className='text-[#9ea7af] text-sm font-Averta-Semibold uppercase leading-[17px] tracking-tight'>customer</p>
-                <div className='flex flex-row gap-[10px] w-full h-fit p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-white'>
+                <div className='flex flex-row gap-[10px] w-full h-fit p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-[#F4F7F9]'>
                   <Image src='/images/About/Google.png' alt='avatar' width={20} height={20}/>
                   <p className='text-[#4f6071] text-base font-Averta-Semibold leading-[23px] tracking-tight'>Long Nhat dep trai</p>
                 </div>
               </div>
               <div className='flex flex-col w-full h-fit gap-[11px]'>
                 <p className='text-[#9ea7af] text-sm font-Averta-Semibold uppercase leading-[17px] tracking-tight'>address</p>
-                <div className='flex flex-row h-fit justify-between p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-white'>
+                <div className='flex flex-row h-fit justify-between p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-[#F4F7F9]'>
                   <p className='text-[#4f6071] text-base font-Averta-Semibold leading-[23px] tracking-tight'>Address</p>
                 </div>
               </div>
               <div className='flex flex-col w-full h-fit gap-[11px]'>
                 <p className='text-[#9ea7af] text-sm font-Averta-Semibold uppercase leading-[17px] tracking-tight'>time</p>
-                <div className='flex flex-row h-fit justify-between p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-white'>
+                <div className='flex flex-row h-fit justify-between p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-[#F4F7F9]'>
                   <p className='text-[#4f6071] text-base font-Averta-Semibold leading-[23px] tracking-tight'>From 8 AM to 6 PM | 29/10/2024</p>
                 </div>
               </div>
               <div className='flex flex-col w-full h-full gap-[11px]'>
                 <p className='text-[#9ea7af] text-sm font-Averta-Semibold uppercase leading-[17px] tracking-tight'>price</p>
                 <div className='flex flex-row w-full h-full gap-[16px]'>
-                  <div className='w-[40%] h-full justify-between p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-white'>
+                  <div className='w-[40%] h-full justify-between p-[13px] border-[#d3d8dd] border-2 rounded-lg bg-[#F4F7F9]'>
                     <p className='text-[#4f6071] text-base font-Averta-Semibold leading-[23px] tracking-tight'>$50</p>
                   </div>
                   {style}
