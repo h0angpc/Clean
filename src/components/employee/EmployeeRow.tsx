@@ -5,6 +5,8 @@ import Star from "./Star";
 import QuickPopupAdmin from "../quickpopup/QuickPopupAdmin";
 import QuickPopupHelper from "../quickpopup/QuickPopupHelper";
 import QuickPopupCustomer from "../quickpopup/QuickPopupCustomer";
+import QuickPopupFeedback from "../quickpopup/QuickPopupFeedback";
+import QuickPopupReturn from "../quickpopup/QuickPopupReturn";
 
 type EmployeeRowProps = {
   id: string;
@@ -108,7 +110,9 @@ const EmployeeRow: React.FC<EmployeeRowProps> = ({
       </div>
       {/* {toggle && <QuickPopupAdmin toggle={handleToggle}/>} */}
       {/* {toggle && <QuickPopupHelper toggle={handleToggle}/>} */}
-      {toggle && <QuickPopupCustomer toggle={handleToggle}/>}
+      {/* {toggle && <QuickPopupCustomer toggle={handleToggle}/>} */}
+      {/* {toggle && <QuickPopupFeedback toggle={handleToggle}/>} */}
+      {toggle && <QuickPopupReturn toggle={handleToggle}/>}
     </div>
   );
 };
