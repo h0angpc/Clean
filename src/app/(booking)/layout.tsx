@@ -4,9 +4,13 @@ const BookingLayout = (props : {
     children: React.ReactNode
 }) => {
   return (
-    <div>
-      <ProgressBar/>
-      {props.children}
+    <div className='flex flex-col'>
+      <div style={{ position: 'sticky', top: 0}}>
+        <ProgressBar/>
+      </div>
+      <div>
+        {props.children}
+      </div>
     </div>
   )
 }

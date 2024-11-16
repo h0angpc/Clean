@@ -27,7 +27,7 @@ const serviceDetails: ServiceDetails = {
 
 const ProgressBar = () => {
   return (
-    <div className='w-full h-[75px] flex flex-row shadow-xl'>
+    <div className='w-full h-[75px] flex flex-row shadow-xl bg-white'>
       <div className='h-full w-[5.2%]'>
         <div className='h-full w-full flex justify-center items-center'>
           <Image src='/images/ProgressBar/Group.svg' alt='exitButton' width={20} height={20}/>
