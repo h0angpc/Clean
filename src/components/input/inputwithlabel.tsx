@@ -83,7 +83,7 @@ export function InputWithLabel({
                             >
                                 <span>{tag}</span>
                                 <Image
-                                    className="cursor-pointer ml-1"
+                                    className="cursor-pointer ml-1 hover:scale-110"
                                     width={24}
                                     height={24}
                                     alt="x"
