@@ -1,6 +1,13 @@
 import React from "react";
 import Star from "./Star";
 
+//import for test popup
+import QuickPopupAdmin from "../quickpopup/QuickPopupAdmin";
+import QuickPopupHelper from "../quickpopup/QuickPopupHelper";
+import QuickPopupCustomer from "../quickpopup/QuickPopupCustomer";
+import QuickPopupFeedback from "../quickpopup/QuickPopupFeedback";
+import QuickPopupReturn from "../quickpopup/QuickPopupReturn";
+
 type EmployeeRowProps = {
   id: string;
   name: string;
@@ -46,6 +53,10 @@ const EmployeeRow: React.FC<EmployeeRowProps> = ({
       </div>
     );
   };
+
+  //state for test popup
+  const [toggle, setToggle] = React.useState(false);
+  const handleToggle = () => setToggle(!toggle)
 
   return (
     <div className="flex flex-wrap gap-3 w-full border-b border-gray-200 bg-white hover:bg-[#f4f7ff] h-auto items-start md:items-center p-2.5 cursor-pointer">
@@ -93,10 +104,15 @@ const EmployeeRow: React.FC<EmployeeRowProps> = ({
       </div>
 
       <div className="w-full  md:w-[8%] flex items-center md:py-6">
-        <button className="ml-auto px-4 py-1.5 bg-[#6896d1] text-[#12153a] bg-opacity-20 text-xs rounded-[4.5px] font-semibold hover:bg-opacity-50">
+        <button className="ml-auto px-4 py-1.5 bg-[#6896d1] text-[#12153a] bg-opacity-20 text-xs rounded-[4.5px] font-semibold hover:bg-opacity-50" onClick={handleToggle}>
           More Info
         </button>
       </div>
+      {/* {toggle && <QuickPopupAdmin toggle={handleToggle}/>} */}
+      {/* {toggle && <QuickPopupHelper toggle={handleToggle}/>} */}
+      {/* {toggle && <QuickPopupCustomer toggle={handleToggle}/>} */}
+      {/* {toggle && <QuickPopupFeedback toggle={handleToggle}/>} */}
+      {toggle && <QuickPopupReturn toggle={handleToggle}/>}
     </div>
   );
 };
