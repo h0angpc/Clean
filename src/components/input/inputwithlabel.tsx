@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -20,6 +21,7 @@ interface InputWithLabelProps {
     options?: string[];
     defaultValue?: string;
     plusPX?: string,
+    className?: string;
 }
 
 export function InputWithLabel({
@@ -30,7 +32,8 @@ export function InputWithLabel({
     inputWidth = "w-full",
     options = [],
     defaultValue,
-    plusPX
+    plusPX,
+    className,
 }: InputWithLabelProps) {
 
     const services = [
@@ -114,7 +117,7 @@ export function InputWithLabel({
                 </div>
             ) : (
                 <Input
-                    className={`font-Averta-Regular h-[50px] text-[16px] text-[#88939D] border-2`}
+                    className={cn("font-Averta-Regular h-[50px] text-[16px] text-[#88939D] border-2", className)}
                     type={inputType}
                     id={inputId}
                     placeholder={inputPlaceholder}
