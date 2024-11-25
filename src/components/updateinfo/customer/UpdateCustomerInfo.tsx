@@ -25,8 +25,8 @@ const UpdateCustomerInfo = () => {
             everything runs smoothly
           </p>
         </div>
-        <div className="grid mt-[80px] gap-3">
-        <div className="flex justify-center flex-wrap md:flex-row gap-2 w-full">
+        <div className="grid mt-[80px] gap-4">
+          <div className="flex justify-center flex-wrap md:flex-row gap-2 w-full">
             <InputWithLabel
               className="min-w-[290px]"
               labelText="FULL NAME" inputType="text"
@@ -133,7 +133,7 @@ const UpdateCustomerInfo = () => {
         </div>
 
         <div className="flex justify-center items-center mt-[2vw] pb-[2vw]">
-          <Button className="md:w-1/3 h-[60px] bg-[#1A78F2] font-Averta-Semibold text-[16px]">Verify</Button>
+          <Button className="md:w-1/3 min-w-[150px] h-[60px] bg-[#1A78F2] font-Averta-Semibold text-[16px]">Verify</Button>
         </div>
       </div>
     </div>
