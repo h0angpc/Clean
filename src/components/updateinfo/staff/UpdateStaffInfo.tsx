@@ -27,81 +27,96 @@ const UpdateStaffInfo = () => {
             everything runs smoothly
           </p>
         </div>
-        <div className="grid justify-center mt-[100px]">
-          <div className="flex flex-col md:flex-row">
+        <div className="grid mt-[80px] gap-3">
+          <div className="flex justify-center flex-wrap md:flex-row gap-2 w-full">
             <InputWithLabel
+              className="min-w-[290px]"
               labelText="FULL NAME" inputType="text"
               inputPlaceholder="Enter Full Name" inputId="name"
               inputWidth="25vw" />
-            <div className="md:ml-2 md:mt-0">
+            <div className="flex md:mt-0 gap-2">
               <InputWithLabel
+                className="min-w-[170px]"
                 labelText="DATE OF BIRTH" inputType="date"
                 inputPlaceholder="" inputId="date"
                 inputWidth="11.25vw" />
-            </div>
-            <div className="md:ml-2 md:mt-0">
               <InputWithLabel
+                className="min-w-[112px]"
                 labelText="GENDER" inputType="combobox"
                 inputPlaceholder="" inputId="gender" defaultValue={genderOptions.at(0)}
                 inputWidth="6.875vw" options={genderOptions} />
             </div>
           </div>
-          <div className="flex flex-col md:flex-row mt-[30px]">
+
+          <div className="flex justify-center flex-wrap md:flex-row gap-2">
             <InputWithLabel
+              className="min-w-[290px]"
               labelText="PHONE NUMBER" inputType="text"
               inputPlaceholder="Enter a Phone number" inputId="phoneNum"
               inputWidth="25vw" />
-            <div className="md:ml-2 md:mt-0">
+            <div className="md:mt-0">
               <InputWithLabel
+                className="min-w-[290px]"
                 labelText="EMAIL ADDRESS" inputType="email"
                 inputPlaceholder="Enter your email address" inputId="contactEmail"
                 inputWidth="18.125vw" plusPX='8px' />
             </div>
           </div>
-          <div className="flex flex-col md:flex-row mt-[30px]">
+
+          <div className="flex justify-center flex-wrap md:flex-row gap-2">
             <InputWithLabel
+              className="min-w-[290px]"
               labelText="SALARY EXPECTATION" inputType="text"
               inputPlaceholder="100000$" inputId="salary"
               inputWidth="18.125vw" plusPX='8px' />
-            <div className="md:ml-2 md:mt-0">
+            <div className=" md:mt-0">
               <InputWithLabel
+                className="min-w-[290px]"
                 labelText="CITY/PROVINCE" inputType="text"
                 inputPlaceholder="Enter your city/province" inputId="city"
                 inputWidth="25vw" />
             </div>
           </div>
-          <div className="flex flex-col md:flex-row mt-[30px]">
+
+          <div className="flex justify-center flex-wrap md:flex-row gap-2">
             <InputWithLabel
+              className="min-w-[290px]"
               labelText="WARD" inputType="text"
               inputPlaceholder="Enter ward" inputId="ward"
-              inputWidth="27.5vw" />
-            <div className="md:ml-2 md:mt-0">
+              inputWidth="25vw" />
+            <div className=" md:mt-0">
               <InputWithLabel
+                className="min-w-[290px]"
                 labelText="POSTAL CODE" inputType="text"
                 inputPlaceholder="Enter Postal Code" inputId="postal"
-                inputWidth="15.625vw" plusPX='8px' />
+                inputWidth="18.125vw" plusPX='8px' />
             </div>
           </div>
-          <div className="flex flex-col md:flex-row mt-[30px]">
+
+          <div className="flex justify-center flex-wrap md:flex-row gap-2">
             <InputWithLabel
+              className="min-w-[290px]"
               labelText="HOUSE NUMBER" inputType="text"
               inputPlaceholder="Enter your House Number" inputId="houseNum"
               inputWidth="18.75vw" />
-            <div className="md:ml-2 md:mt-0">
+            <div className=" md:mt-0">
               <InputWithLabel
+                className="min-w-[290px]"
                 labelText="STREET NAME" inputType="text"
                 inputPlaceholder="Enter your Street Name" inputId="streetName"
                 inputWidth="24.375vw" plusPX='8px' />
             </div>
           </div>
 
-          <div className="mt-[30px]">
-          <InputWithLabel
+          <div className="flex justify-center flex-wrap md:flex-row gap-2">
+            <InputWithLabel
+              className="min-w-[290px]"
               labelText="OFFERED SERVICES" inputType="multipleChoice"
               inputPlaceholder="Add new service" inputId="houseNum"
               inputWidth="43.125vw" plusPX='16px' />
+            
           </div>
-          
+
         </div>
       </div>
       {/* Section-Right */}
@@ -110,7 +125,7 @@ const UpdateStaffInfo = () => {
 
         <div className="mb-6">
           <Image
-            src="/images/camera.svg"
+            src="/images/Dashboard/Personal/camera.svg"
             alt="camera"
             width={160}
             height={160}
@@ -119,10 +134,10 @@ const UpdateStaffInfo = () => {
           <Button variant="link" className="flex text-[18px] items-center justify-center mx-auto font-Averta-Semibold text-[#1A78F2]">Upload Your Avatar</Button>
         </div>
 
-        <p className="text-3xl font-Averta-Bold mb-4 ml-[2.2vw] mt-[1vw]">Identify Card</p>
+        <p className="text-3xl font-Averta-Bold mb-4 ml-[2.2vw] mt-[1vw]">ID Card</p>
         <div className="border-2 bg-white mx-[2.08vw] border-dashed border-gray-300 rounded-lg px-4 py-8 text-center">
           <Image
-            src="/images/upload.svg"
+            src="/images/Dashboard/Personal/upload.svg"
             alt="upload"
             width={40}
             height={40}
@@ -138,7 +153,7 @@ const UpdateStaffInfo = () => {
         <p className="text-3xl font-Averta-Bold mb-4 ml-[2.2vw] mt-[1vw]">Résumé</p>
         <div className="border-2 bg-white h-auto mx-[2.08vw] border-dashed border-gray-300 rounded-lg px-4 py-4 flex">
           <Image
-            src="/images/upload.svg"
+            src="/images/Dashboard/Personal/upload.svg"
             alt="upload"
             width={40}
             height={40}
