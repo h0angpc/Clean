@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from "@/components/ui/card"
+import Image from 'next/image'
 import {
   Carousel,
   CarouselContent,
@@ -72,15 +73,21 @@ const displayDays = orderedDays.map((day) => {
 
 const Step_3 = () => {
   const [timeSelected, setTimeSelected] = useState<string>("");
-  
   return (
     <div className="h-full w-full">
-      <div className="w-1/2 m-auto">
-        <div className="justify-center h-[80px]">
-          <p className="text-4xl text-center font-Averta-Bold mb-2 mt-[50px] ">
+      <div className='sm:hidden w-full h-[70px] flex flex-row bg-white justify-end items-end pr-5'>
+        <div className='h-full w-[5.2%]'>
+          <div className='h-full w-full flex justify-center items-center hover:cursor-pointer' onClick={() => console.log("deptrai")}>
+              <Image src='/images/ProgressBar/Group.svg' alt='exitButton' width={20} height={20}/>
+          </div>
+        </div>
+      </div>
+      <div className="w-3/4 sm:w-1/2 max-sm:pl-10 sm:m-auto mb-[35px]">
+        <div className="justify-center text-left sm:text-center h-[80px]">
+          <p className="text-4xl font-Averta-Bold mb-2 mt-[50px] ">
             Book Timing
           </p>
-          <p className="text-[20px] text-center text-[#88939D] font-Averta-Regular leading-[25px]">
+          <p className="text-[20px] text-[#88939D] font-Averta-Regular leading-[25px]">
             Save even more by booking off-peak dates and times.
           </p>
         </div>
@@ -116,7 +123,7 @@ const Step_3 = () => {
     ))}
     </div>
 
-    <div className="flex justify-center items-center mt-[35px]">
+    <div className="max-sm:hidden flex justify-center items-center mt-[35px]">
           <Button className="w-[165px] h-[55px] bg-[#1A78F2] text-lg text-white font-Averta-Semibold">Next</Button>
     </div>
 </div>

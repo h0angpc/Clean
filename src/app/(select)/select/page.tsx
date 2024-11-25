@@ -8,7 +8,7 @@ const Select = () => {
   const [selectService, setSelectService] = useState('')
 
   return (
-    <div className='flex flex-col w-full h-full'>
+    <div className='flex flex-col w-full h-full pb-8'>
       <div className='w-full h-[75px]'>
         <div className='w-[5%] h-full flex items-center justify-center'>
           <button>
@@ -29,24 +29,24 @@ const Select = () => {
             What we have to offer:
           </h5>
         </div>
-        <div className='w-[80%] h-[450px] flex flex-row items-center justify-center divide-x-2 divide-dashed m-auto border-2 rounded-2xl p-[20px] shadow-xl'>
+        <div className='w-[80%] h-fit flex flex-col sm:flex-row max-sm:justify-center max-sm:items-center max-sm:divide-y-2 sm:divide-x-2 divide-dashed m-auto border-2 rounded-2xl p-[20px] shadow-xl'>
             <div 
-              className='w-[50%] h-full flex flex-col items-center justify-center gap-[10px] hover:cursor-pointer'
+              className='w-[80%] sm:w-[50%] h-full flex flex-col items-center justify-center gap-[10px] hover:cursor-pointer max-sm:pb-5'
               onMouseEnter={() => setSelectService('Home Service')}
               onMouseLeave={() => setSelectService('')}
             >
               <Image src={`${selectService !== 'Home Service' ? '/images/BookingStep0/house_unselect.png' : '/images/BookingStep0/house_select.png'}`} alt='home_service' width={200} height={200}/>
               <div className='w-full h-[40%] flex flex-col items-center gap-[5px]'>
-              <div className='text-[#1d2c4c] text-[34px] font-Averta-Semibold leading-[42px]'>Home Cleaning</div>
-              <div className='text-[#12153a] text-base font-Averta-Regular leading-[23px] tracking-tight text-center'>
-                Professional home cleaning services take the burden off your shoulders, 
-                <br /> ensuring every corner shines while you focus on what matters most.
-                <br /><span className='font-Averta-Semibold'> It's not just cleaning; it’s peace of mind delivered.</span>
-              </div>
+                <div className='text-[#1d2c4c] text-[34px] font-Averta-Semibold leading-[42px]'>Home Cleaning</div>
+                <div className='text-[#12153a] text-base font-Averta-Regular leading-[23px] tracking-tight text-center'>
+                  Professional home cleaning services take the burden off your shoulders, 
+                  <br /> ensuring every corner shines while you focus on what matters most.
+                  <br /><span className='font-Averta-Semibold'> It's not just cleaning; it’s peace of mind delivered.</span>
+                </div>
               </div>
             </div>
             <div 
-              className='w-[50%] h-full flex flex-col items-center justify-center gap-[10px] hover:cursor-pointer'
+              className='w-[80%] sm:w-[50%] h-full flex flex-col items-center justify-center gap-[10px] hover:cursor-pointer max-sm:pt-5'
               onMouseEnter={() => setSelectService('Other Service')}
               onMouseLeave={() => setSelectService('')}  
             >
