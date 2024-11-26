@@ -1,12 +1,6 @@
 import React from "react";
 import Star from "./Star";
-
-//import for test popup
-import QuickPopupAdmin from "../quickpopup/QuickPopupAdmin";
-import QuickPopupHelper from "../quickpopup/QuickPopupHelper";
-import QuickPopupCustomer from "../quickpopup/QuickPopupCustomer";
-import QuickPopupFeedback from "../quickpopup/QuickPopupFeedback";
-import QuickPopupReturn from "../quickpopup/QuickPopupReturn";
+import Link from "next/link";
 
 type EmployeeRowProps = {
   id: string;
@@ -54,34 +48,30 @@ const EmployeeRow: React.FC<EmployeeRowProps> = ({
     );
   };
 
-  //state for test popup
-  const [toggle, setToggle] = React.useState(false);
-  const handleToggle = () => setToggle(!toggle)
-
   return (
     <div className="flex flex-wrap gap-3 w-full border-b border-gray-200 bg-white hover:bg-[#f4f7ff] h-auto items-start md:items-center p-2.5 cursor-pointer">
-      <div className="w-full md:w-[8%] flex items-center justify-start md:py-6 mb-2 md:mb-0">
+      <div className="w-full md:w-[98px] flex items-center justify-start md:py-6 mb-2 md:mb-0">
         <div className="text-sm text-[#202224] font-semibold">
           <span className="md:hidden font-bold">ID: </span>
           {id}
         </div>
       </div>
 
-      <div className="w-full md:w-[12%] flex items-center justify-start md:py-6 mb-2 md:mb-0">
+      <div className="w-full md:w-[140px] flex items-center justify-start md:py-6 mb-2 md:mb-0">
         <div className="text-sm text-[#202224] font-semibold">
           <span className="md:hidden font-bold">NAME: </span>
           {name}
         </div>
       </div>
 
-      <div className="w-full md:w-[20%] flex items-center justify-start md:py-6 mb-2 md:mb-0">
+      <div className="w-full md:w-[240px] flex items-center justify-start md:py-6 mb-2 md:mb-0">
         <div className="text-sm text-[#202224] font-semibold">
           <span className="md:hidden font-bold">ADDRESS: </span>
           {address}
         </div>
       </div>
 
-      <div className="w-full md:w-[15%] flex items-center justify-start md:pl-0 mb-2 md:mb-0">
+      <div className="w-full md:w-[182px] flex items-center justify-start md:pl-0 mb-2 md:mb-0">
         <div className="text-xs text-[#1D2C4C80] font-semibold">
           <span className="md:hidden font-bold text-[#202224]">EVALUATE:</span>
           {renderRating()}
@@ -89,30 +79,28 @@ const EmployeeRow: React.FC<EmployeeRowProps> = ({
         </div>
       </div>
 
-      <div className="w-full md:w-[11%] flex items-center justify-start md:py-6 mb-2 md:mb-0">
+      <div className="w-full md:w-[130px] flex items-center justify-start md:py-6 mb-2 md:mb-0">
         <div className="text-sm text-[#202224cc]">
           <span className="md:hidden font-bold">PHONE: </span>
           {phone}
         </div>
       </div>
 
-      <div className="w-full md:w-[20%] flex items-center justify-start md:py-6 mb-2 md:mb-0">
+      <div className="w-full md:w-[220px] flex items-center justify-start md:py-6 mb-2 md:mb-0">
         <div className="text-sm text-[#202224cc] truncate">
           <span className="md:hidden font-bold">EMAIL: </span>
           {email}
         </div>
       </div>
 
-      <div className="w-full  md:w-[8%] flex items-center md:py-6">
-        <button className="ml-auto px-4 py-1.5 bg-[#6896d1] text-[#12153a] bg-opacity-20 text-xs rounded-[4.5px] font-semibold hover:bg-opacity-50" onClick={handleToggle}>
+      <div className="w-full md:w-[120px] flex items-center md:py-6">
+        <Link
+          href={`/dashboard/employee/${id}`}
+          className="ml-auto px-4 py-1.5 bg-[#6896d1] text-[#12153a] bg-opacity-20 text-xs rounded-[4.5px] font-semibold hover:bg-opacity-50"
+        >
           More Info
-        </button>
+        </Link>
       </div>
-      {/* {toggle && <QuickPopupAdmin toggle={handleToggle}/>} */}
-      {/* {toggle && <QuickPopupHelper toggle={handleToggle}/>} */}
-      {/* {toggle && <QuickPopupCustomer toggle={handleToggle}/>} */}
-      {/* {toggle && <QuickPopupFeedback toggle={handleToggle}/>} */}
-      {toggle && <QuickPopupReturn toggle={handleToggle}/>}
     </div>
   );
 };
