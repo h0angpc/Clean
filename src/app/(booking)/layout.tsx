@@ -5,11 +5,14 @@ const BookingLayout = (props : {
 }) => {
   return (
     <div className='flex flex-col'>
-      <div style={{ position: 'sticky', top: 0}}>
+      <div className='max-sm:hidden sticky top-0'>
         <ProgressBar/>
       </div>
       <div>
         {props.children}
+      </div>
+      <div className='sm:hidden fixed bottom-0 w-full'>
+        <ProgressBar/>
       </div>
     </div>
   )

@@ -5,7 +5,7 @@ import React from 'react'
 
 const Booking5Right = () => {
   return (
-    <div className="w-full md:w-1/3 p-4 bg-gray-100 min-h-screen">
+    <div className="w-full min-w-[365px] md:w-1/3 p-4 bg-gray-100 min-h-screen">
       <p className="text-4xl mx-auto font-Averta-Bold mb-4 mt-[50px]">Billing</p>
       <div className="my-4 border-gray-300 rounded-lg">
         <div className="p-6 bg-white rounded-lg">

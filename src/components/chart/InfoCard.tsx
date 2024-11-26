@@ -17,7 +17,7 @@ export const InfoCard:React.FC<InfoCardProps> = ({titleInfo, dataInfo, urliconIn
     const urlTrend = trend === "up" ? "/images/Chart/up.svg" : "/images/Chart/down.svg";
     const textColorTrend = trend === "up" ? "text-[#00B69B]" : "text-[#B60000]";
   return (
-    <div className='flex flex-col justify-center items-center w-[24%] bg-white py-[25px] px-[25px] gap-[32px] rounded-xl'>
+    <div className='sm:flex sm:flex-col justify-center items-center w-[24%] max-sm:w-full bg-white py-[25px] px-[25px] gap-[32px] rounded-xl'>
         <div className='inline-flex w-full justify-between'>
             <div className='text-left'>
                 <div className='opacity-70 text-[#202224] text-base font-gilroy-regular text-[17px] font-bold mb-[10px]'>{titleInfo}</div>
