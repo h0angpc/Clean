@@ -1,4 +1,4 @@
-[
+export const contractData = [
     {
       "id": "d1e2f3g4-h5i6-j7k8-l9m0-n1o2p3q4r5s6",
       "description": "This contract outlines the terms and conditions of cleaning services, including responsibilities, payment terms, and service limitations.",

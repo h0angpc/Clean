@@ -1,4 +1,4 @@
-[
+export const roomPricingData = [
     {
       "id": "p1a2b3c4-d5e6-f7g8-h9i0-j1k2l3m4n5o6",
       "serviceTypeId": "a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6",

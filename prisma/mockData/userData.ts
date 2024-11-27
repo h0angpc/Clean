@@ -1,4 +1,4 @@
-[
+export const userData = [
     {
       "id": "0dfb34e6-23c3-4ea2-8d0c-2c5d6e0bb5a1",
       "gender": "Male",

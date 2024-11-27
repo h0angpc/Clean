@@ -1,4 +1,4 @@
-[
+export const bookingData = [
     {
       "id": "b1c2d3e4-f5g6-h7i8-j9k0-l1m2n3o4p5q6",
       "customerId": "ea7d315e-27e5-42c9-97ab-4e6f6a9e6013",

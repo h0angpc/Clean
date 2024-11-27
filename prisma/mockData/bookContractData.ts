@@ -1,4 +1,4 @@
-[
+export const bookContractData = [
     {
       "id": "a7b8c9d0-e1f2-g3h4-i5j6-k7l8m9n0o1p2",
       "bookingId": "b1c2d3e4-f5g6-h7i8-j9k0-l1m2n3o4p5q6",

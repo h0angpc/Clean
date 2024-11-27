@@ -1,4 +1,4 @@
-[
+export const blacklistedUserData = [
     {
       "id": "g1h2i3j4-k5l6-m7n8-o9p0-q1r2s3t4u5v6",
       "userId": "0dfb34e6-23c3-4ea2-8d0c-2c5d6e0bb5a1",

@@ -1,4 +1,4 @@
-[
+export const refundData = [
     {
       "id": "d4e5f6g7-h8i9-j0k1-l2m3-n4o5p6q7r8s9",
       "booking_id": "b1c2d3e4-f5g6-h7i8-j9k0-l1m2n3o4p5q6",
@@ -6,7 +6,7 @@
       "reason": "The helper was late and did not complete the service as expected.",
       "status": "pending",
       "created_at": "2024-11-20T12:00:00Z",
-      "resolved_at": null
+      "resolved_at": "2024-11-20T14:00:00Z"
     },
     {
       "id": "e5f6g7h8-i9j0-k1l2-m3n4-o5p6q7r8s9t0",

@@ -1,4 +1,4 @@
-[
+export const helperAvailabilityData = [
     {
       "id": "e1a5f2c3-89ab-456d-9f08-abc123456789",
       "helperId": "0dfb34e6-23c3-4ea2-8d0c-2c5d6e0bb5a1",
