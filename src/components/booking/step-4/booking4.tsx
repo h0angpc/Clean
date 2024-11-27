@@ -40,16 +40,20 @@ const Booking4 = () => {
         </div>
 
         <div className="mt-[50px]">
-          <div className="justify-center flex md:flex-row">
-            <InputWithLabel
-              labelText="ADDRESS" inputType="text"
-              inputPlaceholder="Enter a Location" inputId="location"
-              inputWidth="40vw" />
-            <div className="md:ml-2 mt-2 md:mt-0">
+          <div className="flex justify-center">
+            <div className="flex flex-col md:flex-row">
               <InputWithLabel
-                labelText="APT.NUMBER" inputType="text"
-                inputPlaceholder="" inputId="aptNum"
-                inputWidth="13.125vw" />
+                className="min-w-[250px]"
+                labelText="ADDRESS" inputType="text"
+                inputPlaceholder="Enter a Location" inputId="location"
+                inputWidth="40vw" />
+              <div className="md:ml-2 mt-2 md:mt-0">
+                <InputWithLabel
+                  className="min-w-[100px]"
+                  labelText="APT.NUMBER" inputType="text"
+                  inputPlaceholder="" inputId="aptNum"
+                  inputWidth="13.125vw" />
+              </div>
             </div>
           </div>
 
@@ -57,12 +61,12 @@ const Booking4 = () => {
             <p className="text-[14px] text-center text-[#88939D] font-Averta-Semibold leading-[25px]">
               HOW DO WE GET IN?
             </p>
-            <div className="flex md:flex-row mt-[14px]">
+            <div className="mt-[14px]">
               <ToggleButtonGroup
                 buttons={getInOpitonsButtons}
-                classNameCommon="bg-white h-[55px] md:w-[16.67vw] rounded-[10px]
-              font-Averta-Semibold text-lg leading-[23px] tracking-tight
-              text-[#4f6071] border-2 border-[#d3d8dd] hover:bg-accent"
+                classNameCommon="bg-white h-[55px] md:w-[16.67vw] md:min-w-fit rounded-[10px]
+                font-Averta-Semibold text-lg leading-[23px] tracking-tight
+                text-[#4f6071] border-2 border-[#d3d8dd] hover:bg-accent"
               />
             </div>
           </div>
@@ -72,14 +76,15 @@ const Booking4 = () => {
               WANT TO GIVE ANY SPECIFIC SPOTS A DEEP CLEAN?
             </p>
             <div className="flex md:flex-row mt-[14px]">
-              <div className="space-x-2">
+              <div className="flex flex-wrap gap-3 justify-center">
                 {deepCleanOptionsButtons.map((button) => (
                   <ToggleButton
                     contentText={button.contentText} price={button.price}
                     imageSrc={button.imageSrc} imageSrc2={button.imageSrc2}
-                    className="bg-white md:h-[12.5vw] md:w-[16.67vw] rounded-[10px]
-                  font-Averta-Semibold text-base leading-[23px] tracking-tight
-                text-[#4f6071] border-2 border-[#d3d8dd] hover:bg-accent"
+                    className="bg-white md:h-[15vw] max-h-[180px] min-h-[135px] md:w-[17vw] 
+                    rounded-[10px] max-w-[240px] min-w-[159px]
+                    font-Averta-Semibold text-base leading-[23px] tracking-tight
+                  text-[#4f6071] border-2 border-[#d3d8dd] hover:bg-accent"
                   />
                 ))}
               </div>
@@ -94,7 +99,7 @@ const Booking4 = () => {
               <div className="space-x-2">
                 <ToggleButtonGroup
                   buttons={yesNoOptionsButtons}
-                  classNameCommon="bg-white h-[55px] md:w-[16.67vw] rounded-[10px]
+                  classNameCommon="bg-white h-[55px] md:w-[16.67vw] min-w-[100px] rounded-[10px]
                 font-Averta-Semibold text-lg leading-[23px] tracking-tight
                 text-[#4f6071] border-2 border-[#d3d8dd] hover:bg-accent"/>
               </div>
@@ -102,14 +107,25 @@ const Booking4 = () => {
           </div>
 
           <div className="grid justify-center items-center mt-[45px]">
-            <Input type="text" placeholder="What types of pets? Some of our cleaners have pet allergies."
-              className="md:w-[56.25vw] h-[55px] text-base font-Averta-Regular" />
+            {/* <Input type="text" placeholder="What types of pets? Some of our cleaners have pet allergies."
+              className="w-full md:w-[56.25vw] min-w-[325px] h-[55px] text-base font-Averta-Regular" /> */}
+            <MultiLineInput
+              hasLabel={false}
+              inputPlaceholder="What types of pets? Some of our cleaners have pet allergies."
+              inputId="notesPet"
+              inputHeight="h-[55px]"
+              inputWidth="w-full md:w-[56.25vw] min-w-[325px]"
+            />
             <div className="mt-[30px]">
               <MultiLineInput
+                hasLabel={true}
                 labelText="ADDITIONAL NOTES"
                 inputPlaceholder="I would like Sophie to be my cleaner. Please change my sheets 
-            (fresh bedding is on the bed) and empty the dishwasher."
-                inputId="notes" inputHeight="h-[80px]" inputWidth="md:w-[56.25vw]" />
+                (fresh bedding is on the bed) and empty the dishwasher."
+                inputId="notes"
+                inputHeight="h-[100px]"
+                inputWidth="w-full md:w-[56.25vw] min-w-[325px]"
+              />
             </div>
 
             <div className="flex justify-center items-center mt-[55px] pb-[50px]">

@@ -1,5 +1,7 @@
+'use client'
 import React from 'react'
 import Image from 'next/image'
+import { Button } from '../ui/button';
 
 interface ServiceDetails {
   step: number;
@@ -27,14 +29,13 @@ const serviceDetails: ServiceDetails = {
 
 const ProgressBar = () => {
   return (
-    <div className='w-full h-[75px] flex flex-row shadow-xl bg-white'>
-      <div className='h-full w-[5.2%]'>
-        <div className='h-full w-full flex justify-center items-center'>
-          <Image src='/images/ProgressBar/Group.svg' alt='exitButton' width={20} height={20}/>
+    <div className='w-full h-[75px] flex flex-row sm:shadow-xl bg-white'>
+      <div className='max-sm:hidden h-full w-[5.2%]'>
+        <div className='h-full w-full flex justify-center items-center hover:cursor-pointer' onClick={() => console.log("deptrai")}>
+            <Image src='/images/ProgressBar/Group.svg' alt='exitButton' width={20} height={20}/>
         </div>
       </div>
-      <div className='relative h-full w-[90%] flex flex-row'>
-        {/* <div className='h-full w-[90%] flex flex-row'> */}
+      <div className='max-sm:hidden relative h-full w-[90%] flex flex-row'>
           <div className={`h-full ${serviceDetails.serviceType === 'Home Cleaning' ? 'w-1/6' : 'w-1/5'}`}>
             <div className='h-full w-full flex justify-center items-center'>
               <div className='flex flex-row gap-2'>
@@ -147,7 +148,6 @@ const ProgressBar = () => {
               </div>
             </div>
           </div>
-        {/* </div> */}
         {(serviceDetails.step === 1 && serviceDetails.serviceType === 'Home Cleaning') && (
           <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[0.5]`}></div>
         )}
@@ -170,7 +170,7 @@ const ProgressBar = () => {
           <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-full`}></div>
         )}
       </div>
-      <div className='h-full w-[12%] bg-[#2B3641]'>
+      <div className='h-full w-[12%] max-sm:w-[40%] bg-[#2B3641]'>
         <div className='h-full w-full flex justify-center items-center'>
           <div className='flex flex-col'>
             <div className='flex flex-row m-auto'>
@@ -182,6 +182,9 @@ const ProgressBar = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="sm:hidden w-[60%]">
+          <Button className="h-full rounded-none w-full bg-[#1A78F2] text-lg text-white font-Averta-Semibold">Next</Button>
       </div>
     </div>
   )
