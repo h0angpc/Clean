@@ -1,11 +1,16 @@
+"use client"
 import React from 'react'
+import IssueTable from '@/components/issue/IssueTable'
 
-const IssuePage = () => {
+export default function IssuePage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
+
   return (
     <div>
-      IssuePage
+      <IssueTable />
     </div>
   )
 }
-
-export default IssuePage
