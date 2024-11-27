@@ -64,19 +64,19 @@ export default function IssueTable() {
   const applyFilter = (data: any) => {
     switch (filter) {
       case "Newest":
-                return [...data].sort((a, b) =>{
-                    const dateA = new Date(a.createAt);
-                    const dateB = new Date(b.createAt);
-                    return dateB.getTime() - dateA.getTime();
-                } );
-            case "Oldest":
-                return [...data].sort((a, b) =>{
-                    const dateA = new Date(a.createAt);
-                    const dateB = new Date(b.createAt);
-                    return dateA.getTime() - dateB.getTime();
-                } );
-            default:
-                return data;
+        return [...data].sort((a, b) => {
+          const dateA = new Date(a.createAt);
+          const dateB = new Date(b.createAt);
+          return dateB.getTime() - dateA.getTime();
+        });
+      case "Oldest":
+        return [...data].sort((a, b) => {
+          const dateA = new Date(a.createAt);
+          const dateB = new Date(b.createAt);
+          return dateA.getTime() - dateB.getTime();
+        });
+      default:
+        return data;
     }
   };
 
@@ -107,55 +107,51 @@ export default function IssueTable() {
 
   return (
     <>
-    <div className='flex flex-row justify-between items-center'>
+      <div className='flex flex-wrap justify-between gap-3  items-center'>
 
-      <SearchBarAndFilter
-        setSearchTerm={setSearchTerm}
-        setSearchBy={setSearchBy}
-        onFilterChange={setFilter}
-      />
-      <div className='flex flex-row gap-2'>
-      <button 
+        <SearchBarAndFilter
+          setSearchTerm={setSearchTerm}
+          setSearchBy={setSearchBy}
+          onFilterChange={setFilter}
+        />
+        <div className='flex flex-row gap-2'>
+          <button
             onClick={() => alert('Open popup Create Issue')}
             className="flex flex-row gap-2 items-center justify-center px-8 h-[38px] bg-[#1b78f2] hover:bg-opacity-90 rounded-[8px] text-xs font-Averta-Bold tracking-normal leading-loose whitespace-nowrap text-center text-white">
             <Image src="/images/icons/outline_plus.svg" alt="" width={18} height={18} />
-          Create Issue
-        </button>
-      <AlertDialog>
-                                <AlertDialogTrigger>
-                                <div className="flex flex-row gap-2 items-center justify-center px-10 h-[38px] bg-[#E11B1B] hover:bg-opacity-80 rounded-[8px] text-xs font-Averta-Bold tracking-normal leading-loose whitespace-nowrap text-center text-white">
-        <Image src="/images/Dashboard/Feedback/Trash.svg" alt="" width={18} height={18} />
-          Delete
+            Create Issue
+          </button>
+          <AlertDialog>
+            <AlertDialogTrigger>
+              <div className="flex flex-row gap-2 items-center justify-center px-10 h-[38px] bg-[#E11B1B] hover:bg-opacity-80 rounded-[8px] text-xs font-Averta-Bold tracking-normal leading-loose whitespace-nowrap text-center text-white">
+                <Image src="/images/Dashboard/Feedback/Trash.svg" alt="" width={18} height={18} />
+                Delete
+              </div>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This action will delete the refund request.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction asChild>
+                  <button className="px-4 py-2 text-sm text-white bg-red-600 rounded-lg hover:bg-red-700">
+                    Delete
+                  </button>
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
-                                </AlertDialogTrigger>
-                                <AlertDialogContent>
-                                    <AlertDialogHeader>
-                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                        <AlertDialogDescription>
-                                            This action cannot be undone. This action will delete the refund request.
-                                        </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                        <AlertDialogAction asChild>
-                                            <button className="px-4 py-2 text-sm text-white bg-red-600 rounded-lg hover:bg-red-700">
-                                                Delete
-                                            </button>
-                                        </AlertDialogAction>
-                                    </AlertDialogFooter>
-                                </AlertDialogContent>
-                            </AlertDialog>
       </div>
-    </div>
 
-      <div className="flex flex-col justify-center mt-3.5 w-full bg-white rounded max-md:px-5 max-md:max-w-full">
-        <div className="flex flex-col w-full rounded max-md:max-w-full">
-          <div className="flex overflow-hidden flex-col justify-center w-full rounded bg-neutral-700 max-md:max-w-full">
-            {currentData.map((feedback: Feedback, index: any) => (
-              <IssueRow key={feedback.id} {...feedback} />
-            ))}
-          </div>
-        </div>
+      <div className="flex overflow-hidden flex-col justify-center mt-3.5 w-full max-md:max-w-full">
+        {currentData.map((feedback: Feedback, index: any) => (
+          <IssueRow key={feedback.id} {...feedback} />
+        ))}
       </div>
 
       <Pagination

@@ -388,7 +388,7 @@ const JobHistoryTable = () => {
         ))}
       </div>
 
-      <div className="flex overflow-hidden flex-col justify-center w-full max-md:max-w-full">
+      <div className="flex overflow-hidden flex-col  justify-center w-full max-md:max-w-full">
         {currentData.map((order: JobHistory, index: any) => (
           <JobHistoryRow key={order.id} {...order} />
         ))}
