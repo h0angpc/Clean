@@ -1,11 +1,14 @@
+"use client"
 import React from 'react'
-
-const RefundPage = () => {
-  return (
-    <div>
-      RefundPage
-    </div>
-  )
+import RefundTable from '@/components/refund/RefundTable'
+export default function FeedbackPage({
+    searchParams,
+}: {
+    searchParams: { [key: string]: string | string[] | undefined }
+}) {
+    return (
+        <div>
+            <RefundTable />
+        </div>
+    )
 }
-
-export default RefundPage
