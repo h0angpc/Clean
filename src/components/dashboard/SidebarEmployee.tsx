@@ -41,14 +41,14 @@ const SidebarEmployee: React.FC = () => {
     { 
       icon: "/images/Dashboard/Sidebar/InActive/Feedback.svg", 
       activeIcon: "/images/Dashboard/Sidebar/Active/Feedback.svg", 
-      label: "Feedback", 
-      href: "/dashboard/feedback" 
+      label: "Issue", 
+      href: "/dashboard/issue" 
     },
     { 
       icon: "/images/Dashboard/Sidebar/InActive/OrderHistory.svg", 
       activeIcon: "/images/Dashboard/Sidebar/Active/OrderHistory.svg", 
-      label: "Order History", 
-      href: "/dashboard/order-history" 
+      label: "Job History", 
+      href: "/dashboard/job-history" 
     },
     { 
       icon: "/images/Dashboard/Sidebar/InActive/Calendar.svg", 

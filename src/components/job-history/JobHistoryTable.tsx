@@ -16,10 +16,10 @@ type JobHistory = {
 const columns = [
   { header: "CUSTOMER", className: "w-[200px] hidden md:table-cell" },
   { header: "ADDRESS", className: "w-[230px] hidden md:table-cell" },
-  { header: "TIME", className: "w-[190px] hidden md:table-cell" },
-  { header: "RATING", className: "w-[100px] hidden md:table-cell mr-10" },
+  { header: "TIME", className: "w-[190px] pl-10 hidden md:table-cell" },
+  { header: "RATING", className: "w-[100px] pl-2 hidden md:table-cell mr-10" },
   { header: "PRICE", className: "w-[100px] hidden md:table-cell " },
-  { header: "STATUS", className: "w-[140px] hidden md:table-cell" },
+  { header: "STATUS", className: "w-[140px] pl-3 hidden md:table-cell" },
   { header: "", className: "w-[130px] hidden md:table-cell" },
 ];
 const ordersData: JobHistory[] = [
@@ -367,7 +367,7 @@ const JobHistoryTable = () => {
     <>
       <SearchBar setSearchTerm={handleSearch} setSearchBy={setSearchBy} />
       {/* title column */}
-      <div className="flex gap-3 w-full bg-[#f5f5f5] h-[48px] items-center mt-4 p-2.5">
+      <div className="flex flex-wrap gap-3 w-full bg-[#f5f5f5] h-[48px] items-center mt-4 p-2.5">
         {columns.map((col, index) => (
           <div
             key={index}
@@ -377,7 +377,9 @@ const JobHistoryTable = () => {
           </div>
         ))}
       </div>
-      <div className="flex overflow-hidden flex-col justify-center w-full max-md:max-w-full">
+
+      {/* jobHistory table */}
+      <div className="mt-4 flex overflow-hidden flex-col justify-center w-full max-md:max-w-full">
         {currentData.map((order: JobHistory, index: any) => (
           <JobHistoryRow key={order.id} {...order} />
         ))}

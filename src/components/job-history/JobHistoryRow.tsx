@@ -1,5 +1,7 @@
 import React from "react";
 import Star from "../employee/Star";
+import Link from "next/link";
+
 type JobHistoryRowProps = {
   id: string;
   customerName: string;
@@ -80,7 +82,7 @@ const JobHistoryRow: React.FC<JobHistoryRowProps> = ({
       </div>
       <div className="w-full md:w-[190px] flex items-center justify-start md:pl-0 mb-2 md:mb-0">
         <div className="text-xs text-[#1D2C4C80] font-semibold">
-          <span className="md:hidden font-bold text-[#202224]">TIME:</span>
+          <span className="md:hidden text-sm font-bold text-[#202224]">TIME:</span>
           <div className="flex flex-col  md:items-center">
             <span className="text-[#677582]">
               {startTimeString}{" "}
@@ -90,9 +92,9 @@ const JobHistoryRow: React.FC<JobHistoryRowProps> = ({
           </div>
         </div>
       </div>
-      <div className="w-full md:w-[100px] flex items-center justify-center md:pl-0 mb-2 md:mb-0 mr-10">
-        <div className="text-xs text-[#1D2C4C80] font-semibold text-center">
-          <span className="md:hidden font-bold text-[#202224]">RATING:</span>
+      <div className="w-full md:w-[100px] flex items-center justify-start md:pl-0 mb-2 md:mb-0 mr-10">
+        <div className="text-xs text-[#1D2C4C80] font-semibold">
+          <span className="md:hidden text-sm font-bold text-[#202224]">RATING:</span>
           {renderRating()}
           <div className="mt-1">
             {helperRating !== null ? `${helperRating} out of 5 stars` : "N/A"}
@@ -106,10 +108,10 @@ const JobHistoryRow: React.FC<JobHistoryRowProps> = ({
         </div>
       </div>
       <div className="w-full md:w-[140px] flex items-center justify-start md:py-6 mb-2 md:mb-0">
-        <div className="text-sm text-[#202224cc]">
-          <span className="md:hidden font-bold">STATUS: </span>
+        <div className="text-sm flex flex-row text-[#202224cc]">
+          <span className="md:hidden my-auto font-bold">STATUS: </span>
           <div
-            className={`flex relative gap-4 justify-between items-start px-4 py-1.5 min-h-[27px] ${statusColor}  bg-opacity-20 rounded-md`}
+            className={`ml-2 flex relative gap-4 justify-between items-start px-4 py-1.5 min-h-[27px] ${statusColor}  bg-opacity-20 rounded-md`}
           >
             <div className="z-0 flex-1 shrink my-auto basis-0 font-Averta-Bold text-[13px]">
               {status}
@@ -117,10 +119,13 @@ const JobHistoryRow: React.FC<JobHistoryRowProps> = ({
           </div>
         </div>
       </div>
-      <div className="w-full  flex-1 flex items-center md:py-6">
-        <button className="md:w-[100px] ml-auto px-4 py-1.5 bg-[#6896d1] text-[#12153a] bg-opacity-20 text-xs rounded-[4.5px] font-semibold hover:bg-opacity-50">
+      <div className="w-full md:w-[120px] flex items-center md:py-6">
+        <Link
+          href={`#`}
+          className="ml-auto px-4 py-1.5 bg-[#6896d1] text-[#12153a] bg-opacity-20 text-xs rounded-[4.5px] font-semibold hover:bg-opacity-50"
+        >
           More Info
-        </button>
+        </Link>
       </div>
     </div>
   );
