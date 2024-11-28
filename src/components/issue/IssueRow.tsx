@@ -30,21 +30,22 @@ const IssueRow: React.FC<IssueRowProps> = ({ name, sentiment, message, createAt 
 
 
   return (
-    <div onClick={() => router.push(`issue/${name}`)}
-      className={`flex flex-wrap w-full border-b border-gray-200 max-md:max-w-full items-start lg:items-center h-auto py-4 px-2.5 cursor-pointer bg-white hover:bg-[#f4f7ff]`}>
+    <div 
+      // onClick={() => router.push(`issue-history/${name}`)}
+      className={`flex flex-wrap w-full border-b border-gray-200 max-md:max-w-full items-start lg:items-center h-auto lg:py-4 px-2.5 cursor-pointer bg-white hover:bg-[#f4f7ff]`}>
       <div className={`flex flex-col lg:flex-1 grow shrink justify-center w-full lg:w-[66px]`}>
         <div className="flex overflow-hidden items-center ml-4 pl-px w-full min-h-[48px]">
-          <Checkbox color='gray' icon={null} ripple={false} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} crossOrigin={undefined} />
+          <Checkbox onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} crossOrigin={undefined} />
         </div>
       </div>
       <div className={`flex flex-col lg:flex-2 grow shrink justify-center pl-2.5 text-sm font-bold text-neutral-800 w-full lg:w-[70px]`}>
-        <div className="overflow-hidden self-stretch px-3 py-4 w-full min-h-[48px] font-Averta-Bold text-[15px]">{name}</div>
+        <div className="overflow-hidden self-stretch px-3 lg:py-4 py-2 w-full  font-Averta-Bold text-[15px]">{name}</div>
       </div>
-      <div className={`flex flex-col lg:flex-5 grow shrink justify-center pl-2.5 text-sm font-semibold min-w-[240px] text-neutral-800 lg:w-[400px] w-full max-md:max-w-full`}>
-        <div className="overflow-hidden self-stretch px-3 py-4 w-full min-h-[48px] max-md:max-w-full font-Averta-Bold text-[15px]">{message}</div>
+      <div className={`flex flex-col lg:flex-5 grow shrink justify-center pl-2.5 text-sm font-semibold min-w-[240px] text-neutral-800 lg:w-[450px] w-full max-md:max-w-full`}>
+        <div className="overflow-hidden self-stretch px-3 lg:py-4 py-2 w-full max-md:max-w-full font-Averta-Bold text-[15px]">{message}</div>
       </div>
-      <div className={`flex flex-col grow shrink justify-center pl-2.5 text-sm text-neutral-800 w-full lg:w-[136px]`}>
-        <div className="overflow-hidden self-stretch px-3 py-4 w-full min-h-[48px] font-Averta-SemiBold text-[14px]">{formatDate(createAt)}</div>
+      <div className={`flex flex-col grow shrink justify-center pl-2.5 text-sm text-neutral-800 w-full lg:w-[145px]`}>
+        <div className="overflow-hidden self-stretch px-3 lg:min-w-[152px] lg:py-4 pt-2 pb-3 w-full font-Averta-SemiBold text-[14px]">{formatDate(createAt)}</div>
       </div>
     </div>
   );

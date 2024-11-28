@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Pagination from '../employee/Pagination';
 import SearchBarAndFilter from './SearchBarAndFilter';
-import IssueRow from './IssueRow';
+import IssueRow from '../issue/IssueRow';
 import Image from 'next/image';
 import {
   AlertDialog,
@@ -53,7 +53,7 @@ const issueData: Issue[] = [
   { id: 27, name: "Jullu Jalal", sentiment: "Negative" as "Negative", message: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
 ];
 
-export default function IssueTable() {
+export default function IssueHistoryTable() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");

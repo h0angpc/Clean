@@ -42,7 +42,7 @@ const SidebarEmployee: React.FC = () => {
       icon: "/images/Dashboard/Sidebar/InActive/Feedback.svg", 
       activeIcon: "/images/Dashboard/Sidebar/Active/Feedback.svg", 
       label: "Issue", 
-      href: "/dashboard/issue" 
+      href: "/dashboard/issue-history" 
     },
     { 
       icon: "/images/Dashboard/Sidebar/InActive/OrderHistory.svg", 
@@ -55,6 +55,12 @@ const SidebarEmployee: React.FC = () => {
       activeIcon: "/images/Dashboard/Sidebar/Active/Calendar.svg", 
       label: "Calendar", 
       href: "/dashboard/calendar" 
+    },
+    { 
+      icon: "/images/Dashboard/Sidebar/InActive/LeaveRequest.svg", 
+      activeIcon: "/images/Dashboard/Sidebar/Active/LeaveRequest.svg", 
+      label: "Leave Requests", 
+      href: "/dashboard/leave-request" 
     },
   ];
 
