@@ -1,51 +1,38 @@
 export const bookingData = [
     {
-      "id": "b1c2d3e4-f5g6-h7i8-j9k0-l1m2n3o4p5q6",
-      "customerId": "ea7d315e-27e5-42c9-97ab-4e6f6a9e6013",
-      "helperId": "0dfb34e6-23c3-4ea2-8d0c-2c5d6e0bb5a1",
-      "serviceTypeId": "f1a2b3c4-d5e6-f7g8-h9i0-j1k2l3m4n5o6",
+      "customerId": "ee6efe69-71ca-4e3d-bc07-ba6e5c3e061e",
+      "helperId": "0066dc01-cdd4-4243-9f4e-778bcfa4458f",
+      "serviceTypeId": "d642e7c9-0b6d-4880-8c02-86c4d761d3c0",
       "location": "123 Main St, Springfield",
       "scheduledStartTime": "2024-11-25T10:00:00Z",
       "scheduledEndTime": "2024-11-25T12:00:00Z",
-      "status": "confirmed",
       "cancellationReason": "",
       "totalPrice": 200.00,
       "paymentStatus": "paid",
-      "paymentMethod": "credit_card",
-      "createdAt": "2024-11-20T12:00:00Z",
-      "updatedAt": "2024-11-20T12:00:00Z"
+      "paymentMethod": "credit_card"
     },
     {
-      "id": "c2d3e4f5-g6h7-i8j9-k0l1-m2n3o4p5q6r7",
-      "customerId": "2a4a19b5-d176-41f7-bfc1-36c86d1e8e36",
-      "helperId": "47e0f50a-871c-4937-b593-d4c29d8a6cb4",
-      "serviceTypeId": "g2b3c4d5-e6f7-g8h9-i0j1-k2l3m4n5o6p7",
+      "customerId": "ee6efe69-71ca-4e3d-bc07-ba6e5c3e061e",
+      "helperId": "0066dc01-cdd4-4243-9f4e-778bcfa4458f",
+      "serviceTypeId": "b15bf5ca-ed77-4e09-8fd2-4be22f9ad3b9",
       "location": "456 Oak Lane, Metropolis",
       "scheduledStartTime": "2024-11-26T14:00:00Z",
       "scheduledEndTime": "2024-11-26T16:30:00Z",
-      "status": "pending",
       "cancellationReason": "",
       "totalPrice": 150.00,
-      "paymentStatus": "pending",
-      "paymentMethod": "",
-      "createdAt": "2024-11-20T12:00:00Z",
-      "updatedAt": "2024-11-20T12:00:00Z"
+      "paymentMethod": ""
     },
     {
-      "id": "f5g6h7i8-j9k0-l1m2-n3o4-p5q6r7s8t9u0",
-      "customerId": "ea7d315e-27e5-42c9-97ab-4e6f6a9e6013",
-      "helperId": "47e0f50a-871c-4937-b593-d4c29d8a6cb4",
-      "serviceTypeId": "f1a2b3c4-d5e6-f7g8-h9i0-j11113m4n5o6",
+      "customerId": "ee6efe69-71ca-4e3d-bc07-ba6e5c3e061e",
+      "helperId": "0066dc01-cdd4-4243-9f4e-778bcfa4458f",
+      "serviceTypeId": "89fe2c70-0700-4df8-a461-854ac5658a4c",
       "location": "654 Elm Street, Central City",
       "scheduledStartTime": "2024-11-29T17:00:00Z",
       "scheduledEndTime": "2024-11-29T19:30:00Z",
-      "status": "confirmed",
       "cancellationReason": "",
       "totalPrice": 250.00,
       "paymentStatus": "paid",
-      "paymentMethod": "bank_transfer",
-      "createdAt": "2024-11-20T12:00:00Z",
-      "updatedAt": "2024-11-20T12:00:00Z"
+      "paymentMethod": "bank_transfer"
     }
   ]
   

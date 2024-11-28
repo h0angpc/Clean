@@ -1,21 +1,15 @@
 export const bookContractData = [
     {
-      "id": "a7b8c9d0-e1f2-g3h4-i5j6-k7l8m9n0o1p2",
-      "bookingId": "b1c2d3e4-f5g6-h7i8-j9k0-l1m2n3o4p5q6",
-      "content": "Customer requested extra cleaning supplies for bedrooms.",
-      "createdAt": "2024-11-20T12:00:00Z"
+      "bookingId": "4a961bfb-4ffd-45a7-9291-09471fb19473",
+      "content": "Customer requested extra cleaning supplies for bedrooms."
     },
     {
-      "id": "b8c9d0e1-f2g3-h4i5-j6k7-l8m9n0o1p2q3",
-      "bookingId": "c2d3e4f5-g6h7-i8j9-k0l1-m2n3o4p5q6r7",
-      "content": "Ensure thorough vacuuming of living room carpets.",
-      "createdAt": "2024-11-20T12:00:00Z"
+      "bookingId": "5d8b0ceb-d7dd-4a41-8d62-ffb9d8c7f143",
+      "content": "Ensure thorough vacuuming of living room carpets."
     },
     {
-      "id": "c9d0e1f2-g3h4-i5j6-k7l8-m9n0o1p2q3r4",
-      "bookingId": "f5g6h7i8-j9k0-l1m2-n3o4-p5q6r7s8t9u0",
-      "content": "Customer prefers eco-friendly products for kitchen cleaning.",
-      "createdAt": "2024-11-20T12:00:00Z"
+      "bookingId": "ae6853e4-a950-4639-848e-2b533c448733",
+      "content": "Customer prefers eco-friendly products for kitchen cleaning."
     }
   ]
   

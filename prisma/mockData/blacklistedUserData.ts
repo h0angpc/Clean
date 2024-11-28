@@ -1,29 +1,21 @@
 export const blacklistedUserData = [
     {
-      "id": "g1h2i3j4-k5l6-m7n8-o9p0-q1r2s3t4u5v6",
-      "userId": "0dfb34e6-23c3-4ea2-8d0c-2c5d6e0bb5a1",
+      "userId": "c11a7445-a49d-45be-9212-f546fb788acc",
       "reason": "Multiple violations of terms, including no-shows and late arrivals.",
-      "blacklistedAt": "2024-11-20T12:00:00Z",
-      "blacklistedBy": "ea7d315e-27e5-42c9-97ab-4e6f6a9e6013",
+      "blacklistedBy": "fa21339b-a224-466b-bf76-043a207ad160",
       "isPermanent": true,
       "expiryDate": null
     },
     {
-      "id": "h2i3j4k5-l6m7-n8o9-p0q1-r2s3t4u5v6w7",
-      "userId": "47e0f50a-871c-4937-b593-d4c29d8a6cb4",
+      "userId": "a84bbce5-68f1-44fc-a399-bad8fca300be",
       "reason": "Received multiple complaints about rude behavior from customers.",
-      "blacklistedAt": "2024-11-15T14:30:00Z",
-      "blacklistedBy": "2a4a19b5-d176-41f7-bfc1-36c86d1e8e36",
-      "isPermanent": false,
+      "blacklistedBy": "ee6efe69-71ca-4e3d-bc07-ba6e5c3e061e",
       "expiryDate": "2025-01-15T00:00:00Z"
     },
     {
-      "id": "i3j4k5l6-m7n8-o9p0-q1r2-s3t4u5v6w7x8",
-      "userId": "b7a3c762-66c3-4235-9cc1-7b3d8c8de0cd",
+      "userId": "0066dc01-cdd4-4243-9f4e-778bcfa4458f",
       "reason": "Repeated cancellations causing operational disruptions.",
-      "blacklistedAt": "2024-11-18T10:00:00Z",
-      "blacklistedBy": "ea7d315e-27e5-42c9-97ab-4e6f6a9e6013",
-      "isPermanent": false,
+      "blacklistedBy": "ee6efe69-71ca-4e3d-bc07-ba6e5c3e061e",
       "expiryDate": "2024-12-18T00:00:00Z"
     }
   ]

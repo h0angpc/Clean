@@ -1,39 +1,24 @@
 export const helperData = [
     {
-      "id": "0dfb34e6-23c3-4ea2-8d0c-2c5d6e0bb5a1",
+      "id": "0066dc01-cdd4-4243-9f4e-778bcfa4458f",
       "experienceDescription": "5 years of experience in carpentry and plumbing.",
       "resumeUploaded": "https://example.com/resume/john_doe.pdf",
-      "servicesOffered": ["service1-uuid", "service2-uuid"],
-      "salaryExpectation": 25.50,
-      "averageRating": 4.7,
-      "completedJobs": 120,
-      "cancelledJobs": 3,
-      "createdAt": "2024-11-20T12:00:00Z",
-      "updatedAt": "2024-11-20T12:00:00Z"
+      "servicesOffered": ["76a0e76e-43e1-4857-b224-14ffb8e269c0", "89fe2c70-0700-4df8-a461-854ac5658a4c"],
+      "salaryExpectation": 25.50
     },
     {
-      "id": "47e0f50a-871c-4937-b593-d4c29d8a6cb4",
+      "id": "a84bbce5-68f1-44fc-a399-bad8fca300be",
       "experienceDescription": "10 years of experience in house cleaning and organizing.",
       "resumeUploaded": "https://example.com/resume/jane_smith.pdf",
-      "servicesOffered": ["service3-uuid", "service4-uuid"],
-      "salaryExpectation": 20.00,
-      "averageRating": 4.9,
-      "completedJobs": 200,
-      "cancelledJobs": 2,
-      "createdAt": "2024-11-20T12:00:00Z",
-      "updatedAt": "2024-11-20T12:00:00Z"
+      "servicesOffered": ["d998fd93-627b-4eb1-ade6-c664eaca188b", "fbe89b3b-039c-49b8-bfa1-2e9f5cfe4f90"],
+      "salaryExpectation": 20.00
     },
     {
-      "id": "b7a3c762-66c3-4235-9cc1-7b3d8c8de0cd",
+      "id": "c11a7445-a49d-45be-9212-f546fb788acc",
       "experienceDescription": "2 years of experience in gardening and landscaping.",
       "resumeUploaded": "https://example.com/resume/michael_brown.pdf",
-      "servicesOffered": ["service5-uuid", "service6-uuid"],
-      "salaryExpectation": 18.75,
-      "averageRating": 4.2,
-      "completedJobs": 50,
-      "cancelledJobs": 5,
-      "createdAt": "2024-11-20T12:00:00Z",
-      "updatedAt": "2024-11-20T12:00:00Z"
+      "servicesOffered": ["b15bf5ca-ed77-4e09-8fd2-4be22f9ad3b9"],
+      "salaryExpectation": 18.75
     }
   ]
   
