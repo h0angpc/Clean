@@ -191,6 +191,7 @@ const Sidebar: React.FC = () => {
   ];
 
   const handleMenuClick = (menu: string) => {
+    handleMobileItemClick();
     setExpandedMenu((prev) => (prev === menu ? null : menu));
   };
 
@@ -198,6 +199,11 @@ const Sidebar: React.FC = () => {
     // Only close mobile menu, don't reset expandedMenu
     setIsMobileMenuOpen(false);
   };
+
+  const handleMobileItemClickAndCollapse = () => {
+    handleMobileItemClick();
+    setExpandedMenu(null);
+  }
 
   return (
     <>
@@ -261,7 +267,7 @@ const Sidebar: React.FC = () => {
                     label={item.label}
                     href={item.href}
                     isActive={pathname === item.href}
-                    onClick={handleMobileItemClick}
+                    onClick={handleMobileItemClickAndCollapse}
                   />
                 )}
               </React.Fragment>
