@@ -23,36 +23,155 @@ export type LeaveRequest = {
     customerName: string;
     status: "Approved" | "Cancelled" | "Rejected" | "Pending";
     reason: string;
+    scheduledStartTime: string;
+    scheduledEndTime: string;
     createAt: string;
 }
 const leaveRequestData: LeaveRequest[] = [
-    { id: 1, customerName: "Huy", status: "Approved" as "Approved", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2022-10-15T08:13:00Z" },
-    { id: 2, customerName: "Jullu Jalal", status: "Approved" as "Approved", reason: "Free Classifieds Using Them To Promote Your Stuff Online", createAt: "2022-10-15T08:13:00Z" },
-    { id: 3, customerName: "Jullu Jalal", status: "Cancelled" as "Cancelled", reason: "Vacation Home Rental Success", createAt: "2022-10-15T08:13:00Z" },
-    { id: 4, customerName: "Jullu Jalal", status: "Pending" as "Pending", reason: "Enhance Your Brand Potential With Giant Advertising Blimps", createAt: "2023-10-15T08:13:00Z" },
-    { id: 5, customerName: "Jullu Jalal", status: "Cancelled" as "Cancelled", reason: "Always Look On The Bright Side Of Life", createAt: "2023-10-15T08:13:00Z" },
-    { id: 6, customerName: "Jullu Jalal", status: "Cancelled" as "Cancelled", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 7, customerName: "Jullu Jalal", status: "Cancelled" as "Cancelled", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 8, customerName: "Jullu Jalal", status: "Cancelled" as "Cancelled", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 9, customerName: "Jullu Jalal", status: "Cancelled" as "Cancelled", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 10, customerName: "Jullu Jalal", status: "Cancelled" as "Cancelled", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 11, customerName: "Jullu Jalal", status: "Pending" as "Pending", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 12, customerName: "Jullu Jalal", status: "Pending" as "Pending", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2024-10-15T08:13:00Z" },
-    { id: 13, customerName: "Jullu Jalal", status: "Pending" as "Pending", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2024-10-15T08:13:00Z" },
-    { id: 14, customerName: "Jullu Jalal", status: "Pending" as "Pending", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 15, customerName: "Jullu Jalal", status: "Pending" as "Pending", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 16, customerName: "Jullu Jalal", status: "Approved" as "Approved", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 17, customerName: "Jullu Jalal", status: "Approved" as "Approved", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 18, customerName: "Jullu Jalal", status: "Approved" as "Approved", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 19, customerName: "Jullu Jalal", status: "Approved" as "Approved", reason: "Free Classifieds Using Them To Promote Your Stuff Online", createAt: "2023-10-15T08:13:00Z" },
-    { id: 20, customerName: "Jullu Jalal", status: "Approved" as "Approved", reason: "Vacation Home Rental Success", createAt: "2023-10-15T08:13:00Z" },
-    { id: 21, customerName: "Jullu Jalal", status: "Pending" as "Pending", reason: "Enhance Your Brand Potential With Giant Advertising Blimps", createAt: "2023-10-15T08:13:00Z" },
-    { id: 22, customerName: "Jullu Jalal", status: "Approved" as "Approved", reason: "Always Look On The Bright Side Of Life", createAt: "2023-10-15T08:13:00Z" },
-    { id: 23, customerName: "Jullu Jalal", status: "Rejected" as "Rejected", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 24, customerName: "Jullu Jalal", status: "Rejected" as "Rejected", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 25, customerName: "Jullu Jalal", status: "Rejected" as "Rejected", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 26, customerName: "Jullu Jalal", status: "Rejected" as "Rejected", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
-    { id: 27, customerName: "Jullu Jalal", status: "Rejected" as "Rejected", reason: "Get Best Advertiser In Your Side Pocket", createAt: "2023-10-15T08:13:00Z" },
+    {
+        id: 1,
+        customerName: "Huy",
+        status: "Approved",
+        reason: "Get Best Advertiser In Your Side Pocket",
+        scheduledStartTime: "2022-11-01",
+        scheduledEndTime: "2022-11-05",
+        createAt: "2022-10-15T08:13:00Z"
+    },
+    {
+        id: 2,
+        customerName: "Jullu Jalal",
+        status: "Approved",
+        reason: "Free Classifieds Using Them To Promote Your Stuff Online",
+        scheduledStartTime: "2022-12-01",
+        scheduledEndTime: "2022-12-05",
+        createAt: "2022-10-15T08:13:00Z"
+    },
+    {
+        id: 3,
+        customerName: "Jullu Jalal",
+        status: "Cancelled",
+        reason: "Vacation Home Rental Success",
+        scheduledStartTime: "2023-01-10",
+        scheduledEndTime: "2023-01-15",
+        createAt: "2022-10-15T08:13:00Z"
+    },
+    {
+        id: 4,
+        customerName: "Jullu Jalal",
+        status: "Pending",
+        reason: "Enhance Your Brand Potential With Giant Advertising Blimps",
+        scheduledStartTime: "2023-03-05",
+        scheduledEndTime: "2023-03-10",
+        createAt: "2023-10-15T08:13:00Z"
+    },
+    {
+        id: 5,
+        customerName: "Jullu Jalal",
+        status: "Cancelled",
+        reason: "Always Look On The Bright Side Of Life",
+        scheduledStartTime: "2023-04-15",
+        scheduledEndTime: "2023-04-15",
+        createAt: "2023-10-15T08:13:00Z"
+    },
+    {
+        id: 6,
+        customerName: "Jullu Jalal",
+        status: "Cancelled",
+        reason: "Get Best Advertiser In Your Side Pocket",
+        scheduledStartTime: "2023-05-01",
+        scheduledEndTime: "2023-05-05",
+        createAt: "2023-10-15T08:13:00Z"
+    },
+    {
+        id: 7,
+        customerName: "Jullu Jalal",
+        status: "Cancelled",
+        reason: "Get Best Advertiser In Your Side Pocket",
+        scheduledStartTime: "2023-06-10",
+        scheduledEndTime: "2023-06-15",
+        createAt: "2023-10-15T08:13:00Z"
+    },
+    {
+        id: 8,
+        customerName: "Jullu Jalal",
+        status: "Cancelled",
+        reason: "Get Best Advertiser In Your Side Pocket",
+        scheduledStartTime: "2023-07-20",
+        scheduledEndTime: "2023-07-25",
+        createAt: "2023-10-15T08:13:00Z"
+    },
+    {
+        id: 9,
+        customerName: "Jullu Jalal",
+        status: "Cancelled",
+        reason: "Get Best Advertiser In Your Side Pocket",
+        scheduledStartTime: "2023-08-01",
+        scheduledEndTime: "2023-08-05",
+        createAt: "2023-10-15T08:13:00Z"
+    },
+    {
+        id: 10,
+        customerName: "Jullu Jalal",
+        status: "Cancelled",
+        reason: "Get Best Advertiser In Your Side Pocket",
+        scheduledStartTime: "2023-09-15",
+        scheduledEndTime: "2023-09-20",
+        createAt: "2023-10-15T08:13:00Z"
+    },
+    {
+        id: 11,
+        customerName: "Jullu Jalal",
+        status: "Pending",
+        reason: "Get Best Advertiser In Your Side Pocket",
+        scheduledStartTime: "2023-10-10",
+        scheduledEndTime: "2023-10-15",
+        createAt: "2023-10-15T08:13:00Z"
+    },
+    {
+        id: 12,
+        customerName: "Jullu Jalal",
+        status: "Pending",
+        reason: "Get Best Advertiser In Your Side Pocket",
+        scheduledStartTime: "2024-01-01",
+        scheduledEndTime: "2024-01-05",
+        createAt: "2024-10-15T08:13:00Z"
+    },
+    {
+        id: 13,
+        customerName: "Jullu Jalal",
+        status: "Pending",
+        reason: "Get Best Advertiser In Your Side Pocket",
+        scheduledStartTime: "2024-02-01",
+        scheduledEndTime: "2024-02-05",
+        createAt: "2024-10-15T08:13:00Z"
+    },
+    {
+        id: 14,
+        customerName: "Jullu Jalal",
+        status: "Pending",
+        reason: "Get Best Advertiser In Your Side Pocket",
+        scheduledStartTime: "2023-03-15",
+        scheduledEndTime: "2023-03-20",
+        createAt: "2023-10-15T08:13:00Z"
+    },
+    {
+        id: 15,
+        customerName: "Jullu Jalal",
+        status: "Pending",
+        reason: "Get Best Advertiser In Your Side Pocket",
+        scheduledStartTime: "2023-04-01",
+        scheduledEndTime: "2023-04-05",
+        createAt: "2023-10-15T08:13:00Z"
+    },
+    {
+        id: 16,
+        customerName: "Jullu Jalal",
+        status: "Approved",
+        reason: "Get Best Advertiser In Your Side Pocket",
+        scheduledStartTime: "2023-05-15",
+        scheduledEndTime: "2023-05-20",
+        createAt: "2023-10-15T08:13:00Z"
+    }
 ];
 export default function LeaveRequestTable() {
     const [currentPage, setCurrentPage] = useState(1);

@@ -31,9 +31,9 @@ const IssueRow: React.FC<IssueRowProps> = ({ name, sentiment, message, createAt 
 
   return (
     <div 
-      // onClick={() => router.push(`issue-history/${name}`)}
+      onClick={() => router.push(`issue-history/${name}`)}
       className={`flex flex-wrap w-full border-b border-gray-200 max-md:max-w-full items-start lg:items-center h-auto lg:py-4 px-2.5 cursor-pointer bg-white hover:bg-[#f4f7ff]`}>
-      <div className={`flex flex-col lg:flex-1 grow shrink justify-center w-full lg:w-[66px]`}>
+      <div onClick={(e) => e.stopPropagation()} className={`flex flex-col lg:flex-1 grow shrink justify-center w-full lg:w-[66px]`}>
         <div className="flex overflow-hidden items-center ml-4 pl-px w-full min-h-[48px]">
           <Checkbox onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} crossOrigin={undefined} />
         </div>
