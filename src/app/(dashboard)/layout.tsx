@@ -1,5 +1,6 @@
 import Header from '@/components/dashboard/Header'
 import Sidebar from '@/components/dashboard/Sidebar'
+import SidebarCustomer from '@/components/dashboard/SidebarCusomter'
 import SidebarEmployee from '@/components/dashboard/SidebarEmployee'
 import React from 'react'
 
