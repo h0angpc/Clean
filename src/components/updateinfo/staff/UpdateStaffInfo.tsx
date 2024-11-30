@@ -2,10 +2,17 @@ import { InputWithLabel } from '@/components/input/inputwithlabel'
 import Image from "next/image";
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import TagInput from '@/components/input/taginput';
-import { Tag } from 'lucide-react';
+import { MultipleChoiceInput } from '@/components/input/multiplechoice-input';
+import { ComboboxInput } from '@/components/input/combobox-input';
 
 const genderOptions = ["Female", "Male", "Other"]
+
+const serviceOptions = [
+  "Home Cleaning",
+  "Baby-Sitting",
+  "Caretaking",
+  "House Keeping"
+];
 
 const UpdateStaffInfo = () => {
   return (
@@ -40,10 +47,10 @@ const UpdateStaffInfo = () => {
                 labelText="DATE OF BIRTH" inputType="date"
                 inputPlaceholder="" inputId="date"
                 inputWidth="11.25vw" />
-              <InputWithLabel
+              <ComboboxInput
                 className="min-w-[112px]"
-                labelText="GENDER" inputType="combobox"
-                inputPlaceholder="" inputId="gender" defaultValue={genderOptions.at(0)}
+                labelText="GENDER" 
+                inputId="gender" defaultValue={genderOptions.at(0)}
                 inputWidth="6.875vw" options={genderOptions} />
             </div>
           </div>
@@ -109,12 +116,11 @@ const UpdateStaffInfo = () => {
           </div>
 
           <div className="flex justify-center flex-wrap md:flex-row gap-2">
-            <InputWithLabel
+            <MultipleChoiceInput
               className="min-w-[290px]"
-              labelText="OFFERED SERVICES" inputType="multipleChoice"
-              inputPlaceholder="Add new service" inputId="houseNum"
-              inputWidth="43.125vw" plusPX='16px' />
-            
+              labelText="OFFERED SERVICES" inputId="houseNum"
+              inputWidth="43.125vw" plusPX='16px' options={serviceOptions} />
+
           </div>
 
         </div>

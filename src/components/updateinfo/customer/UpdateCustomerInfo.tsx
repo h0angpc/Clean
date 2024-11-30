@@ -2,6 +2,7 @@ import { InputWithLabel } from '@/components/input/inputwithlabel'
 import Image from "next/image";
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { ComboboxInput } from '@/components/input/combobox-input';
 
 const genderOptions = ["Female", "Male", "Other"]
 
@@ -38,10 +39,10 @@ const UpdateCustomerInfo = () => {
                 labelText="DATE OF BIRTH" inputType="date"
                 inputPlaceholder="" inputId="date"
                 inputWidth="11.25vw" />
-              <InputWithLabel
+              <ComboboxInput
                 className="min-w-[112px]"
-                labelText="GENDER" inputType="combobox"
-                inputPlaceholder="" inputId="gender" defaultValue={genderOptions.at(0)}
+                labelText="GENDER" 
+                inputId="gender" defaultValue={genderOptions.at(0)}
                 inputWidth="6.875vw" options={genderOptions} />
             </div>
           </div>
