@@ -1,7 +1,7 @@
 import { ToggleButton } from '@/components/button/togglebutton'
 import { ToggleButtonGroup } from '@/components/button/togglebuttongroup'
 import { InputWithLabel } from '@/components/input/inputwithlabel'
-import { MultiLineInput } from '@/components/input/multiplelineinput'
+import { MultiLineInput } from '@/components/input/multipleline-input'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import React from 'react'
