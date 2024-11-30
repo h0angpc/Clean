@@ -1,6 +1,7 @@
 "use client"
 import React from 'react'
 import IssueTable from '@/components/issue/IssueTable'
+import IssueHistoryTable from '@/components/issue-history/IssueHistoryTable'
 
 export default function IssuePage({
   searchParams,
@@ -10,7 +11,7 @@ export default function IssuePage({
 
   return (
     <div>
-      <IssueTable />
+      <IssueHistoryTable/>
     </div>
   )
 }

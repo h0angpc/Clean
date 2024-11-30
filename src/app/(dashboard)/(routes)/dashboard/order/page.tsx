@@ -1,11 +1,12 @@
-import React from 'react'
+import OrderTable from "@/components/order/OrderTable";
+import React from "react";
 
 const OrderPage = () => {
   return (
-    <div>
-      OrderPage
-    </div>
-  )
-}
+    <>
+      <OrderTable />
+    </>
+  );
+};
 
-export default OrderPage
+export default OrderPage;
