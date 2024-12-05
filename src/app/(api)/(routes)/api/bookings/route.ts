@@ -3,7 +3,11 @@ import { NextResponse } from "next/server";
 //Get all bookings
 export async function GET() {
   try {
-    const bookings = await prisma.booking.findMany();
+    const bookings = await prisma.booking.findMany({
+      include: {
+        serviceType: true
+      }
+    });
     return NextResponse.json(bookings);
   }
   catch (error) {
