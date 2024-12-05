@@ -1,11 +1,12 @@
-import React from 'react'
+import CategoryServiceTable from "@/components/service/category/CategoryServiceTable";
+import React from "react";
 
-const CategoryPage = () => {
+const CategoryServicePage = () => {
   return (
     <div>
-      CategoryPage
+      <CategoryServiceTable />
     </div>
-  )
-}
+  );
+};
 
-export default CategoryPage
+export default CategoryServicePage;
