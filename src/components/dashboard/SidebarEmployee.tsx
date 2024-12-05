@@ -39,31 +39,38 @@ const SidebarEmployee: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    {
-      icon: "/images/Dashboard/Sidebar/InActive/Employee.svg",
-      activeIcon: "/images/Dashboard/Sidebar/Active/Employee.svg",
-      label: "Personal",
-      href: "/dashboard/personal"
+    { 
+      icon: "/images/Dashboard/Sidebar/InActive/Employee.svg", 
+      activeIcon: "/images/Dashboard/Sidebar/Active/Employee.svg", 
+      label: "Personal", 
+      href: "/dashboard/personal" 
     },
-    {
-      icon: "/images/Dashboard/Sidebar/InActive/Feedback.svg",
-      activeIcon: "/images/Dashboard/Sidebar/Active/Feedback.svg",
-      label: "Feedback",
-      href: "/dashboard/feedback"
+    { 
+      icon: "/images/Dashboard/Sidebar/InActive/Feedback.svg", 
+      activeIcon: "/images/Dashboard/Sidebar/Active/Feedback.svg", 
+      label: "Issue", 
+      href: "/dashboard/issue-history" 
     },
-    {
-      icon: "/images/Dashboard/Sidebar/InActive/OrderHistory.svg",
-      activeIcon: "/images/Dashboard/Sidebar/Active/OrderHistory.svg",
-      label: "Order History",
-      href: "/dashboard/order-history"
+    { 
+      icon: "/images/Dashboard/Sidebar/InActive/OrderHistory.svg", 
+      activeIcon: "/images/Dashboard/Sidebar/Active/OrderHistory.svg", 
+      label: "Job History", 
+      href: "/dashboard/job-history" 
     },
-    {
-      icon: "/images/Dashboard/Sidebar/InActive/Calendar.svg",
-      activeIcon: "/images/Dashboard/Sidebar/Active/Calendar.svg",
-      label: "Calendar",
-      href: "/dashboard/calendar"
+    { 
+      icon: "/images/Dashboard/Sidebar/InActive/Calendar.svg", 
+      activeIcon: "/images/Dashboard/Sidebar/Active/Calendar.svg", 
+      label: "Calendar", 
+      href: "/dashboard/calendar" 
+    },
+    { 
+      icon: "/images/Dashboard/Sidebar/InActive/LeaveRequest.svg", 
+      activeIcon: "/images/Dashboard/Sidebar/Active/LeaveRequest.svg", 
+      label: "Leave Requests", 
+      href: "/dashboard/leave-request" 
     },
   ];
+
 
   const handleMobileItemClick = () => {
     // Only close mobile menu, don't reset expandedMenu
