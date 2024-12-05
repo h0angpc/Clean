@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+
 const OtherServices = () => {
   const services: string[] = ["BabySitting", "Caretaking", "House Keeping"];
   const forHowLong = [
@@ -20,19 +21,23 @@ const OtherServices = () => {
       price: "$xx",
     },
   ];
+
   const [selectedService, setSelectedService] = useState<number>(0);
   const [selectedHowLong, setHowLong] = useState<number>(0);
+
   const handleSelect = (index: number, type: "service" | "howLong"): void => {
     if (type === "service") setSelectedService(index);
     else setHowLong(index);
   };
+
   return (
     <>
-      <div className="relative w-full h-[500px] mt-[80px]">
-        <div className="flex flex-col absolute inset-0 items-center">
+      <div className="w-full h-full mt-[55px]">
+        <div className="flex flex-col inset-0 items-center">
           <p className="font-Averta-Bold text-center text-[38px] mb-8">
             Customize Your Requirements
           </p>
+
           <span className="font-Averta-Semibold text-[#9FA7B0] text-[14px] leading-[17px] mb-4">
             SERVICE DETAILS
           </span>
@@ -53,6 +58,7 @@ const OtherServices = () => {
               </div>
             ))}
           </div>
+
           <span className="font-Averta-Semibold text-[#9FA7B0] text-[14px] leading-[17px] mb-4">
             FOR HOW LONG?
           </span>
@@ -70,7 +76,7 @@ const OtherServices = () => {
                       : "border-[#D3D8DD] text-[#4F6071] hover:border-[#1A78F2] hover:text-[#1A78F2]"
                   }`}
                 >
-                  <span className=" font-Averta-Semibold text-[20px] leading-[26px]">
+                  <span className="font-Averta-Semibold text-[20px] leading-[26px]">
                     {item.time}
                   </span>
                 </div>
@@ -80,6 +86,7 @@ const OtherServices = () => {
               </div>
             ))}
           </div>
+
           <button className="px-16 py-2 bg-[#1b78f2] rounded-[8px] text-lg font-Averta-Semibold tracking-normal leading-loose text-center text-white">
             Next
           </button>
@@ -88,4 +95,5 @@ const OtherServices = () => {
     </>
   );
 };
+
 export default OtherServices;

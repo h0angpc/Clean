@@ -1,10 +1,10 @@
 "use client";
 import Calendar from "@/components/calendar/Calendar";
-import Header from "@/components/header/Header";
+import Header from "@/components/header/header";
 import Image from "next/image";
 import React from "react";
 import { useState, useEffect } from "react";
-const page = () => {
+const Step_2 = () => {
   const daysOfWeek = [
     "",
     "MONDAY",
@@ -30,7 +30,9 @@ const page = () => {
     "December",
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(11);
+  const today = new Date();
+
+  const [currentIndex, setCurrentIndex] = useState(today.getMonth() + 1);
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % months.length);
@@ -43,7 +45,7 @@ const page = () => {
   };
 
   const getMonth = (index: any) => {
-    return months[(index + months.length) % months.length];
+    return months[(index + months.length - 1) % months.length];
   };
 
   return (
@@ -103,16 +105,10 @@ const page = () => {
           <div className="w-[132px] text-center m-[3px]">SUNDAY</div>
           <div className="w-[132px] text-center m-[3px]">MONDAY</div>
           <div className="w-[132px] text-center m-[3px]">TUESDAY</div>
-          <div className="w-[132px] text-center m-[3px]">
-            WEDNESDAY
-          </div>
-          <div className="w-[132px] text-center m-[3px]">
-            THURSDAY
-          </div>
+          <div className="w-[132px] text-center m-[3px]">WEDNESDAY</div>
+          <div className="w-[132px] text-center m-[3px]">THURSDAY</div>
           <div className="w-[132px] text-center m-[3px]">FRIDAY</div>
-          <div className="w-[132px] text-center m-[3px]">
-            SATURDAY
-          </div>
+          <div className="w-[132px] text-center m-[3px]">SATURDAY</div>
         </div>
         <Calendar month={currentIndex} />
       </div>
@@ -123,4 +119,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Step_2;
