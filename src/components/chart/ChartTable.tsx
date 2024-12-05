@@ -6,8 +6,8 @@ type ChartTableProps = {
         service_name: string;
         location: string;
         date_time: string;
-        service_fee: string;
-        status: "Completed" | "Processing";
+        service_fee: number;
+        status: string;
     }[];
 }
 

@@ -1,6 +1,9 @@
 export interface BookingData {
     // Step 0: Select service category
-    serviceCategory?: string;
+    serviceCategory?: {
+      id: string,
+      name: string
+    };
 
     // Step 1: Booking Information
     numberOfBedroom?: string;

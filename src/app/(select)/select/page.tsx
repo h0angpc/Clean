@@ -1,11 +1,40 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from 'next/image'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { IServiceCategoryResponse } from '@/utils/interfaces'
+import {bookingStore} from '@/utils/store/booking.store'
+
+type SelectService = {
+  id: string,
+  name: string
+}
 
 const Select = () => {
 
-  const [selectService, setSelectService] = useState('')
+  const bookingUpdate = bookingStore((state: any) => state.updateBookingData)
+  const [selectService, setSelectService] = useState<SelectService>({ id: '', name: '' })
+  const [serviceCategories, setServiceCategories] = useState<IServiceCategoryResponse[]>([])
+  const router = useRouter();
+  const handleRoute = () => {
+    bookingUpdate({serviceCategory: selectService});
+    router.push('/booking/step-1');
+  }
+
+  const mappingServiceCategory = (name: string) => {
+    const category = serviceCategories.find(element => element.name === name);
+    return category ? {id: category.id, name: name} : { id: '', name: '' };
+  }
+
+  useEffect(() => {
+    const fetchUserData = async (url: string) => {
+      const res = await fetch(url);
+      const data = await res.json();
+      setServiceCategories(data);
+    }
+    fetchUserData('http://localhost:3000/api/service-categories');
+  },[])
 
   return (
     <div className='flex flex-col w-full h-full pb-8'>
@@ -32,10 +61,11 @@ const Select = () => {
         <div className='w-[80%] h-fit flex flex-col sm:flex-row max-sm:justify-center max-sm:items-center max-sm:divide-y-2 sm:divide-x-2 divide-dashed m-auto border-2 rounded-2xl p-[20px] shadow-xl'>
             <div 
               className='w-[80%] sm:w-[50%] h-full flex flex-col items-center justify-center gap-[10px] hover:cursor-pointer max-sm:pb-5'
-              onMouseEnter={() => setSelectService('Home Service')}
-              onMouseLeave={() => setSelectService('')}
+              onMouseEnter={() => setSelectService(mappingServiceCategory('Home Cleaning'))}
+              onMouseLeave={() => setSelectService({ id: '', name: '' })}
+              onClick={handleRoute}
             >
-              <Image src={`${selectService !== 'Home Service' ? '/images/Select/house_unselect.png' : '/images/Select/house_select.png'}`} alt='home_service' width={200} height={200}/>
+              <Image src={`${selectService.name !== 'Home Cleaning' ? '/images/Select/house_unselect.png' : '/images/Select/house_select.png'}`} alt='home_service' width={200} height={200}/>
               <div className='w-full h-[40%] flex flex-col items-center gap-[5px]'>
                 <div className='text-[#1d2c4c] text-[34px] font-Averta-Semibold leading-[42px]'>Home Cleaning</div>
                 <div className='text-[#12153a] text-base font-Averta-Regular leading-[23px] tracking-tight text-center'>
@@ -47,12 +77,13 @@ const Select = () => {
             </div>
             <div 
               className='w-[80%] sm:w-[50%] h-full flex flex-col items-center justify-center gap-[10px] hover:cursor-pointer max-sm:pt-5'
-              onMouseEnter={() => setSelectService('Other Service')}
-              onMouseLeave={() => setSelectService('')}  
+              onMouseEnter={() => setSelectService(mappingServiceCategory('Other Services'))}
+              onMouseLeave={() => setSelectService({ id: '', name: '' })}
+              onClick={handleRoute}
             >
               <div className='relative h-[200px] w-[280px]'>
-                <Image src={`${selectService !== 'Other Service' ? '/images/Select/other1_unselect.png' : '/images/Select/other1_select.png'}`} alt='other_service_01' width={133.3} height={133.3} className='absolute top-0 left-0'/>
-                <Image src={`${selectService !== 'Other Service' ? '/images/Select/other2_unselect.png' : '/images/Select/other2_select.png'}`} alt='other_service_02' width={133.3} height={133.3} className='absolute bottom-0 right-0'/>
+                <Image src={`${selectService.name !== 'Other Services' ? '/images/Select/other1_unselect.png' : '/images/Select/other1_select.png'}`} alt='other_service_01' width={133.3} height={133.3} className='absolute top-0 left-0'/>
+                <Image src={`${selectService.name !== 'Other Services' ? '/images/Select/other2_unselect.png' : '/images/Select/other2_select.png'}`} alt='other_service_02' width={133.3} height={133.3} className='absolute bottom-0 right-0'/>
               </div>
               <div className='w-full h-[40%] flex flex-col items-center gap-[5px]'>
                 <div className='text-[#1d2c4c] text-[34px] font-Averta-Semibold leading-[42px]'>Other Services</div>
