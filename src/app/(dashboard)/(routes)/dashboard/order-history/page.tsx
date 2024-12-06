@@ -1,11 +1,12 @@
-import React from 'react'
+import OrderHistoryTable from "@/components/order-history/OrderHistoryTable";
+import React from "react";
 
 const OrderHistoryPage = () => {
   return (
-    <div>
-      OrderHistoryPage
-    </div>
-  )
-}
+    <>
+      <OrderHistoryTable />
+    </>
+  );
+};
 
-export default OrderHistoryPage
+export default OrderHistoryPage;
