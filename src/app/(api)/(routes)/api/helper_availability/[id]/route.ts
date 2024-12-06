@@ -11,6 +11,22 @@ export async function GET(
             where: {
                 id: params.id,
             },
+            include: {
+                approvedBy: {
+                    select: { 
+                      fullName: true
+                    }
+                },
+                helper: {
+                    select: {  
+                      user: {
+                        select: {
+                          fullName: true
+                        }
+                      }
+                    }
+                  },
+            }
         });
         if (!helperAvailability) {
             return NextResponse.json(
@@ -29,7 +45,7 @@ export async function GET(
 }
 
 // Update helper_availability by id
-export async function PUT(
+export async function PATCH(
     req: Request,
     { params }: { params: { id: string } }
 ) {

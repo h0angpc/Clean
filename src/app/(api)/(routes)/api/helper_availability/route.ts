@@ -3,8 +3,29 @@ import { NextResponse } from "next/server";
 
 // Get all helper_availability
 export async function GET() {
-  const helperAvailability = await prisma.helperAvailability.findMany();
-  return NextResponse.json(helperAvailability);
+  try {
+    const leaveRequests = await prisma.helperAvailability.findMany({
+      include: {
+        helper: {
+          select: {  
+            user: {
+              select: {
+                fullName: true
+              }
+            }
+          }
+        },
+      }
+    });
+    return NextResponse.json(leaveRequests);
+  }
+  catch (error){
+    console.error("Error fetching leave requests", error);
+    return NextResponse.json(
+      { status: "error", error: "Failed to fetch leave requests"},
+      { status: 500}
+    );
+  }
 }
 
 // Create a new helper_availability
