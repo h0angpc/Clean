@@ -1,10 +1,11 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Button } from '../ui/button';
+import { usePathname, useRouter } from 'next/navigation';
+import { bookingStore } from '@/utils/store/booking.store';
 
 interface ServiceDetails {
-  step: number;
   serviceType: string;
   bedrooms?: string;
   bathrooms?: string;
@@ -15,23 +16,77 @@ interface ServiceDetails {
   address: string;
   subTotal: string;
 }
-//Other Services | Home Cleaning
-const serviceDetails: ServiceDetails = {
-  step: 4,
-  serviceType: 'Other Services',
-  bedrooms: '',
-  bathrooms: '',
-  cleanType: '',
-  scheduleDate: '',
-  address: '',
-  subTotal: ''
-}
-
 const ProgressBar = () => {
+  const [step, setStep] = useState(1)
+  const bookingData = bookingStore((state: any) => state.bookingData);
+  const [serviceDetails, setServiceDetails] = useState<ServiceDetails>({
+    serviceType: '',
+    bedrooms: '',
+    bathrooms: '',
+    cleanType: '',
+    serviceDetail: '',
+    howLong: '',
+    scheduleDate: '',
+    address: '',
+    subTotal: ''
+  })
+  const pathName = usePathname();
+  const router = useRouter();
+  const handleRoute = () => {
+    router.push('/')
+  }
+  const handleNextBtn = () => {
+    switch (pathName) {
+      case '/booking/step-1':
+        router.push('/booking/step-2')
+        break;
+      case '/booking/step-2':
+        router.push('/booking/step-3')
+        break;
+      case '/booking/step-3':
+        router.push('/booking/step-4')
+        break;
+      case '/booking/step-4':
+        router.push('/booking/step-5')
+        break;
+      case '/booking/step-5':
+        // router.push('/payment')
+        break;
+      default:
+        break;
+    }
+  }
+
+  useEffect(() => {
+    setServiceDetails({serviceType: bookingData.serviceCategory?.name || 'Home Cleaning', ...bookingData})
+  }, [bookingData])
+
+  useEffect(() => {
+    switch (pathName) {
+      case '/booking/step-1':
+        setStep(1)
+        break;
+      case '/booking/step-2':
+        setStep(2)
+        break;
+      case '/booking/step-3':
+        setStep(2)
+        break;
+      case '/booking/step-4':
+        setStep(3)
+        break;
+      case '/booking/step-5':
+        setStep(4)
+        break;
+      default:
+        break;
+    }
+  }, [pathName])
+
   return (
     <div className='w-full h-[75px] flex flex-row sm:shadow-xl bg-white'>
       <div className='max-sm:hidden h-full w-[5.2%]'>
-        <div className='h-full w-full flex justify-center items-center hover:cursor-pointer' onClick={() => console.log("deptrai")}>
+        <div className='h-full w-full flex justify-center items-center hover:cursor-pointer' onClick={handleRoute}>
             <Image src='/images/ProgressBar/Group.svg' alt='exitButton' width={20} height={20}/>
         </div>
       </div>
@@ -148,25 +203,25 @@ const ProgressBar = () => {
               </div>
             </div>
           </div>
-        {(serviceDetails.step === 1 && serviceDetails.serviceType === 'Home Cleaning') && (
-          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[0.5]`}></div>
+        {(step === 1 && serviceDetails.serviceType === 'Home Cleaning') && (
+          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[50%]`}></div>
         )}
-        {(serviceDetails.step === 2 && serviceDetails.serviceType === 'Home Cleaning') && (
-          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[0.65]`}></div>
+        {(step === 2 && serviceDetails.serviceType === 'Home Cleaning') && (
+          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[65%]`}></div>
         )}
-        {(serviceDetails.step === 3 && serviceDetails.serviceType === 'Home Cleaning') && (
-          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[0.78]`}></div>
+        {(step === 3 && serviceDetails.serviceType === 'Home Cleaning') && (
+          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[78%]`}></div>
         )}
-        {(serviceDetails.step === 1 && serviceDetails.serviceType === 'Other Services') && (
-          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[0.427]`}></div>
+        {(step === 1 && serviceDetails.serviceType === 'Other Services') && (
+          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[43%]`}></div>
         )}
-        {(serviceDetails.step === 2 && serviceDetails.serviceType === 'Other Services') && (
-          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[0.6]`}></div>
+        {(step === 2 && serviceDetails.serviceType === 'Other Services') && (
+          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[60%]`}></div>
         )}
-        {(serviceDetails.step === 3 && serviceDetails.serviceType === 'Other Services') && (
-          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[0.75]`}></div>
+        {(step === 3 && serviceDetails.serviceType === 'Other Services') && (
+          <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-[75%]`}></div>
         )}
-        {serviceDetails.step === 4 && (
+        {step === 4 && (
           <div className={`absolute bottom-0 left-0 h-[3px] bg-[#1a78f2] w-full`}></div>
         )}
       </div>
@@ -184,7 +239,7 @@ const ProgressBar = () => {
         </div>
       </div>
       <div className="sm:hidden w-[60%]">
-          <Button className="h-full rounded-none w-full bg-[#1A78F2] text-lg text-white font-Averta-Semibold">Next</Button>
+          <Button className="h-full rounded-none w-full bg-[#1A78F2] text-lg text-white font-Averta-Semibold" onClick={handleNextBtn}>Next</Button>
       </div>
     </div>
   )

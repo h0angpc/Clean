@@ -1,8 +1,10 @@
 'use client'
 import React from 'react'
 import { FaRegTrashAlt } from "react-icons/fa";
+import { GoArrowLeft } from "react-icons/go";
 import { LuArrowLeft } from "react-icons/lu";
 import Image from 'next/image';
+import { Feedback } from '@/components/feedback/FeedbackTable';
 import {
     AlertDialog,
     AlertDialogAction,

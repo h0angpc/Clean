@@ -8,6 +8,8 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Provider from "@/components/provider/provider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,16 +26,16 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider
-      appearance={{
-        layout: {
-          unsafe_disableDevelopmentModeWarnings: true,
-        },
-        elements: {
-          footerPagesLink__terms: {
-            display: "none",
-          },
-        },
-      }}
+    // appearance={{
+    //     layout: {
+    //         unsafe_disableDevelopmentModeWarnings: true,
+    //     },
+    //     elements: {
+    //         footerPagesLink__terms: {
+    //             display: "none",
+    //         },
+    //     },
+    // }}
     >
       <html lang="en">
         <body className={inter.className}>
