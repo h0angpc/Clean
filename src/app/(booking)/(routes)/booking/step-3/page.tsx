@@ -64,7 +64,6 @@ const Step_3 = () => {
   const handleClick = (time: number) => {
     setTimeSelected(time);
     bookingUpdate({ bookingTiming: timeSelected });
-    console.log(bookingData)
   }
 
   // const day = new Date(bookingData.bookingDate).getDate();

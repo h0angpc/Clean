@@ -91,17 +91,21 @@ const ChartPage = () => {
   
   useEffect(() => {
     const fetchBookingData = async (url: string) => {
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        cache: 'force-cache',
+      });
       const data = await res.json();
       mappingChartData(data);
     }
     const fetchUserData = async (url: string) => {
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        cache: 'force-cache',
+      });
       const data = await res.json();
       setUser(data);
     }
-    fetchBookingData('http://localhost:3000/api/bookings');
-    fetchUserData('http://localhost:3000/api/users');
+    fetchBookingData('/api/bookings');
+    fetchUserData('/api/users');
   },[])
 
   useEffect(() => {

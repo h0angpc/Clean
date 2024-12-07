@@ -28,14 +28,14 @@ const Select = () => {
   }
 
   useEffect(() => {
-    const fetchUserData = async (url: string) => {
+    const fetchServiceCategoriesData = async (url: string) => {
       const res = await fetch(url, {
-        cache: "force-cache"
+        cache: 'force-cache',
       });
       const data = await res.json();
       setServiceCategories(data);
     }
-    fetchUserData('http://localhost:3000/api/service-categories');
+    fetchServiceCategoriesData('/api/service-categories');
   },[])
 
   return (
