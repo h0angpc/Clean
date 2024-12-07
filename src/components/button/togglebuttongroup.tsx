@@ -41,7 +41,7 @@ export function ToggleButtonGroup({ buttons, classNameCommon }: ToggleButtonGrou
     };
 
     return (
-        <div className="flex flex-wrap gap-3 justify-center">
+        <div className="space-x-2">
             {buttons.map((button) => (
                 <ToggleButton
                     key={button.id}
