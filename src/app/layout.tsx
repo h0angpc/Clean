@@ -8,6 +8,7 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Provider from "@/components/provider/provider";
 
