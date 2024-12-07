@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Checkbox } from "@material-tailwind/react";
 import { useRouter } from 'next/navigation';
 
@@ -8,12 +8,15 @@ const LeaveRequestRow: React.FC<LeaveRequestRowProps> = ({
   endDatetime,
   status,
   requestReason,
-  helper
+  helper,
+  onCheckboxToggle,
 }) => {
   const router = useRouter();
-  //const bgColor = isEven ? 'bg-white' : 'bg-[#f5f7ff]';
-  const statusColor = status === 'Approved' ? 'bg-[#ccf0eb] text-[#00b69b]' :
-    status === 'Cancelled' || status === 'Rejected' ? 'bg-[#fcd7d4] text-[#ef3826]' :
+
+  const [isChecked, setIsChecked] = useState(false);
+  
+  const statusColor = status.toLowerCase() === 'approved' ? 'bg-[#ccf0eb] text-[#00b69b]' :
+    status.toLowerCase() === 'cancelled' || status.toLowerCase() === 'rejected' ? 'bg-[#fcd7d4] text-[#ef3826]' :
       'bg-[#fce7af] text-[#FF9500]';
 
   const formatDate = (dateString: string): string => {
@@ -46,13 +49,28 @@ const LeaveRequestRow: React.FC<LeaveRequestRowProps> = ({
     );
   }
 
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    setIsChecked(checked);
+    if (onCheckboxToggle) {
+      onCheckboxToggle(id, checked);
+    }
+  };
+
   return (
     <div
       onClick={() => router.push(`leave-request/${id}`)}
       className={`flex flex-wrap w-full border-b border-gray-200 max-md:max-w-full items-start lg:items-center h-auto py-4 px-2.5 cursor-pointer bg-white hover:bg-[#f4f7ff]`}>
-      <div onClick={(e) => e.stopPropagation()} className={`flex flex-col lg:flex-[1] grow shrink justify-center w-full lg:w-[66px]`}>
+      <div onClick={(e) => e.stopPropagation()} 
+          className={`flex flex-col lg:flex-[1] grow shrink justify-center w-full lg:w-[66px]`}>
         <div className="flex overflow-hidden items-center ml-4 pl-px w-full min-h-[48px]">
-          <Checkbox onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} crossOrigin={undefined} />
+          <Checkbox 
+            checked={isChecked}
+            onChange={handleCheckboxChange}
+            onClick={(e) => e.stopPropagation()}
+            crossOrigin={undefined} 
+            onPointerEnterCapture={undefined} 
+            onPointerLeaveCapture={undefined} />
         </div>
       </div>
       <div className={`flex flex-col lg:flex-[2] grow shrink justify-center pl-2.5 text-sm font-bold text-neutral-800 w-full lg:w-[70px]`}>

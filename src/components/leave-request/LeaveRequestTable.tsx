@@ -5,6 +5,7 @@ import LeaveRequestRow from './LeaveRequestRow';
 import Pagination from '../employee/Pagination';
 import SearchBarAndFilter from './SearchBarAndFilter';
 import Image from 'next/image';
+import ClipLoader from "react-spinners/ClipLoader";
 import { useEffect } from 'react';
 import {
     AlertDialog,
@@ -20,14 +21,32 @@ import {
 
 interface LeaveRequestTableProps {
     canCreate: boolean;
+    userId: string;
 }
 
-const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({ canCreate }) => {
+const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({ canCreate, userId }) => {
     // const url = "http://localhost:3001/api/helper_availability";
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filter, setFilter] = useState("Filter by");
+    const [searchBy, setSearchBy] = useState("Name");
+    const [checkedRows, setCheckedRows] = useState<string[]>([]);
+    const [deleting, setDeleting] = useState(false);
+
+    const queryClient = useQueryClient();
 
     const fetchData = async (): Promise<LeaveRequest[]> => {
         try {
-            const response = await fetch(`/api/helper_availability`);
+            let enpoint;
+            if (canCreate){
+                enpoint = `/api/helper_availability?helperId=${userId}`
+            }
+            else {
+                enpoint = `/api/helper_availability`
+            }
+            
+            const response = await fetch(enpoint);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -38,19 +57,11 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({ canCreate }) => {
         }
     };
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [filter, setFilter] = useState("Filter by");
-    const [searchBy, setSearchBy] = useState("Name");
-
 
     const { data, isLoading, error } = useQuery({
         queryKey: ["leaveRequests"],
         queryFn: fetchData,
     });
-
-    const leaveRequestsdata: LeaveRequest[] = data ?? [];
-
 
     // filter
     const applyFilter = (data: LeaveRequest[]) => {
@@ -73,7 +84,7 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({ canCreate }) => {
     };
 
     // search by
-    const filteredData = leaveRequestsdata.filter((Request) => {
+    const filteredData = (data || []).filter((Request) => {
         const term = searchTerm.toLowerCase();
         if (searchBy === "Name") {
             return Request.helper?.user?.fullName.toLowerCase().includes(term);
@@ -95,11 +106,58 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({ canCreate }) => {
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
+
     const handlePageChange = (newPage: number) => {
         if (newPage > 0 && newPage <= totalPages) setCurrentPage(newPage);
     };
 
-    useEffect(() => { }, [])
+    const handleCheckboxToggle = (id: string, isChecked: boolean) => {
+        setCheckedRows((prevCheckedRows) =>
+            isChecked
+                ? [...prevCheckedRows, id]
+                : prevCheckedRows.filter((rowId) => rowId !== id)
+        );
+    };
+
+    const handleDeleteRequests = async () => {
+        if (checkedRows.length === 0) {
+            console.log("Please select request to delete");
+            return;
+        }
+        try {
+            setDeleting(true);
+
+            await Promise.all(
+                checkedRows.map((id) => {
+                    fetch(`/api/helper_availability/${id}`, 
+                    {
+                        method: "DELETE",
+                    });
+                })
+            );
+            console.log("Delete requests successfully!");
+            
+            queryClient.setQueryData<LeaveRequest[] | undefined>(
+                ["leaveRequests"],
+                (oldData) =>
+                    (oldData || []).filter((request) => !checkedRows.includes(request.id))
+            );
+
+            setCheckedRows([]);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setDeleting(false);
+        }
+    };
+
+    if (!data)
+        return (
+            <div className="flex justify-center items-center w-full h-[500px]">
+                <ClipLoader color="#2A88F5" loading={true} size={30} />
+            </div>
+        );
+
     return (
         <>
             <div className='flex flex-wrap justify-between gap-3 items-center'>
@@ -127,13 +185,14 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({ canCreate }) => {
                             <AlertDialogHeader>
                                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                    This action cannot be undone. This action will delete the leave request.
+                                    This action cannot be undone. This action will delete leave requests.
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                                 <AlertDialogAction asChild>
-                                    <button className="px-4 py-2 text-sm text-white bg-red-600 rounded-lg hover:bg-red-700">
+                                    <button className="px-4 py-2 text-sm text-white bg-red-600 rounded-lg hover:bg-red-700"
+                                        onClick={handleDeleteRequests}>
                                         Delete
                                     </button>
                                 </AlertDialogAction>
@@ -145,7 +204,10 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({ canCreate }) => {
             </div>
             <div className="flex overflow-hidden flex-col justify-center mt-3.5 w-full max-md:max-w-full">
                 {currentData.map((request: LeaveRequest, index: any) => (
-                    <LeaveRequestRow key={request.id} {...request} />
+                    <LeaveRequestRow
+                        key={request.id}
+                        {...request}
+                        onCheckboxToggle={handleCheckboxToggle} />
                 ))}
             </div>
             <Pagination

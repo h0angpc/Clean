@@ -7,6 +7,7 @@ type LeaveRequest = {
     status: "Approved" | "Cancelled" | "Rejected" | "Pending";
     requestReason: string;
     rejectionReason: string;
+    approvedById: string;
     approvedBy?: {
         fullName: string
     } ;
@@ -31,4 +32,5 @@ type LeaveRequestRowProps = {
             fullName: string
         }
     }
+    onCheckboxToggle?: (id: string, checked: boolean) => void;
 }

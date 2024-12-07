@@ -16,10 +16,13 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from "@tanstack/react-query";
 const LeaveRequestDetail = ({ params }: { params: { id: string } }) => {
     const [detail, setDetail] = useState<LeaveRequest | null>(null);
 
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    let userRole = 'helper';
+
+    const queryClient = useQueryClient();
     const [rejectionReason, setRejectionReason] = useState("");
 
     useEffect(() => {
@@ -74,7 +77,9 @@ const LeaveRequestDetail = ({ params }: { params: { id: string } }) => {
 
             const updatedDetail = await response.json();
             setDetail(updatedDetail);
-            setIsPopupOpen(false); 
+            queryClient.invalidateQueries({
+                queryKey: ["leaveRequests"],
+            });
             alert("Leave request has been rejected.");
         } catch (error) {
             console.error("Error rejecting leave request:", error);
@@ -82,9 +87,84 @@ const LeaveRequestDetail = ({ params }: { params: { id: string } }) => {
         }
     };
 
-    const handleApprove = () => {
+    const handleApprove = async () => {
+        try {
+            const response = await fetch(`/api/helper_availability/${params.id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    status: "Approved",
+                    approvedById: "ee6efe69-71ca-4e3d-bc07-ba6e5c3e061e",
+                }),
+            });
 
+            if (!response.ok) {
+                throw new Error("Failed to approve the leave request.");
+            }
+
+            const updatedDetail = await response.json();
+            setDetail(updatedDetail);
+            queryClient.invalidateQueries({
+                queryKey: ["leaveRequests"],
+            });
+            alert("Leave request has been approved.");
+        } catch (error) {
+            console.error("Error approving leave request:", error);
+            alert("Something went wrong while approving the leave request.");
+        }
     };
+
+    const handleDelete = async () => {
+        try {
+            const response = await fetch(`/api/helper_availability/${params.id}`, {
+                method: "DELETE",
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to delete the leave request.");
+            }
+
+            queryClient.invalidateQueries({
+                queryKey: ["leaveRequests"],
+            });
+
+            alert("Leave request has been deleted successfully.");
+            router.back();
+        } catch (error) {
+            console.error("Error deleting leave request:", error);
+            alert("Something went wrong while deleting the leave request.");
+        }
+    };
+
+    const handleCancel = async () => {
+        try {
+            const response = await fetch(`/api/helper_availability/${params.id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    status: "Cancelled",
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to cancel the leave request.");
+            }
+
+            const updatedDetail = await response.json();
+            setDetail(updatedDetail);
+            queryClient.invalidateQueries({
+                queryKey: ["leaveRequests"],
+            });
+            alert("Leave request has been cancelled.");
+        } catch (error) {
+            console.error("Error cancelling leave request:", error);
+            alert("Something went wrong while cancelling the leave request.");
+        }
+    }
 
     const logo = [
         {
@@ -110,7 +190,7 @@ const LeaveRequestDetail = ({ params }: { params: { id: string } }) => {
                 <div className='flex flex-wrap items-center justify-between'>
                     <div className='flex flex-row items-center justify-start'>
                         <button
-                            onClick={() => router.push("/dashboard/leave-request")}
+                            onClick={() => router.back()}
                             className='h-full p-6 hover:bg-slate-200 border-r-[1px] '>
                             <LuArrowLeft className='h-[19px] text-neutral-300 text-xl font-bold' />
                         </button>
@@ -122,12 +202,16 @@ const LeaveRequestDetail = ({ params }: { params: { id: string } }) => {
                         </div>
                     </div>
                     <div className='flex flex-row'>
-                        {/*  */}
-                        {detail?.status == 'Pending' && <div className='flex flex-row justify-center items-center gap-2'>
+                        {userRole == 'admin' && detail?.status.toLowerCase() == 'pending' && <div className='flex flex-row justify-center items-center gap-2'>
                             {/* Nút approve */}
                             <AlertDialog>
                                 <AlertDialogTrigger>
-                                    <div className='flex items-center justify-center px-8 py-2 md:w-[130px] rounded-lg font-Averta-Bold text-[13px] text-white bg-blue-600 hover:bg-blue-500'>Approve</div>
+                                    <div
+                                        className='flex items-center justify-center px-8 py-2 md:w-[130px] rounded-lg 
+                                        font-Averta-Bold text-[13px] text-white bg-blue-600 hover:bg-blue-500'
+                                    >
+                                        Approve
+                                    </div>
                                 </AlertDialogTrigger>
                                 <AlertDialogContent>
                                     <AlertDialogHeader>
@@ -147,7 +231,12 @@ const LeaveRequestDetail = ({ params }: { params: { id: string } }) => {
                             {/* Nút reject */}
                             <AlertDialog>
                                 <AlertDialogTrigger>
-                                    <div className='flex items-center justify-center px-8 py-2 md:w-[130px] rounded-lg font-Averta-Bold text-[13px] text-white bg-red-600 hover:bg-red-500'>Reject</div>
+                                    <div
+                                        className='flex items-center justify-center px-8 py-2 md:w-[130px] rounded-lg 
+                                        font-Averta-Bold text-[13px] text-white bg-red-600 hover:bg-red-500'
+                                    >
+                                        Reject
+                                    </div>
                                 </AlertDialogTrigger>
                                 <AlertDialogContent>
                                     <AlertDialogHeader>
@@ -171,8 +260,8 @@ const LeaveRequestDetail = ({ params }: { params: { id: string } }) => {
                                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                                         <AlertDialogAction asChild>
                                             <button
-                                                onClick={handleReject}
                                                 className="px-4 py-2 text-sm text-white bg-red-600 rounded-lg hover:bg-red-700"
+                                                onClick={handleReject}
                                             >
                                                 Reject
                                             </button>
@@ -181,49 +270,100 @@ const LeaveRequestDetail = ({ params }: { params: { id: string } }) => {
                                 </AlertDialogContent>
                             </AlertDialog>
                         </div>}
-                        {(detail?.status == 'Rejected') &&
-                            <button
-                                className="flex justify-center items-center"
-                                onClick={() => setIsPopupOpen(true)}
-                            >
-                                <div className="flex justify-center items-center px-8 py-2 w-full rounded-lg bg-blue-600 hover:bg-blue-500 font-Averta-Bold text-white text-[13px]">
-                                    Rejection Reason
-                                </div>
-                            </button>
-                        }
-                        {/* Popup Section */}
-                        {isPopupOpen && (
-                            <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
-                                <div className="flex flex-col bg-white rounded-lg shadow-lg max-w-md w-full p-4 relative">
-                                    {/* Header */}
-                                    <button
-                                        className="text-gray-500 ml-auto hover:text-gray-700 text-4xl"
-                                        onClick={() => setIsPopupOpen(false)}
-                                    >
-                                        &times;
-                                    </button>
-                                    <div className="flex justify-between items-center mb-2">
-                                        <h3 className="text-lg font-bold text-gray-800">Rejection Reason</h3>
+
+                        {userRole == 'helper' && detail?.status.toLowerCase() == 'pending' && <div className='flex flex-row justify-center items-center gap-2'>
+                            {/* Nút cancel */}
+                            <AlertDialog>
+                                <AlertDialogTrigger>
+                                    <div className='flex items-center justify-center px-8 py-2 md:w-[130px] rounded-lg font-Averta-Bold text-[13px] text-white bg-red-600 hover:bg-red-500'>Cancel</div>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            This action cannot be undone. This action will cancel the request.
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                        <AlertDialogAction asChild>
+                                            <button
+                                                className="px-4 py-2 text-sm text-white bg-red-600 rounded-lg hover:bg-red-700"
+                                                onClick={handleCancel}
+                                            >
+                                                Sure
+                                            </button>
+                                        </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
+                        </div>}
+
+                        {/* Rejection Reason */}
+                        {(detail?.status.toLowerCase() == 'rejected') &&
+                            <AlertDialog>
+                                <AlertDialogTrigger>
+                                    <div className="flex justify-center items-center px-8 py-2 w-full rounded-lg bg-blue-600 hover:bg-blue-500 font-Averta-Bold text-white text-[13px]">
+                                        Rejection Reason
                                     </div>
-                                    <p className="text-sm font-[400w] text-[#64748B] mb-6">The reason why Leave Application is rejected.</p>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>Rejection Reason</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            The reason why Leave Application is rejected
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+
                                     <div className="p-4 border-2 rounded-md  text-gray-700">
                                         {/* Nội dung lý do từ chối */}
                                         {detail?.rejectionReason || 'No reason provided.'}
                                     </div>
-                                </div>
-                            </div>
-                        )}
+                                    <AlertDialogFooter>
+                                        <AlertDialogAction>OK</AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
+                        }
 
-                        {(detail?.status == 'Approved') &&
+
+
+                        {(detail?.status.toLowerCase() == 'approved') &&
                             <div className="flex justify-center items-center">
-                                <div className="flex justify-center items-center px-8 py-2 w-full border-2 border-neutral-950 rounded-lg font-Averta-Bold text-[14px]">
-                                    {`Approve by ${detail?.approvedBy?.fullName}`}
+                                <div className="flex justify-center items-center px-8 py-2 w-full border-2 text-[#00B69B] border-[#00B69B] rounded-lg font-Averta-Bold text-[14px]">
+                                    {`Approve by ${detail?.approvedBy?.fullName || "Unknown"}`}
                                 </div>
                             </div>
                         }
-                        <button className='h-full p-6 ml-2 hover:bg-slate-200'>
-                            <FaRegTrashAlt className='h-[19px]' />
-                        </button>
+
+                        {/* Delete request */}
+                        <AlertDialog>
+                            <AlertDialogTrigger>
+                                <button className='h-full p-6 ml-2 hover:bg-slate-200'>
+                                    <FaRegTrashAlt className='h-[19px]' />
+                                </button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        This action cannot be undone. This action will delete the leave request.
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction asChild>
+                                        <button
+                                            className="px-4 py-2 text-sm text-white bg-red-600 rounded-lg hover:bg-red-700"
+                                            onClick={handleDelete}
+                                        >
+                                            Delete
+                                        </button>
+                                    </AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
                     </div>
                 </div>
                 {/* End Title */}

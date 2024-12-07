@@ -55,6 +55,9 @@ export async function PATCH(
       id: params.id,
     },
     data,
+    include: {
+        approvedBy: true,
+    }
   });
   return NextResponse.json(updatedServiceCategory);
 }
