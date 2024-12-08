@@ -18,6 +18,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { CreateLeaveRequestPopup } from '../popup/CreateLeaveRequestPopup';
 
 interface LeaveRequestTableProps {
     canCreate: boolean;
@@ -32,7 +33,6 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({ canCreate, userId
     const [filter, setFilter] = useState("Filter by");
     const [searchBy, setSearchBy] = useState("Name");
     const [checkedRows, setCheckedRows] = useState<string[]>([]);
-    const [deleting, setDeleting] = useState(false);
 
     const queryClient = useQueryClient();
 
@@ -125,7 +125,6 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({ canCreate, userId
             return;
         }
         try {
-            setDeleting(true);
 
             await Promise.all(
                 checkedRows.map((id) => {
@@ -146,9 +145,7 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({ canCreate, userId
             setCheckedRows([]);
         } catch (error) {
             console.error(error);
-        } finally {
-            setDeleting(false);
-        }
+        } 
     };
 
     if (!data)
@@ -168,15 +165,12 @@ const LeaveRequestTable: React.FC<LeaveRequestTableProps> = ({ canCreate, userId
                     onFilterChange={setFilter}
                 />
                 <div className='flex flex-row gap-2'>
-                    {canCreate && <button
-                        onClick={() => alert('Open popup Create LeaveRequest')}
-                        className="flex flex-row gap-2 items-center justify-center px-8 h-[38px] bg-[#1b78f2] hover:bg-opacity-90 rounded-[8px] text-xs font-Averta-Bold tracking-normal leading-loose whitespace-nowrap text-center text-white">
-                        <Image src="/images/icons/outline_plus.svg" alt="" width={18} height={18} />
-                        Create LeaveRequest
-                    </button>}
+                    {canCreate && 
+                    <CreateLeaveRequestPopup></CreateLeaveRequestPopup>
+                    }
                     <AlertDialog>
-                        <AlertDialogTrigger>
-                            <div className="flex flex-row gap-2 items-center justify-center px-10 h-[38px] bg-[#E11B1B] hover:bg-opacity-90 rounded-[8px] text-xs font-Averta-Bold tracking-normal leading-loose whitespace-nowrap text-center text-white">
+                        <AlertDialogTrigger disabled={checkedRows.length === 0} className='bg-[#E11B1B] hover:bg-opacity-90 disabled:bg-[#cccccc] rounded-[8px]' >
+                            <div className="flex flex-row gap-2 items-center justify-center px-10 h-[38px]  text-xs font-Averta-Bold tracking-normal leading-loose whitespace-nowrap text-center text-white">
                                 <Image src="/images/Dashboard/Feedback/Trash.svg" alt="" width={18} height={18} />
                                 Delete
                             </div>
