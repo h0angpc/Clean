@@ -1,5 +1,7 @@
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
+import { helperAvailabilityData } from "../../../../../../prisma/mockData";
+import { helperAvailabilitySchema } from "./helper_availability.shema";
 
 // Get all helper_availability
 export async function GET(req: Request) {
@@ -54,9 +56,28 @@ export async function GET(req: Request) {
 
 // Create a new helper_availability
 export async function POST(req: Request) {
-  const data = await req.json();
-  const newHelperAvailability = await prisma.helperAvailability.create({
-    data,
-  });
+  try {
+    const body = await req.json();
+    //Get current User, tam thoi xai User cung
+    const userId = "0066dc01-cdd4-4243-9f4e-778bcfa4458f";
+
+    const data = helperAvailabilitySchema.parse(body);
+
+    const newHelperAvailability = await prisma.helperAvailability.create({
+      data: {
+        helperId: userId,
+        availabilityType: data.availabilityType,
+        startDatetime: data.startDatetime,
+        endDatetime: data.endDatetime,
+        requestReason: data.requestReason,
+      },
+    });
   return NextResponse.json(newHelperAvailability);
+  } catch (error) {
+    console.error("Error creating leave request:", error);
+    return NextResponse.json(
+      { status: "error", error: "Failed to create leave request" },
+      { status: 500 }
+    );
+  }
 }

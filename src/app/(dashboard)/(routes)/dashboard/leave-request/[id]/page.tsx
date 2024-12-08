@@ -96,6 +96,7 @@ const LeaveRequestDetail = ({ params }: { params: { id: string } }) => {
                 },
                 body: JSON.stringify({
                     status: "Approved",
+                    //Tam thoi xai User cung
                     approvedById: "ee6efe69-71ca-4e3d-bc07-ba6e5c3e061e",
                 }),
             });

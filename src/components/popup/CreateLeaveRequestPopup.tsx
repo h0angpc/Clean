@@ -8,6 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import CustomInput from "../input/CustomInput";
+import Image from 'next/image';
 import CustomSelect from "../select/CustomSelect";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,8 +16,34 @@ import {
   leaveRequestSchema,
   createLeaveRequestData,
 } from "@/schema/leaveRequestSchema";
+import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function CreateLeaveRequestPopup() {
+
+  const queryClient = useQueryClient();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const createLeaveRequest = async (data: createLeaveRequestData) => {
+    try {
+      const response = await fetch('/api/helper_availability', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        throw new Error("Error creating leave request");
+      }
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error("Error creating leave request:", error);
+    }
+  };
+
   const form = useForm<createLeaveRequestData>({
     mode: "onSubmit",
     resolver: zodResolver(leaveRequestSchema),
@@ -28,14 +55,30 @@ export function CreateLeaveRequestPopup() {
     formState: { errors },
   } = form;
 
-  const onSubmitHandle = (data: createLeaveRequestData) => {
-    console.log(data);
+  const onSubmitHandle = async (data: createLeaveRequestData) => {
+    try {
+      console.log("Submitting data:", data);
+      await createLeaveRequest(data);
+      // console.log("Leave request created successfully.");
+      queryClient.invalidateQueries({ queryKey: ["leaveRequests"] });
+      setIsDialogOpen(false);
+    } catch (error) {
+      console.error("Error while creating leave request:", error);
+      alert("Failed to create leave request. Please try again.");
+    }
   };
 
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Create Leave Request</Button>
+        <button
+          className="flex flex-row gap-2 items-center justify-center px-8 h-[38px] bg-[#1b78f2] 
+          hover:bg-opacity-90 rounded-[8px] text-xs font-Averta-Bold tracking-normal leading-loose 
+          whitespace-nowrap text-center text-white"
+          onClick={() => setIsDialogOpen(true)}>
+          <Image src="/images/icons/outline_plus.svg" alt="" width={18} height={18} />
+          Create LeaveRequest
+        </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

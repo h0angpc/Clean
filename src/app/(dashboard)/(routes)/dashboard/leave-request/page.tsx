@@ -7,6 +7,8 @@ const LeaveRequestPage = async () => {
 
   let tableProps;
 
+
+  //Tam thoi xai User cung, sau nay get currentUser
   if (userRole === "helper") {
     tableProps = { canCreate: true, userId: "0066dc01-cdd4-4243-9f4e-778bcfa4458f" };
   } else {
