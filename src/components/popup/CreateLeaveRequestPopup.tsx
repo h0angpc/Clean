@@ -20,7 +20,6 @@ import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
 export function CreateLeaveRequestPopup() {
-
   const queryClient = useQueryClient();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -47,29 +46,44 @@ export function CreateLeaveRequestPopup() {
   const form = useForm<createLeaveRequestData>({
     mode: "onSubmit",
     resolver: zodResolver(leaveRequestSchema),
+    defaultValues: {
+      availabilityType: "",
+      startDatetime: new Date().toISOString().split("T")[0],
+      endDatetime: new Date().toISOString().split("T")[0],
+      requestReason: "",
+    },
   });
 
   const {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = form;
 
   const onSubmitHandle = async (data: createLeaveRequestData) => {
     try {
       console.log("Submitting data:", data);
       await createLeaveRequest(data);
-      // console.log("Leave request created successfully.");
       queryClient.invalidateQueries({ queryKey: ["leaveRequests"] });
       setIsDialogOpen(false);
+      reset(); // Reset form after successful submission
     } catch (error) {
       console.error("Error while creating leave request:", error);
       alert("Failed to create leave request. Please try again.");
     }
   };
 
+  const handleOpenChange = (open: boolean) => {
+    setIsDialogOpen(open);
+    if (!open) {
+      // Reset form when dialog is closed
+      reset();
+    }
+  };
+
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <Dialog open={isDialogOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <button
           className="flex flex-row gap-2 items-center justify-center px-8 h-[38px] bg-[#1b78f2] 
@@ -87,12 +101,12 @@ export function CreateLeaveRequestPopup() {
         <form onSubmit={handleSubmit(onSubmitHandle)}>
           <div className="flex flex-col justify-center items-center gap-6 py-4">
             <Controller
-              name="availability_type"
+              name="availabilityType"
               control={control}
               render={({ field }) => (
                 <CustomSelect
                   label="Availability Type"
-                  id="availability_type"
+                  id="availabilityType"
                   options={[
                     { id: "vacation", name: "Vacation" },
                     { id: "sick_leave", name: "Sick Leave" },
@@ -102,7 +116,7 @@ export function CreateLeaveRequestPopup() {
                   placeholder="Select Service Category"
                   value={field.value ?? ""}
                   onChange={field.onChange}
-                  error={errors.availability_type?.message}
+                  error={errors.availabilityType?.message}
                   ref={field.ref}
                 ></CustomSelect>
               )}
@@ -110,34 +124,32 @@ export function CreateLeaveRequestPopup() {
 
             <div className="flex gap-4 w-full">
               <Controller
-                name="start_datetime"
+                name="startDatetime"
                 control={control}
-                defaultValue={new Date()}
                 render={({ field }) => (
                   <CustomInput
                     label="start date"
-                    id="start_datetime"
+                    id="startDatetime"
                     className="w-full"
-                    value={field.value.toISOString().split("T")[0]}
+                    value={field.value}
                     onChange={field.onChange}
-                    error={errors.start_datetime?.message}
+                    error={errors.startDatetime?.message}
                     type="date"
                   ></CustomInput>
                 )}
               />
 
               <Controller
-                name="end_datetime"
+                name="endDatetime"
                 control={control}
-                defaultValue={new Date()}
                 render={({ field }) => (
                   <CustomInput
                     label="end date"
-                    id="end_datetime"
+                    id="endDatetime"
                     className="w-full"
-                    value={field.value.toISOString().split("T")[0]}
+                    value={field.value}
                     onChange={field.onChange}
-                    error={errors.end_datetime?.message}
+                    error={errors.endDatetime?.message}
                     type="date"
                   ></CustomInput>
                 )}
@@ -145,17 +157,17 @@ export function CreateLeaveRequestPopup() {
             </div>
 
             <Controller
-              name="request_reason"
+              name="requestReason"
               control={control}
               render={({ field }) => (
                 <CustomInput
                   label="Reason"
                   placeholder="Enter Reason"
-                  id="request_reason"
+                  id="requestReason"
                   className="w-full"
                   value={field.value ?? ""}
                   onChange={field.onChange}
-                  error={errors.request_reason?.message}
+                  error={errors.requestReason?.message}
                 ></CustomInput>
               )}
             />
