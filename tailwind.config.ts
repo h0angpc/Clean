@@ -1,13 +1,15 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
-const config = {
+const withMT = require("@material-tailwind/react/utils/withMT");
+
+const config = withMT({
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -52,6 +54,19 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        stale: {
+          50: "#f8fafc",
+          100: "#f1f5f9",
+          200: "#e2e8f0",
+          300: "#cbd5e1",
+          400: "#94a3b8",
+          500: "#64748b",
+          600: " #475569",
+          700: "#334155",
+          800: "#1e293b",
+          900: "#0f172a",
+          950: "#020617",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -73,33 +88,33 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
-        'gilroy-regular': ['Gilroy-Regular'],
-        'gilroy-extraBoldItalic': ['Gilroy-ExtraBoldItalic'],
-        'gilroy-bold': ['Gilroy-Bold'],
-        'gilroy-black': ['Gilroy-Black'],
-        'gilroy-light': ['Gilroy-Light'],
-        'gilroy-semibold': ['Gilroy-Semibold'],
-        'gilroy-medium': ['Gilroy-Medium'],
-        'gilroy-mediumItalic': ['Gilroy-MediumItalic'],
-        'gilroy-blackItalic': ['Gilroy-BlackItalic'],
-        'gilroy-ultraLight': ['Gilroy-UltraLight'],
-        'gilroy-regularItalic': ['Gilroy-RegularItalic'],
-        'gilroy-semiboldItalic': ['Gilroy-SemiboldItalic'],
-        'gilroy-heavyItalic': ['Gilroy-HeavyItalic'],
-        'gilroy-extraBold': ['Gilroy-Extrabold'],
-        'gilroy-boldItalic': ['Gilroy-BoldItalic'],
-        'gilroy-ultraLightItalic': ['Gilroy-UltraLightItalic'],
-        'gilroy-lightItalic': ['Gilroy-LightItalic'],
-        'gilroy-heavy': ['Gilroy-Heavy'],
-        'gilroy-thin': ['Gilroy-Thin'],
-        'gilroy-thinItalic': ['Gilroy-ThinItalic'],
-        'Averta-Bold': ['Averta-Bold'],
-        'Averta-Regular': ['Averta-Regular'],
-        'Averta-Semibold': ['Averta-Semibold'],
-      }
+        "gilroy-regular": ["Gilroy-Regular"],
+        "gilroy-extraBoldItalic": ["Gilroy-ExtraBoldItalic"],
+        "gilroy-bold": ["Gilroy-Bold"],
+        "gilroy-black": ["Gilroy-Black"],
+        "gilroy-light": ["Gilroy-Light"],
+        "gilroy-semibold": ["Gilroy-Semibold"],
+        "gilroy-medium": ["Gilroy-Medium"],
+        "gilroy-mediumItalic": ["Gilroy-MediumItalic"],
+        "gilroy-blackItalic": ["Gilroy-BlackItalic"],
+        "gilroy-ultraLight": ["Gilroy-UltraLight"],
+        "gilroy-regularItalic": ["Gilroy-RegularItalic"],
+        "gilroy-semiboldItalic": ["Gilroy-SemiboldItalic"],
+        "gilroy-heavyItalic": ["Gilroy-HeavyItalic"],
+        "gilroy-extraBold": ["Gilroy-Extrabold"],
+        "gilroy-boldItalic": ["Gilroy-BoldItalic"],
+        "gilroy-ultraLightItalic": ["Gilroy-UltraLightItalic"],
+        "gilroy-lightItalic": ["Gilroy-LightItalic"],
+        "gilroy-heavy": ["Gilroy-Heavy"],
+        "gilroy-thin": ["Gilroy-Thin"],
+        "gilroy-thinItalic": ["Gilroy-ThinItalic"],
+        "Averta-Bold": ["Averta-Bold"],
+        "Averta-Regular": ["Averta-Regular"],
+        "Averta-Semibold": ["Averta-Semibold"],
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+}) satisfies Config;
 
-export default config
+export default config;
