@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label" 
+import { Label } from "@/components/ui/label"
 
 interface InputWithLabelProps {
     labelText: string;
@@ -12,6 +12,9 @@ interface InputWithLabelProps {
     inputWidth?: string;
     plusPX?: string,
     className?: string;
+    error?: string;
+    value?: string | number;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export function InputWithLabel({
@@ -22,6 +25,9 @@ export function InputWithLabel({
     inputWidth = "w-full",
     plusPX,
     className,
+    error,
+    value,
+    onChange,
 }: InputWithLabelProps) {
 
     return (
@@ -30,13 +36,24 @@ export function InputWithLabel({
                 {labelText}
             </Label>
 
-            <Input
-                className={cn("font-Averta-Regular h-[50px] text-[16px] text-[#88939D] border-2", className)}
-                type={inputType}
-                id={inputId}
-                placeholder={inputPlaceholder}
-                style={plusPX ? { width: `calc(${inputWidth} + ${plusPX})` } : { width: `${inputWidth}` }}
-            />
+            <div className="relative">
+                <Input
+                    className={cn("font-Averta-Regular h-[50px] text-[16px] text-[#88939D] border-2",
+                        error ? "border-red-500 focus:ring-red-500" : "border-[#E5E7EB]", className)}
+                    type={inputType}
+                    
+                    id={inputId}
+                    placeholder={inputPlaceholder}
+                    style={plusPX ? { width: `calc(${inputWidth} + ${plusPX})` } : { width: `${inputWidth}` }}
+                    value={value}
+                    onChange={onChange}
+                />
+                {error && (
+                    <p className="lg:absolute text-[14px] text-red-500 font-Averta-Regular top-full mt-[2px]">
+                        {error}
+                    </p>
+                )}
+            </div>
         </div>
     );
 }
