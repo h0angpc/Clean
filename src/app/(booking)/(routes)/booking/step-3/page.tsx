@@ -18,7 +18,7 @@ const timeSlots = [
   {
     type: "specific",
     time: "Flexible",
-    value: 0,
+    value: 1,
   },
   {
     type: "standard",
@@ -48,8 +48,6 @@ const timeSlots = [
 ];
 
 const Step_3 = () => {
-  const bookingData = bookingStore((state: any) => state.bookingData)
-
   const [timeSelected, setTimeSelected] = useState<number>(0);
   const bookingUpdate = bookingStore((state: any) => state.updateBookingData)
 
@@ -62,8 +60,8 @@ const Step_3 = () => {
   }
   
   const handleClick = (time: number) => {
+    bookingUpdate({ bookingTiming: time });
     setTimeSelected(time);
-    bookingUpdate({ bookingTiming: timeSelected });
   }
 
   // const day = new Date(bookingData.bookingDate).getDate();
