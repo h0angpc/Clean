@@ -1,11 +1,12 @@
 import { InputWithLabel } from '@/components/input/inputwithlabel'
 import Image from "next/image";
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ComboboxInput } from '@/components/input/combobox-input';
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createCustomerInfoData, customerInfoSchema } from '@/schema/customerInfoSchema';
+import FileDownloadCard from '@/components/card/FileDownloadCard';
 
 const genderOptions = ["Female", "Male", "Other"]
 
@@ -23,12 +24,163 @@ const UpdateCustomerInfo = () => {
     reset,
   } = form;
 
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [selectedAvatar, setSelectedAvatar] = useState<File | null>(null);
+  const [idCard, setIdCard] = useState<File | null>(null);
+  const [idCardUrl, setidCardUrl] = useState<string | null>(null);
+
+  const inputAvatarRef = useRef<HTMLInputElement>(null);
+
+  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedAvatar(file);
+
+      const objectUrl = URL.createObjectURL(file);
+      setAvatarUrl(objectUrl);
+    }
+  };
+
+  const handleIdCardChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      const allowedFormats = ["image/jpeg", "image/png", "application/pdf"];
+      if (!allowedFormats.includes(selectedFile.type)) {
+        alert("Only JPG, PNG, or PDF files are allowed!");
+        return;
+      }
+
+      if (selectedFile.size > 10 * 1024 * 1024) {
+        alert("File size should be less than 10MB!");
+        return;
+      }
+
+      setIdCard(selectedFile);
+
+      if (selectedFile.type.startsWith("image/")) {
+        const objectUrl = URL.createObjectURL(selectedFile);
+        setidCardUrl(objectUrl);
+      }
+      else {
+        setidCardUrl(null);
+      }
+    }
+  };
+
+  const handleIdCardDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const droppedFile = event.dataTransfer.files?.[0];
+    if (droppedFile) {
+      const allowedFormats = ["image/jpeg", "image/png", "application/pdf"];
+      if (!allowedFormats.includes(droppedFile.type)) {
+        alert("Only JPG, PNG, or PDF files are allowed!");
+        return;
+      }
+
+      if (droppedFile.size > 10 * 1024 * 1024) {
+        alert("File size should be less than 10MB!");
+        return;
+      }
+
+      setIdCard(droppedFile);
+
+      if (droppedFile.type.startsWith("image/")) {
+        const objectUrl = URL.createObjectURL(droppedFile);
+        setidCardUrl(objectUrl);
+      }
+      else {
+        setidCardUrl(null);
+      }
+    }
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
+  const handleDownload = (file: File | null) => {
+    if (!file) {
+      alert("No file selected to download.");
+      return;
+    }
+
+    const fileUrl = URL.createObjectURL(file);
+
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = file.name;
+
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+    URL.revokeObjectURL(fileUrl);
+  };
+
+  const uploadFile = async (file: File | null): Promise<string | null> => {
+    if (!file) {
+      alert("Please select a file first!");
+      return null;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("/api/test-cloudinary", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        return data.url; // Trả về URL file đã upload
+      } else {
+        console.error("File upload failed:", await response.text());
+        return null;
+      }
+    } catch (error) {
+      console.error("File upload failed:", error);
+      return null;
+    }
+  };
+
   const onSubmitHandle = async (data: createCustomerInfoData) => {
-    console.log(data);
+    try {
+      // Upload các file song song
+      const [avatarUrl, idCardUrl] = await Promise.all([
+        uploadFile(selectedAvatar),
+        uploadFile(idCard),
+      ]);
+
+      // Kiểm tra nếu có file nào không upload được
+      if (!avatarUrl || !idCardUrl) {
+        alert("Failed to upload one or more files. Please try again.");
+        return;
+      }
+
+      // Cập nhật URL vào form data
+      const formData = {
+        ...data,
+        avatar: avatarUrl,
+        idCard: idCardUrl,
+      };
+
+      console.log("Final Form Data:", formData);
+
+      //Tam thoi xai cung
+      await fetch("/api/users/fa21339b-a224-466b-bf76-043a207ad160",
+        { method: "PUT", body: JSON.stringify(formData) });
+
+      alert("Form submitted successfully!");
+    } catch (error) {
+      console.error("Failed to submit data:", error);
+      alert("Something went wrong during form submission.");
+    }
   };
 
   return (
-    <form 
+    <form
       className="flex flex-col md:flex-row h-full relative min-h-screen"
       onSubmit={handleSubmit(onSubmitHandle)}>
       {/* Section-Left */}
@@ -50,7 +202,7 @@ const UpdateCustomerInfo = () => {
         </div>
         <div className="grid mt-[80px] gap-7">
           <div className="flex justify-center flex-wrap md:flex-row gap-2 w-full">
-          <Controller
+            <Controller
               name="fullName"
               control={control}
               render={({ field }) => (
@@ -98,7 +250,7 @@ const UpdateCustomerInfo = () => {
           </div>
 
           <div className="flex justify-center flex-wrap md:flex-row gap-2">
-          <Controller
+            <Controller
               name="phoneNumber"
               control={control}
               render={({ field }) => (
@@ -130,40 +282,83 @@ const UpdateCustomerInfo = () => {
           </div>
 
           <div className="flex justify-center flex-wrap md:flex-row gap-2">
-            <InputWithLabel
-              className="min-w-[290px]"
-              labelText="CITY/PROVINCE" inputType="text"
-              inputPlaceholder="Enter your city/province" inputId="city"
-              inputWidth="43.125vw" plusPX="16px" />
+            <Controller
+              name="city"
+              control={control}
+              render={({ field }) => (
+                <InputWithLabel
+                  className="min-w-[290px]"
+                  labelText="CITY/PROVINCE" inputType="text"
+                  inputPlaceholder="Enter your city/province" inputId="city"
+                  inputWidth="43.125vw" plusPX="16px"
+                  value={field.value ?? ""}
+                  onChange={field.onChange}
+                  error={errors.city?.message} />
+              )} />
           </div>
 
           <div className="flex justify-center flex-wrap md:flex-row gap-2">
-            <InputWithLabel
-              className="min-w-[290px]"
-              labelText="WARD" inputType="text"
-              inputPlaceholder="Enter ward" inputId="ward"
-              inputWidth="25vw" />
+            <Controller
+              name="ward"
+              control={control}
+              render={({ field }) => (
+                <InputWithLabel
+                  className="min-w-[290px]"
+                  labelText="WARD" inputType="text"
+                  inputPlaceholder="Enter ward" inputId="ward"
+                  inputWidth="25vw"
+                  value={field.value ?? ""}
+                  onChange={field.onChange}
+                  error={errors.ward?.message} />
+              )} />
+
             <div className=" md:mt-0">
-              <InputWithLabel
-                className="min-w-[290px]"
-                labelText="POSTAL CODE" inputType="text"
-                inputPlaceholder="Enter Postal Code" inputId="postal"
-                inputWidth="18.125vw" plusPX='8px' />
+              <Controller
+                name="postalCode"
+                control={control}
+                render={({ field }) => (
+                  <InputWithLabel
+                    className="min-w-[290px]"
+                    labelText="POSTAL CODE" inputType="text"
+                    inputPlaceholder="Enter Postal Code" inputId="postalCode"
+                    inputWidth="18.125vw" plusPX='8px'
+                    value={field.value ?? ""}
+                    onChange={field.onChange}
+                    error={errors.postalCode?.message} />
+                )} />
             </div>
           </div>
 
           <div className="flex justify-center flex-wrap md:flex-row gap-2">
-            <InputWithLabel
-              className="min-w-[290px]"
-              labelText="HOUSE NUMBER" inputType="text"
-              inputPlaceholder="Enter your House Number" inputId="houseNum"
-              inputWidth="18.75vw" />
+            <Controller
+              name="houseNumber"
+              control={control}
+              render={({ field }) => (
+                <InputWithLabel
+                  className="min-w-[290px]"
+                  labelText="HOUSE NUMBER" inputType="text"
+                  inputPlaceholder="Enter your House Number" inputId="houseNumber"
+                  inputWidth="18.75vw"
+                  value={field.value ?? ""}
+                  onChange={field.onChange}
+                  error={errors.houseNumber?.message} />
+              )} />
+
             <div className=" md:mt-0">
-              <InputWithLabel
-                className="min-w-[290px]"
-                labelText="STREET NAME" inputType="text"
-                inputPlaceholder="Enter your Street Name" inputId="streetName"
-                inputWidth="24.375vw" plusPX='8px' />
+              <Controller
+                name="streetName"
+                control={control}
+                render={({ field }) => (
+                  <InputWithLabel
+                    className="min-w-[290px]"
+                    labelText="STREET NAME" inputType="text"
+                    inputPlaceholder="Enter your Street Name" inputId="streetName"
+                    inputWidth="24.375vw" plusPX='8px'
+                    value={field.value ?? ""}
+                    onChange={field.onChange}
+                    error={errors.streetName?.message} />
+                )} />
+
             </div>
           </div>
 
@@ -171,33 +366,135 @@ const UpdateCustomerInfo = () => {
       </div>
       {/* Section Right */}
       <div className="md:w-1/3 bg-gray-100 min-h-screen">
-        <p className="text-3xl mx-auto font-Averta-Bold mb-4 mt-[4.7vw] ml-[2.2vw]">Avatar</p>
+                
+        {/* Avatar */}
+        <div>
+          <p className="text-3xl font-Averta-Bold mb-4 mt-[4.7vw] ml-[2.2vw]">Avatar</p>
 
-        <div className="mb-6">
-          <Image
-            src="/images/Dashboard/Personal/camera.svg"
-            alt="camera"
-            width={160}
-            height={160}
-            className="cursor-pointer flex items-center justify-center mx-auto transition-transform duration-300 hover:scale-110"
-          />
-          <Button variant="link" className="flex text-[18px] items-center justify-center mx-auto font-Averta-Semibold text-[#1A78F2]">Upload Your Avatar</Button>
+          <div className="mb-6">
+            <div className="w-[160px] h-[160px] rounded-full overflow-hidden flex mx-auto justify-center bg-gray-200 cursor-pointer">
+              {avatarUrl ? (
+                <Image
+                  src={avatarUrl}
+                  alt="avatar"
+                  width={160}
+                  height={160}
+                  className="cursor-pointer flex items-center justify-center mx-auto rounded-full"
+                  onClick={() => {
+                    if (inputAvatarRef.current) {
+                      inputAvatarRef.current.click();
+                    }
+                  }}
+                />
+              ) : (
+                <Image
+                  src="/images/Dashboard/Personal/camera.svg"
+                  alt="camera"
+                  width={160}
+                  height={160}
+                  className="cursor-pointer flex items-center justify-center mx-auto transition-transform duration-300 hover:scale-110"
+                  onClick={() => {
+                    if (inputAvatarRef.current) {
+                      inputAvatarRef.current.click();
+                    }
+                  }}
+                />
+              )}
+            </div>
+
+            <input
+              ref={inputAvatarRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              id="avatar-upload"
+              onChange={handleAvatarChange}
+            />
+            <label
+              htmlFor="avatar-upload"
+              className="block hover:underline w-fit mx-auto mt-2 text-[#1A78F2] cursor-pointer font-Averta-Semibold"
+            >
+              Upload Your Avatar
+            </label>
+          </div>
         </div>
 
-        <p className="text-3xl font-Averta-Bold mb-4 ml-[2.2vw] mt-[1vw]">ID Card</p>
-        <div className="border-2 bg-white mx-[2.08vw] border-dashed border-gray-300 rounded-lg px-4 py-8 text-center">
-          <Image
-            src="/images/Dashboard/Personal/upload.svg"
-            alt="upload"
-            width={40}
-            height={40}
-            className="mb-6 mx-auto"
+        {/* ID Card */}
+        <div>
+          <p className="text-3xl font-Averta-Bold mb-4 ml-[2.2vw] mt-[1vw]">ID Card</p>
+          <input
+            id="indentifyCard"
+            type="file"
+            className="hidden"
+            accept=".jpg,.jpeg,.png,.pdf"
+            onChange={handleIdCardChange}
           />
-          <p className="text-[14px] text-gray-600 font-Averta-Semibold mb-3">Select a file or drag and drop here</p>
-          <p className="text-[12px] text-gray-500 mb-6">JPG, PNG or PDF, file size no more than 10MB</p>
-          <button className="bg-white font-Averta-Semibold text-[#1A78F2] border-2 border-[#1A78F2] px-4 py-2 rounded-md hover:bg-blue-50 transition-colors">
-            Select File
-          </button>
+
+          <div
+            onDrop={handleIdCardDrop}
+            onDragOver={handleDragOver}
+          >
+            {idCardUrl ? (
+              <>
+                <div className="text-center">
+                  <Image
+                    src={idCardUrl}
+                    alt="identity"
+                    width={400}
+                    height={200}
+                    className='mx-auto'
+                  />
+                </div>
+                <div className="flex flex-wrap justify-center gap-[10px] mt-4">
+                  <Button className="w-[170px] h-[40px] 
+                    bg-[#1A78F2] font-Averta-Semibold text-[16px]"
+                    type="button"
+                    onClick={() => handleDownload(idCard)}>
+                    Download
+                  </Button>
+                  <Button className="w-[170px] h-[40px]
+                    bg-white font-Averta-Semibold text-[#1A78F2] hover:bg-gray-100
+                      text-[16px] border-2 border-[#1A78F2]"
+                    onClick={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
+                    type="button">Upload IDCard</Button>
+                </div></>
+            ) : idCard ? (
+              <FileDownloadCard
+                className='mx-[2.08vw]'
+                fileName={idCard.name}
+                fileSize={idCard.size}
+                onUpdate={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
+                onDownload={() => handleDownload(idCard)} />
+            ) : (
+              <div
+                className="border-2 bg-white mx-[2.08vw] border-dashed border-gray-300 rounded-lg px-4 py-8 text-center"
+              >
+                <Image
+                  src="/images/Dashboard/Personal/upload.svg"
+                  alt="upload"
+                  width={40}
+                  height={40}
+                  className="mb-6 mx-auto"
+                />
+                <>
+                  <p className="text-[14px] text-gray-600 font-Averta-Semibold mb-3">
+                    Select a file or drag and drop here
+                  </p>
+                  <p className="text-[12px] text-gray-500 mb-6">
+                    JPG, PNG or PDF, file size no more than 10MB
+                  </p>
+                </>
+                <button
+                  type="button"
+                  className="bg-white font-Averta-Semibold text-[#1A78F2] border-2 border-[#1A78F2] px-4 py-2 rounded-md hover:bg-blue-50 transition-colors"
+                  onClick={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
+                >
+                  Select File
+                </button>
+              </div>
+            )}
+          </div>
+
         </div>
 
         <div className="flex justify-center items-center mt-[2vw] pb-[2vw]">

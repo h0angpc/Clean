@@ -91,7 +91,33 @@ const UpdateStaffInfo = () => {
     }
   };
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleResumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      const allowedFormats = ["image/jpeg", "image/png", "application/pdf"];
+      if (!allowedFormats.includes(selectedFile.type)) {
+        alert("Only JPG, PNG, or PDF files are allowed!");
+        return;
+      }
+
+      if (selectedFile.size > 10 * 1024 * 1024) {
+        alert("File size should be less than 10MB!");
+        return;
+      }
+
+      setResume(selectedFile);
+
+      if (selectedFile.type.startsWith("image/")) {
+        const objectUrl = URL.createObjectURL(selectedFile);
+        setResumeUrl(objectUrl);
+      }
+      else {
+        setResumeUrl(null);
+      }
+    }
+  };
+
+  const handleIdCardDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const droppedFile = event.dataTransfer.files?.[0];
     if (droppedFile) {
@@ -118,6 +144,33 @@ const UpdateStaffInfo = () => {
     }
   };
 
+  const handleResumeDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const droppedFile = event.dataTransfer.files?.[0];
+    if (droppedFile) {
+      const allowedFormats = ["application/pdf"];
+      if (!allowedFormats.includes(droppedFile.type)) {
+        alert("Only PDF files are allowed!");
+        return;
+      }
+
+      if (droppedFile.size > 10 * 1024 * 1024) {
+        alert("File size should be less than 10MB!");
+        return;
+      }
+
+      setResume(droppedFile);
+
+      if (droppedFile.type.startsWith("image/")) {
+        const objectUrl = URL.createObjectURL(droppedFile);
+        setResumeUrl(objectUrl);
+      }
+      else {
+        setResumeUrl(null);
+      }
+    }
+  };
+
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
@@ -127,50 +180,19 @@ const UpdateStaffInfo = () => {
       alert("No file selected to download.");
       return;
     }
-  
+
     const fileUrl = URL.createObjectURL(file);
-  
+
     const link = document.createElement('a');
     link.href = fileUrl;
-    link.download = file.name; 
-  
+    link.download = file.name;
+
     document.body.appendChild(link);
     link.click();
-  
+
     document.body.removeChild(link);
     URL.revokeObjectURL(fileUrl);
   };
-
-
-  // const handleSubmitImage = async () => {
-  //   if (!selectedAvatar) {
-  //     alert("Please select an image first!");
-  //     return;
-  //   }
-
-  //   const formData = new FormData();
-  //   formData.append("file", selectedAvatar);
-
-  //   try {
-  //     const response = await fetch("/api/test-cloudinary", {
-  //       method: "POST",
-  //       body: formData,
-  //     });
-
-  //     const data = await response.json();
-
-  //     if (response.ok) {
-  //       alert("Upload successful!");
-  //       console.log("Uploaded Data:", data);
-  //     } else {
-  //       alert("Upload failed!");
-  //     }
-  //   } catch (error) {
-  //     console.error("Upload failed:", error);
-  //     alert("Something went wrong.");
-  //   }
-  // };
-
 
   const {
     control,
@@ -179,8 +201,67 @@ const UpdateStaffInfo = () => {
     reset,
   } = form;
 
+  const uploadFile = async (file: File | null): Promise<string | null> => {
+    if (!file) {
+      alert("Please select a file first!");
+      return null;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("/api/test-cloudinary", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        return data.url; // Trả về URL file đã upload
+      } else {
+        console.error("File upload failed:", await response.text());
+        return null;
+      }
+    } catch (error) {
+      console.error("File upload failed:", error);
+      return null;
+    }
+  };
+
   const onSubmitHandle = async (data: createHelperInfoData) => {
-    console.log(data);
+    try {
+      // Upload các file song song
+      const [avatarUrl, idCardUrl, resumeUrl] = await Promise.all([
+        uploadFile(selectedAvatar),
+        uploadFile(idCard),
+        uploadFile(resume),
+      ]);
+
+      // Kiểm tra nếu có file nào không upload được
+      if (!avatarUrl || !idCardUrl || !resumeUrl) {
+        alert("Failed to upload one or more files. Please try again.");
+        return;
+      }
+
+      // Cập nhật URL vào form data
+      const formData = {
+        ...data,
+        avatar: avatarUrl,
+        idCard: idCardUrl,
+        resume: resumeUrl,
+      };
+
+      console.log("Final Form Data:", formData);
+
+      // Gửi dữ liệu form đến backend
+      // await fetch("/api/submit-helper-info", { method: "POST", body: JSON.stringify(formData) });
+
+      alert("Form submitted successfully!");
+    } catch (error) {
+      console.error("Failed to submit data:", error);
+      alert("Something went wrong during form submission.");
+    }
   };
 
   return (
@@ -206,7 +287,6 @@ const UpdateStaffInfo = () => {
         </div>
         <div className="grid mt-[80px] gap-7">
           <div className="flex justify-center flex-wrap md:flex-row gap-2 w-full">
-
             <Controller
               name="fullName"
               control={control}
@@ -453,8 +533,12 @@ const UpdateStaffInfo = () => {
             </label>
           </div>
         </div>
+
         {/* ID Card */}
-        <div>
+        <div
+          onDrop={handleIdCardDrop}
+          onDragOver={handleDragOver}
+        >
           <p className="text-3xl font-Averta-Bold mb-4 ml-[2.2vw] mt-[1vw]">ID Card</p>
           <input
             id="indentifyCard"
@@ -463,69 +547,71 @@ const UpdateStaffInfo = () => {
             accept=".jpg,.jpeg,.png,.pdf"
             onChange={handleIdCardChange}
           />
-          {idCardUrl ? (
-            <>
-              <div className="text-center">
-                <Image
-                  src={idCardUrl}
-                  alt="identity"
-                  width={400}
-                  height={200}
-                  className='mx-auto'
-                />
-              </div>
-              <div className="flex flex-wrap justify-center gap-[10px] mt-4">
-                <Button className="w-[170px] h-[40px] 
+
+          <div>
+            {idCardUrl ? (
+              <>
+                <div className="text-center">
+                  <Image
+                    src={idCardUrl}
+                    alt="identity"
+                    width={400}
+                    height={200}
+                    className='mx-auto'
+                  />
+                </div>
+                <div className="flex flex-wrap justify-center gap-[10px] mt-4">
+                  <Button className="w-[170px] h-[40px] 
                     bg-[#1A78F2] font-Averta-Semibold text-[16px]"
                     type="button"
                     onClick={() => handleDownload(idCard)}>
                     Download
-                </Button>
-                <Button className="w-[170px] h-[40px]
+                  </Button>
+                  <Button className="w-[170px] h-[40px]
                     bg-white font-Averta-Semibold text-[#1A78F2] hover:bg-gray-100
                       text-[16px] border-2 border-[#1A78F2]"
-                      onClick={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
-                      type="button">Upload IDCard</Button>
-              </div></>
-          ) : idCard ? (
-            <FileDownloadCard 
-              className='mx-[2.08vw]' 
-              fileName={idCard.name} 
-              fileSize={idCard.size}
-              onUpdate={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
-              onDownload={() => handleDownload(idCard)} />
-          ) : (
-            <div
-              className="border-2 bg-white mx-[2.08vw] border-dashed border-gray-300 rounded-lg px-4 py-8 text-center"
-              onDrop={handleDrop}
-              onDragOver={handleDragOver}
-            >
-              <Image
-                src="/images/Dashboard/Personal/upload.svg"
-                alt="upload"
-                width={40}
-                height={40}
-                className="mb-6 mx-auto"
-              />
-              <>
-                <p className="text-[14px] text-gray-600 font-Averta-Semibold mb-3">
-                  Select a file or drag and drop here
-                </p>
-                <p className="text-[12px] text-gray-500 mb-6">
-                  JPG, PNG or PDF, file size no more than 10MB
-                </p>
-              </>
-              <button
-                type="button"
-                className="bg-white font-Averta-Semibold text-[#1A78F2] border-2 border-[#1A78F2] px-4 py-2 rounded-md hover:bg-blue-50 transition-colors"
-                onClick={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
+                    onClick={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
+                    type="button">Upload IDCard</Button>
+                </div></>
+            ) : idCard ? (
+              <FileDownloadCard
+                className='mx-[2.08vw]'
+                fileName={idCard.name}
+                fileSize={idCard.size}
+                onUpdate={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
+                onDownload={() => handleDownload(idCard)} />
+            ) : (
+              <div
+                className="border-2 bg-white mx-[2.08vw] border-dashed border-gray-300 rounded-lg px-4 py-8 text-center"
               >
-                Select File
-              </button>
-            </div>
-          )}
+                <Image
+                  src="/images/Dashboard/Personal/upload.svg"
+                  alt="upload"
+                  width={40}
+                  height={40}
+                  className="mb-6 mx-auto"
+                />
+                <>
+                  <p className="text-[14px] text-gray-600 font-Averta-Semibold mb-3">
+                    Select a file or drag and drop here
+                  </p>
+                  <p className="text-[12px] text-gray-500 mb-6">
+                    JPG, PNG or PDF, file size no more than 10MB
+                  </p>
+                </>
+                <button
+                  type="button"
+                  className="bg-white font-Averta-Semibold text-[#1A78F2] border-2 border-[#1A78F2] px-4 py-2 rounded-md hover:bg-blue-50 transition-colors"
+                  onClick={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
+                >
+                  Select File
+                </button>
+              </div>
+            )}
+          </div>
 
         </div>
+        
         {/* Resume */}
         <div>
           <p className="text-3xl font-Averta-Bold mb-4 ml-[2.2vw] mt-[1vw]">Résumé</p>
@@ -534,27 +620,76 @@ const UpdateStaffInfo = () => {
             type="file"
             className="hidden"
             accept=".jpg,.jpeg,.png,.pdf"
-            onChange={handleIdCardChange}
+            onChange={handleResumeChange}
           />
-          <div className="border-2 bg-white h-auto mx-[2.08vw] border-dashed border-gray-300 rounded-lg px-4 py-4 flex">
-            <Image
-              src="/images/Dashboard/Personal/upload.svg"
-              alt="upload"
-              width={40}
-              height={40}
-            />
-            <div className="py-2 px-4 text-center mx-auto">
-              <p className="text-[14px] text-gray-600 font-Averta-Semibold">Select your CV or drag and drop here</p>
-              <p className="text-[12px] text-gray-500 mt-[12px]">JPG, PNG or PDF, file size no more than 10MB</p>
-            </div>
-            <button
-              type="button"
-              className="bg-white font-Averta-Semibold text-[#1A78F2] 
+          <div
+            onDrop={handleResumeDrop}
+            onDragOver={handleDragOver}
+          >
+            {resumeUrl ? (
+              <>
+                <div className='text-center'>
+                  <Image
+                    src={resumeUrl}
+                    alt="resume"
+                    width={400}
+                    height={200}
+                    className='mx-auto' />
+                </div>
+                <div className="flex flex-wrap justify-center gap-[10px] mt-4">
+                  <Button className="w-[170px] h-[40px] 
+                    bg-[#1A78F2] font-Averta-Semibold text-[16px]"
+                    type="button"
+                    onClick={() => handleDownload(resume)}>
+                    Download
+                  </Button>
+                  <Button className="w-[170px] h-[40px]
+                    bg-white font-Averta-Semibold text-[#1A78F2] hover:bg-gray-100
+                      text-[16px] border-2 border-[#1A78F2]"
+                    onClick={() => document.querySelector<HTMLInputElement>("#resumeUploaded")?.click()}
+                    type="button">Upload IDCard</Button>
+                </div>
+              </>
+            ) : resume ? (
+              <FileDownloadCard
+                className='mx-[2.08vw]'
+                fileName={resume.name}
+                fileSize={resume.size}
+                onUpdate={() => document.querySelector<HTMLInputElement>("#resumeUploaded")?.click()}
+                onDownload={() => handleDownload(resume)} />
+            ) : (
+              <div
+                className="border-2 bg-white h-auto mx-[2.08vw] border-dashed
+             border-gray-300 rounded-lg px-4 py-4 flex"
+
+              >
+                <Image
+                  src="/images/Dashboard/Personal/upload.svg"
+                  alt="upload"
+                  width={40}
+                  height={40}
+                />
+                <div className="py-2 px-4 text-center mx-auto">
+                  <p className="text-[14px] text-gray-600 font-Averta-Semibold">
+                    Select your CV or drag and drop here
+                  </p>
+                  <p className="text-[12px] text-gray-500 mt-[12px]">
+                    JPG, PNG or PDF, file size no more than 10MB
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="bg-white font-Averta-Semibold text-[#1A78F2] 
                   border-2 border-[#1A78F2] px-4 py-2 rounded-md hover:bg-blue-50 
-                  transition-colors h-fit ml-auto my-auto w-auto">
-              Select File
-            </button>
+                  transition-colors h-fit ml-auto my-auto w-auto"
+                  onClick={() => document.querySelector<HTMLInputElement>("#resumeUploaded")?.click()}
+                >
+                  Select File
+                </button>
+              </div>
+            )}
           </div>
+
         </div>
 
         <div className="flex justify-center items-center mt-[2vw] pb-[2vw]">

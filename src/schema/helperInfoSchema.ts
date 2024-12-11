@@ -32,7 +32,10 @@ const helperInfoSchema = z.object({
     servicesOffered: z
       .array(z.string())
       .min(1, 'At least one service must be selected'),
-  });
+    // avatar: z.string().url({ message: "Invalid avatar URL" }),
+    // idCard: z.string().url({ message: "Invalid ID Card URL" }),
+    // resume: z.string().url({ message: "Invalid resume URL" }),
+});
 
   const partialHelperInfoSchema = helperInfoSchema.partial();
 
