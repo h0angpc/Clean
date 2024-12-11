@@ -9,6 +9,8 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { createHelperInfoData, helperInfoSchema } from '@/schema/helperInfoSchema';
+import { setId } from '@material-tailwind/react/components/Tabs/TabsContext';
+import FileDownloadCard from '@/components/card/FileDownloadCard';
 
 const genderOptions = ["Female", "Male", "Other"]
 
@@ -44,29 +46,110 @@ const UpdateStaffInfo = () => {
   }));
 
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedAvatar, setSelectedAvatar] = useState<File | null>(null);
+  const [idCard, setIdCard] = useState<File | null>(null);
+  const [idCardUrl, setidCardUrl] = useState<string | null>(null);
+  const [resume, setResume] = useState<File | null>(null);
+  const [resumeUrl, setResumeUrl] = useState<string | null>(null);
 
-  const inputFileRef = useRef<HTMLInputElement>(null);
+  const inputAvatarRef = useRef<HTMLInputElement>(null);
 
   // Handle file selection
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setSelectedFile(file);
+      setSelectedAvatar(file);
 
       const objectUrl = URL.createObjectURL(file);
       setAvatarUrl(objectUrl);
     }
   };
 
+  const handleIdCardChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      const allowedFormats = ["image/jpeg", "image/png", "application/pdf"];
+      if (!allowedFormats.includes(selectedFile.type)) {
+        alert("Only JPG, PNG, or PDF files are allowed!");
+        return;
+      }
+
+      if (selectedFile.size > 10 * 1024 * 1024) {
+        alert("File size should be less than 10MB!");
+        return;
+      }
+
+      setIdCard(selectedFile);
+
+      if (selectedFile.type.startsWith("image/")) {
+        const objectUrl = URL.createObjectURL(selectedFile);
+        setidCardUrl(objectUrl);
+      }
+      else {
+        setidCardUrl(null);
+      }
+    }
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const droppedFile = event.dataTransfer.files?.[0];
+    if (droppedFile) {
+      const allowedFormats = ["image/jpeg", "image/png", "application/pdf"];
+      if (!allowedFormats.includes(droppedFile.type)) {
+        alert("Only JPG, PNG, or PDF files are allowed!");
+        return;
+      }
+
+      if (droppedFile.size > 10 * 1024 * 1024) {
+        alert("File size should be less than 10MB!");
+        return;
+      }
+
+      setIdCard(droppedFile);
+
+      if (droppedFile.type.startsWith("image/")) {
+        const objectUrl = URL.createObjectURL(droppedFile);
+        setidCardUrl(objectUrl);
+      }
+      else {
+        setidCardUrl(null);
+      }
+    }
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
+  const handleDownload = (file: File | null) => {
+    if (!file) {
+      alert("No file selected to download.");
+      return;
+    }
+  
+    const fileUrl = URL.createObjectURL(file);
+  
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = file.name; 
+  
+    document.body.appendChild(link);
+    link.click();
+  
+    document.body.removeChild(link);
+    URL.revokeObjectURL(fileUrl);
+  };
+
+
   // const handleSubmitImage = async () => {
-  //   if (!selectedFile) {
+  //   if (!selectedAvatar) {
   //     alert("Please select an image first!");
   //     return;
   //   }
 
   //   const formData = new FormData();
-  //   formData.append("file", selectedFile);
+  //   formData.append("file", selectedAvatar);
 
   //   try {
   //     const response = await fetch("/api/test-cloudinary", {
@@ -319,93 +402,159 @@ const UpdateStaffInfo = () => {
       </div>
       {/* Section-Right */}
       <div className="md:w-1/3 bg-gray-100 min-h-screen">
-        <p className="text-3xl font-Averta-Bold mb-4 mt-[4.7vw] ml-[2.2vw]">Avatar</p>
+        {/* Avatar */}
+        <div>
+          <p className="text-3xl font-Averta-Bold mb-4 mt-[4.7vw] ml-[2.2vw]">Avatar</p>
 
-        <div className="mb-6">
-          <div className="w-[160px] h-[160px] rounded-full overflow-hidden flex mx-auto justify-center bg-gray-200 cursor-pointer">
-            {avatarUrl ? (
-              <Image
-                src={avatarUrl}
-                alt="avatar"
-                width={160}
-                height={160}
-                className="cursor-pointer flex items-center justify-center mx-auto rounded-full"
-                onClick={() => {
-                  if (inputFileRef.current) {
-                    inputFileRef.current.click();
-                  }
-                }}
-              />
-            ) : (
-              <Image
-                src="/images/Dashboard/Personal/camera.svg"
-                alt="camera"
-                width={160}
-                height={160}
-                className="cursor-pointer flex items-center justify-center mx-auto transition-transform duration-300 hover:scale-110"
-                onClick={() => {
-                  if (inputFileRef.current) {
-                    inputFileRef.current.click();
-                  }
-                }}
-              />
-            )}
+          <div className="mb-6">
+            <div className="w-[160px] h-[160px] rounded-full overflow-hidden flex mx-auto justify-center bg-gray-200 cursor-pointer">
+              {avatarUrl ? (
+                <Image
+                  src={avatarUrl}
+                  alt="avatar"
+                  width={160}
+                  height={160}
+                  className="cursor-pointer flex items-center justify-center mx-auto rounded-full"
+                  onClick={() => {
+                    if (inputAvatarRef.current) {
+                      inputAvatarRef.current.click();
+                    }
+                  }}
+                />
+              ) : (
+                <Image
+                  src="/images/Dashboard/Personal/camera.svg"
+                  alt="camera"
+                  width={160}
+                  height={160}
+                  className="cursor-pointer flex items-center justify-center mx-auto transition-transform duration-300 hover:scale-110"
+                  onClick={() => {
+                    if (inputAvatarRef.current) {
+                      inputAvatarRef.current.click();
+                    }
+                  }}
+                />
+              )}
+            </div>
+
+            <input
+              ref={inputAvatarRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              id="avatar-upload"
+              onChange={handleAvatarChange}
+            />
+            <label
+              htmlFor="avatar-upload"
+              className="block hover:underline w-fit mx-auto mt-2 text-[#1A78F2] cursor-pointer font-Averta-Semibold"
+            >
+              Upload Your Avatar
+            </label>
           </div>
-
+        </div>
+        {/* ID Card */}
+        <div>
+          <p className="text-3xl font-Averta-Bold mb-4 ml-[2.2vw] mt-[1vw]">ID Card</p>
           <input
-            ref={inputFileRef}
+            id="indentifyCard"
             type="file"
-            accept="image/*"
             className="hidden"
-            id="avatar-upload"
-            onChange={handleFileChange}
+            accept=".jpg,.jpeg,.png,.pdf"
+            onChange={handleIdCardChange}
           />
-          <label
-            htmlFor="avatar-upload"
-            className="block hover:underline w-fit mx-auto mt-2 text-[#1A78F2] cursor-pointer font-Averta-Semibold"
-          >
-            Upload Your Avatar
-          </label>
-        </div>
+          {idCardUrl ? (
+            <>
+              <div className="text-center">
+                <Image
+                  src={idCardUrl}
+                  alt="identity"
+                  width={400}
+                  height={200}
+                  className='mx-auto'
+                />
+              </div>
+              <div className="flex flex-wrap justify-center gap-[10px] mt-4">
+                <Button className="w-[170px] h-[40px] 
+                    bg-[#1A78F2] font-Averta-Semibold text-[16px]"
+                    type="button"
+                    onClick={() => handleDownload(idCard)}>
+                    Download
+                </Button>
+                <Button className="w-[170px] h-[40px]
+                    bg-white font-Averta-Semibold text-[#1A78F2] hover:bg-gray-100
+                      text-[16px] border-2 border-[#1A78F2]"
+                      onClick={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
+                      type="button">Upload IDCard</Button>
+              </div></>
+          ) : idCard ? (
+            <FileDownloadCard 
+              className='mx-[2.08vw]' 
+              fileName={idCard.name} 
+              fileSize={idCard.size}
+              onUpdate={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
+              onDownload={() => handleDownload(idCard)} />
+          ) : (
+            <div
+              className="border-2 bg-white mx-[2.08vw] border-dashed border-gray-300 rounded-lg px-4 py-8 text-center"
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+            >
+              <Image
+                src="/images/Dashboard/Personal/upload.svg"
+                alt="upload"
+                width={40}
+                height={40}
+                className="mb-6 mx-auto"
+              />
+              <>
+                <p className="text-[14px] text-gray-600 font-Averta-Semibold mb-3">
+                  Select a file or drag and drop here
+                </p>
+                <p className="text-[12px] text-gray-500 mb-6">
+                  JPG, PNG or PDF, file size no more than 10MB
+                </p>
+              </>
+              <button
+                type="button"
+                className="bg-white font-Averta-Semibold text-[#1A78F2] border-2 border-[#1A78F2] px-4 py-2 rounded-md hover:bg-blue-50 transition-colors"
+                onClick={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
+              >
+                Select File
+              </button>
+            </div>
+          )}
 
-        <p className="text-3xl font-Averta-Bold mb-4 ml-[2.2vw] mt-[1vw]">ID Card</p>
-        <div className="border-2 bg-white mx-[2.08vw] border-dashed border-gray-300 rounded-lg px-4 py-8 text-center">
-          <Image
-            src="/images/Dashboard/Personal/upload.svg"
-            alt="upload"
-            width={40}
-            height={40}
-            className="mb-6 mx-auto"
-          />
-          <p className="text-[14px] text-gray-600 font-Averta-Semibold mb-3">Select a file or drag and drop here</p>
-          <p className="text-[12px] text-gray-500 mb-6">JPG, PNG or PDF, file size no more than 10MB</p>
-          <button
-            type="button"
-            className="bg-white font-Averta-Semibold text-[#1A78F2] border-2 border-[#1A78F2] px-4 py-2 
-            rounded-md hover:bg-blue-50 transition-colors">
-            Select File
-          </button>
         </div>
-
-        <p className="text-3xl font-Averta-Bold mb-4 ml-[2.2vw] mt-[1vw]">Résumé</p>
-        <div className="border-2 bg-white h-auto mx-[2.08vw] border-dashed border-gray-300 rounded-lg px-4 py-4 flex">
-          <Image
-            src="/images/Dashboard/Personal/upload.svg"
-            alt="upload"
-            width={40}
-            height={40}
+        {/* Resume */}
+        <div>
+          <p className="text-3xl font-Averta-Bold mb-4 ml-[2.2vw] mt-[1vw]">Résumé</p>
+          <input
+            id="resumeUploaded"
+            type="file"
+            className="hidden"
+            accept=".jpg,.jpeg,.png,.pdf"
+            onChange={handleIdCardChange}
           />
-          <div className="py-2 px-4 text-center mx-auto">
-            <p className="text-[14px] text-gray-600 font-Averta-Semibold">Select your CV or drag and drop here</p>
-            <p className="text-[12px] text-gray-500 mt-[12px]">JPG, PNG or PDF, file size no more than 10MB</p>
-          </div>
-          <button
-            type="button"
-            className="bg-white font-Averta-Semibold text-[#1A78F2] 
+          <div className="border-2 bg-white h-auto mx-[2.08vw] border-dashed border-gray-300 rounded-lg px-4 py-4 flex">
+            <Image
+              src="/images/Dashboard/Personal/upload.svg"
+              alt="upload"
+              width={40}
+              height={40}
+            />
+            <div className="py-2 px-4 text-center mx-auto">
+              <p className="text-[14px] text-gray-600 font-Averta-Semibold">Select your CV or drag and drop here</p>
+              <p className="text-[12px] text-gray-500 mt-[12px]">JPG, PNG or PDF, file size no more than 10MB</p>
+            </div>
+            <button
+              type="button"
+              className="bg-white font-Averta-Semibold text-[#1A78F2] 
                   border-2 border-[#1A78F2] px-4 py-2 rounded-md hover:bg-blue-50 
                   transition-colors h-fit ml-auto my-auto w-auto">
-            Select File
-          </button>
+              Select File
+            </button>
+          </div>
         </div>
 
         <div className="flex justify-center items-center mt-[2vw] pb-[2vw]">
