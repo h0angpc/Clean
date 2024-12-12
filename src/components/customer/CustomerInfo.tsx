@@ -6,16 +6,45 @@ import { Button } from '@/components/ui/button';
 import { ComboboxInput } from '@/components/input/combobox-input';
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createCustomerInfoData, customerInfoSchema } from '@/schema/customerInfoSchema';
+import { createCustomerInfoData, customerInfoSchema, updateCustomerInfoData } from '@/schema/customerInfoSchema';
 import FileDownloadCard from '@/components/card/FileDownloadCard';
 import ClipLoader from "react-spinners/ClipLoader";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
+import { useRouter } from 'next/navigation';
+import { LuArrowLeft } from 'react-icons/lu';
 
 const genderOptions = ["Female", "Male", "Other"]
 
-const CustomerInfo = () => {
-    const form = useForm<createCustomerInfoData>({
+interface CustomerInfoProps {
+    userId: string,
+}
+
+const CustomerInfo: React.FC<CustomerInfoProps> = ({ userId }) => {
+    const router = useRouter();
+    const [idCard, setIdCard] = useState<File | null>(null);
+    const [idCardUrl, setidCardUrl] = useState<string | null>(null);
+
+    const form = useForm<updateCustomerInfoData>({
         mode: "onSubmit",
         resolver: zodResolver(customerInfoSchema),
+    });
+
+    const fetchCustomerInfo = async (): Promise<Customer> => {
+        try {
+            const response = await fetch(`/api/users/${userId}`);
+            if (!response.ok) {
+                throw new Error("Error fetching user info");
+            }
+            return await response.json();
+        } catch (error) {
+            console.error("Error fetching user info", error);
+            throw new Error("Error fetching user info");
+        }
+    };
+
+    const { data: customerData, isPending: isFetchCustomerPending } = useQuery({
+        queryKey: ["serviceDetail", userId],
+        queryFn: fetchCustomerInfo,
     });
 
     const {
@@ -25,26 +54,45 @@ const CustomerInfo = () => {
         reset,
     } = form;
 
-    const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-    const [selectedAvatar, setSelectedAvatar] = useState<File | null>(null);
-    const [idCard, setIdCard] = useState<File | null>(null);
-    const [idCardUrl, setidCardUrl] = useState<string | null>(null);
-
     useEffect(() => {
-        setidCardUrl("/images/Dashboard/Personal/identity.png");
-    }, []);
-
-    const inputAvatarRef = useRef<HTMLInputElement>(null);
-
-    const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            setSelectedAvatar(file);
-
-            const objectUrl = URL.createObjectURL(file);
-            setAvatarUrl(objectUrl);
+        if (!userId) {
+            reset();
+            return;
         }
-    };
+        if (customerData) {
+            console.log("Initial gender:", customerData.gender);
+            const addressParts = customerData.address.split(' - ');
+            reset({
+                ...customerData,
+                houseNumber: addressParts[0],
+                streetName: addressParts[1],
+                ward: addressParts[2],
+                city: addressParts[3],
+                postalCode: addressParts[4],
+                gender: customerData.gender ?? ""
+            });
+
+            const identifyCardUrl = customerData?.identifyCard;
+            setidCardUrl(identifyCardUrl);
+
+            if (identifyCardUrl) {
+                fetch(identifyCardUrl)
+                    .then((response) => response.blob())
+                    .then((blob) => {
+                        // Kiểm tra loại MIME của file để xác định tên và kiểu đúng
+                        const mimeType = blob.type;
+
+                        // Nếu là file PDF
+                        const file = new File([blob], 'identityCard', { type: mimeType });
+
+                        // Set file vào state (setIdCard sẽ nhận file)
+                        setIdCard(file);
+                    })
+                    .catch((error) => console.error('Error fetching the identity card:', error));
+            }
+        }
+    }, [userId, customerData, reset]);
+
 
     const handleIdCardChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
@@ -150,32 +198,38 @@ const CustomerInfo = () => {
         }
     };
 
-    const onSubmitHandle = async (data: createCustomerInfoData) => {
+    const onSubmitHandle = async (data: updateCustomerInfoData) => {
         try {
-            // Upload các file song song
-            const [avatarUrl, idCardUrl] = await Promise.all([
-                uploadFile(selectedAvatar),
-                uploadFile(idCard),
-            ]);
+            let idCardUrl_temp = null;
 
-            // Kiểm tra nếu có file nào không upload được
-            if (!avatarUrl || !idCardUrl) {
-                alert("Failed to upload one or more files. Please try again.");
-                return;
+            // Kiểm tra nếu có sự thay đổi thì mới upload idCard
+            if (idCard && customerData?.identifyCard !== idCardUrl) {
+                idCardUrl_temp = await uploadFile(idCard);
+            }
+            else {
+                idCardUrl_temp = customerData?.identifyCard;
             }
 
             // Cập nhật URL vào form data
             const formData = {
                 ...data,
-                avatar: avatarUrl,
-                idCard: idCardUrl,
+                idCard: idCardUrl_temp,
             };
+
+            if (data.email === customerData?.email) {
+                delete formData.email;
+            }
 
             console.log("Final Form Data:", formData);
 
             //Tam thoi xai cung
-            await fetch("/api/users/fa21339b-a224-466b-bf76-043a207ad160",
-                { method: "PUT", body: JSON.stringify(formData) });
+            await fetch(`/api/users/${userId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
 
             alert("Form submitted successfully!");
         } catch (error) {
@@ -184,6 +238,13 @@ const CustomerInfo = () => {
         }
     };
 
+    if (!customerData)
+        return (
+            <div className="flex w-full h-full items-center justify-center">
+                <ClipLoader color="#2A88F5" loading={true} size={30} />
+            </div>
+        );
+
     return (
         <div className="bg-white h-fit">
             <form className=" h-full w-full flex flex-wrap md:flex-row justify-center"
@@ -191,61 +252,72 @@ const CustomerInfo = () => {
                 {/* Section Left */}
                 <div className="md:w-2/3 pb-10 bg-white">
                     <div className="flex flex-row">
-                        <Image
-                            src="/images/Dashboard/Personal/exit-button.png"
-                            alt="X-button"
-                            width={70}
-                            height={70}
-                            className='cursor-pointer hover:bg-[#ededed]'
-                        />
+                        <button
+                            type="button"
+                            onClick={() => router.back()}
+                            className='h-full p-6 hover:bg-slate-200 border-r-[1px] '>
+                            <LuArrowLeft className='h-[19px] text-neutral-300 text-xl font-bold' />
+                        </button>
                         <p className="font-Averta-Bold text-4xl text-center my-auto ml-[10px]">User Info</p>
                     </div>
 
-                    <div className="grid mt-[50px] gap-4">
+                    <div className="grid mt-[50px] gap-6">
                         <div className="flex justify-center flex-wrap md:flex-row gap-2 w-full">
                             <Controller
                                 name="fullName"
                                 control={control}
-                                render={({ field }) => (
-                                    <InputWithLabel
-                                        className="min-w-[290px]"
-                                        labelText="FULL NAME" inputType="text"
-                                        inputPlaceholder="Enter Full Name" inputId="fullName"
-                                        value={field.value ?? ""}
-                                        onChange={field.onChange}
-                                        inputWidth="25vw"
-                                        error={errors.fullName?.message}
-                                    />
-                                )} />
+                                render={({ field }) => {
+                                    // console.log("fullName: ", field.value)
+                                    return (
+                                        <InputWithLabel
+                                            className="min-w-[290px]"
+                                            labelText="FULL NAME" inputType="text"
+                                            inputPlaceholder="Enter Full Name" inputId="fullName"
+                                            value={field.value ?? ""}
+                                            onChange={field.onChange}
+                                            inputWidth="25vw"
+                                            error={errors.fullName?.message}
+                                        />
+                                    )
+                                }} />
                             <div className="flex md:mt-0 gap-2">
                                 <Controller
                                     name="dateOfBirth"
                                     control={control}
-                                    render={({ field }) => (
-                                        <InputWithLabel
+                                    render={({ field }) => {
+                                        console.log("field.value Date:", field.value);
+                                        const formattedDate = field.value ? field.value.split('T')[0] : "";
+
+                                        return (<InputWithLabel
                                             className="min-w-[170px]"
                                             labelText="DATE OF BIRTH" inputType="date"
                                             inputPlaceholder="" inputId="dateOfBirth"
-                                            value={field.value}
+                                            value={formattedDate}
                                             onChange={field.onChange}
                                             error={errors.dateOfBirth?.message}
-                                            inputWidth="11.25vw" />
-                                    )} />
+                                            inputWidth="11.25vw" />)
+                                    }
+                                    } />
                                 <Controller
                                     name="gender"
                                     control={control}
-                                    render={({ field }) => (
-                                        <ComboboxInput
-                                            className="min-w-[112px]"
-                                            labelText="GENDER"
-                                            inputId="gender" defaultValue={genderOptions.at(0)}
-                                            inputWidth="6.875vw" options={genderOptions}
-                                            inputPlaceholder='Gender'
-                                            value={field.value ?? ""}
-                                            onChange={field.onChange}
-                                            error={errors.gender?.message}
-                                        />
-                                    )} />
+                                    render={({ field }) => {
+                                        // console.log("field.value Gender:", field.value);  
+                                        return (
+                                            <ComboboxInput
+                                                className="min-w-[112px]"
+                                                labelText="GENDER"
+                                                inputId="gender"
+                                                inputWidth="6.875vw"
+                                                options={genderOptions}
+                                                inputPlaceholder="Gender"
+                                                value={field.value ?? customerData.gender}
+                                                onChange={field.onChange}
+                                                error={errors.gender?.message}
+                                                ref={field.ref}
+                                            />
+                                        );
+                                    }} />
 
                             </div>
                         </div>
@@ -273,7 +345,7 @@ const CustomerInfo = () => {
                                         <InputWithLabel
                                             className="min-w-[290px]"
                                             labelText="EMAIL ADDRESS" inputType="email"
-                                            inputPlaceholder="Enter your email address" inputId="contactEmail"
+                                            inputPlaceholder="Enter your email address" inputId="email"
                                             inputWidth="18.125vw" plusPX='8px'
                                             value={field.value ?? ""}
                                             onChange={field.onChange}
@@ -368,59 +440,8 @@ const CustomerInfo = () => {
                 {/* Section Right */}
                 <div className="md:w-1/3 justify-center min-w-[300px]">
 
-                    {/* Avatar */}
                     <div>
-                        <p className="font-Averta-Bold text-4xl my-[12.8875px] ml-[10px]">Avatar</p>
-                        <div className="mb-6">
-                            <div className="w-[160px] h-[160px] rounded-full overflow-hidden flex mx-auto justify-center bg-gray-200 cursor-pointer">
-                                {avatarUrl ? (
-                                    <Image
-                                        src={avatarUrl}
-                                        alt="avatar"
-                                        width={160}
-                                        height={160}
-                                        className="cursor-pointer flex items-center justify-center mx-auto rounded-full"
-                                        onClick={() => {
-                                            if (inputAvatarRef.current) {
-                                                inputAvatarRef.current.click();
-                                            }
-                                        }}
-                                    />
-                                ) : (
-                                    <Image
-                                        src="/images/Dashboard/Personal/camera.svg"
-                                        alt="camera"
-                                        width={160}
-                                        height={160}
-                                        className="cursor-pointer flex items-center justify-center mx-auto transition-transform duration-300 hover:scale-110"
-                                        onClick={() => {
-                                            if (inputAvatarRef.current) {
-                                                inputAvatarRef.current.click();
-                                            }
-                                        }}
-                                    />
-                                )}
-                            </div>
-
-                            <input
-                                ref={inputAvatarRef}
-                                type="file"
-                                accept="image/*"
-                                className="hidden"
-                                id="avatar-upload"
-                                onChange={handleAvatarChange}
-                            />
-                            <label
-                                htmlFor="avatar-upload"
-                                className="block hover:underline w-fit mx-auto mt-2 text-[#1A78F2] cursor-pointer font-Averta-Semibold"
-                            >
-                                Upload Your Avatar
-                            </label>
-                        </div>
-                    </div>
-
-                    <div>
-                        <p className="text-3xl font-Averta-Bold mt-[1vw] ml-[10px]">ID Card</p>
+                        <p className="font-Averta-Bold text-4xl my-[12.8875px] ml-[10px]">ID Card</p>
                         <input
                             id="indentifyCard"
                             type="file"
@@ -433,38 +454,43 @@ const CustomerInfo = () => {
                             onDrop={handleIdCardDrop}
                             onDragOver={handleDragOver}
                         >
-                            {idCardUrl ? (
-                                <>
+                            {idCard ? (
+                                idCard.type.startsWith('image/') ? (
                                     <div className="text-center">
                                         <Image
-                                            src={idCardUrl}
+                                            src={idCardUrl || ''}
                                             alt="identity"
                                             width={400}
                                             height={200}
                                             className='mx-auto'
+                                            unoptimized
                                         />
+                                        <div className="flex flex-wrap justify-center gap-[10px] mt-4">
+                                            <Button
+                                                className="w-[170px] h-[40px] bg-[#1A78F2] font-Averta-Semibold text-[16px]"
+                                                type="button"
+                                                onClick={() => handleDownload(idCard)}>
+                                                Download
+                                            </Button>
+                                            <Button
+                                                className="w-[170px] h-[40px] bg-white font-Averta-Semibold text-[#1A78F2] hover:bg-gray-100 text-[16px] border-2 border-[#1A78F2]"
+                                                onClick={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
+                                                type="button">
+                                                Upload IDCard
+                                            </Button>
+                                        </div>
                                     </div>
-                                    <div className="flex flex-wrap justify-center gap-[10px] mt-4">
-                                        <Button className="w-[170px] h-[40px] 
-                                                bg-[#1A78F2] font-Averta-Semibold text-[16px]"
-                                            type="button"
-                                            onClick={() => handleDownload(idCard)}>
-                                            Download
-                                        </Button>
-                                        <Button className="w-[170px] h-[40px]
-                                                bg-white font-Averta-Semibold text-[#1A78F2] hover:bg-gray-100
-                                                text-[16px] border-2 border-[#1A78F2]"
-                                            onClick={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
-                                            type="button">Upload IDCard</Button>
-                                    </div></>
-                            ) : idCard ? (
-                                <FileDownloadCard
-                                    className='mx-[2.08vw]'
-                                    fileName={idCard.name}
-                                    fileSize={idCard.size}
-                                    onUpdate={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
-                                    onDownload={() => handleDownload(idCard)} />
+                                ) : (
+                                    // Nếu là PDF
+                                    <FileDownloadCard
+                                        className='mx-[1.04vw]'
+                                        fileName={idCard.name}
+                                        fileSize={idCard.size}
+                                        onUpdate={() => document.querySelector<HTMLInputElement>("#indentifyCard")?.click()}
+                                        onDownload={() => handleDownload(idCard)} />
+                                )
                             ) : (
+                                // Trường hợp không có idCard
                                 <div className="flex justify-center items-center w-full h-[200px]">
                                     <ClipLoader color="#2A88F5" loading={true} size={30} />
                                 </div>
@@ -473,7 +499,7 @@ const CustomerInfo = () => {
                     </div>
                 </div>
                 <div className="flex justify-center items-center py-[20px]">
-                    <Button className="md:w-1/5 min-w-[150px] h-[60px] bg-[#1A78F2] font-Averta-Semibold text-[16px]">Save</Button>
+                    <Button type="submit" className="md:w-1/5 min-w-[150px] h-[60px] bg-[#1A78F2] font-Averta-Semibold text-[16px]">Save</Button>
                 </div>
             </form>
         </div>

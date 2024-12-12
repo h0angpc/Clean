@@ -48,7 +48,7 @@ export function MultipleChoiceInput({
             <div className="w-fit">
                 <div
                     className={cn(
-                        `flex flex-wrap items-center border-2 gap-2 border-gray-300 p-2 rounded-lg font-Averta-Regular min-h-[50px] max-h-[100px] overflow-auto text-[16px] text-[#88939D]`,
+                        `flex flex-wrap items-center border-2 gap-2 border-gray-300 p-2 rounded-lg font-Averta-Regular min-h-[50px] max-h-[100px] overflow-auto text-[16px] placeholder:text-[#88939D] text-[#47494b]`,
                         error ? "border-red-500 focus:ring-red-500" : "border-[#E5E7EB]",
                         className
                     )}

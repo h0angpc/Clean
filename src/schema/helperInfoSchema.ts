@@ -18,8 +18,8 @@ const helperInfoSchema = z.object({
     .email('Invalid email')
     .min(1, 'Email is required'),
     salaryExpectation: z.coerce
-    .number()
-    .nonnegative("Salary expectation must be non-negative"),
+    .number({required_error: 'Salary expectation is required'})
+    .nonnegative("Salary expectation must be non-negative").min(1, 'Salary expectation is required'),
     city: z.string({required_error: 'City is required'}).min(1, 'City is required'),
     ward: z.string({ required_error: 'Ward is required'}).min(1, 'Ward is required'),
     postalCode: z.string({ required_error: 'Postal Code is required'})

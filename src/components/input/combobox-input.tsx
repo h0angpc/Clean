@@ -1,15 +1,14 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import { Label } from "@/components/ui/label"
+import React, { forwardRef } from "react";
+import { cn } from "@/lib/utils";
+import { Label } from "@/components/ui/label";
 import {
     Select, SelectContent, SelectGroup, SelectItem,
     SelectLabel, SelectTrigger, SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
-
-
-interface ComboboxInputlProps {
+interface ComboboxInputProps {
     labelText: string;
     inputId: string;
     inputWidth?: string;
@@ -22,18 +21,22 @@ interface ComboboxInputlProps {
     error?: string;
 }
 
-export function ComboboxInput({
-    labelText,
-    inputId,
-    inputWidth = "w-full",
-    inputPlaceholder,
-    options = [],
-    defaultValue,
-    className,
-    value,
-    onChange,
-    error
-}: ComboboxInputlProps) {
+// Sử dụng forwardRef để truyền ref vào component
+export const ComboboxInput = forwardRef<HTMLButtonElement, ComboboxInputProps>((
+    {
+        labelText,
+        inputId,
+        inputWidth = "w-full",
+        inputPlaceholder,
+        options = [],
+        defaultValue,
+        className,
+        value,
+        onChange,
+        error
+    },
+    ref
+) => {
 
     return (
         <div className="grid max-w-max items-center gap-1.5">
@@ -41,15 +44,16 @@ export function ComboboxInput({
                 {labelText}
             </Label>
             <div className="relative">
-                <Select defaultValue={defaultValue} value={value} onValueChange={(val) => onChange?.(val)}>
+                <Select defaultValue={defaultValue} value={value ?? defaultValue} onValueChange={(val) => onChange?.(val)}>
                     <SelectTrigger
-                        className={cn("font-Averta-Regular h-[50px] text-[16px] text-[#88939D] border-2", 
+                        className={cn("font-Averta-Regular h-[50px] text-[16px] placeholder:text-[#88939D] text-[#47494b] border-2", 
                             error ? "border-red-500 focus:ring-red-500" : "border-[#E5E7EB]",
                             className)}
                         style={{ width: `${inputWidth}` }}
                         id={inputId}
+                        ref={ref}
                     >
-                        <SelectValue placeholder={inputPlaceholder}/>
+                        <SelectValue placeholder={inputPlaceholder} />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
@@ -69,4 +73,7 @@ export function ComboboxInput({
             </div>
         </div>
     );
-}
+});
+
+// Đảm bảo rằng ref được chuyển qua khi sử dụng component
+ComboboxInput.displayName = "ComboboxInput";  // Optional: Để dễ dàng debug trong React DevTools

@@ -1,9 +1,9 @@
 import React from 'react';
 import CustomerInfo from '@/components/customer/CustomerInfo';
 
-const CustomerDetail = () => {
+const CustomerDetail = ({ params }: { params: { id: string } }) => {
   return (
-    <CustomerInfo/>
+    <CustomerInfo userId={params.id}/>
   )
 }
 

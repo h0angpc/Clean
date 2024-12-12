@@ -38,7 +38,7 @@ export function InputWithLabel({
 
             <div className="relative">
                 <Input
-                    className={cn("font-Averta-Regular h-[50px] text-[16px] text-[#88939D] border-2",
+                    className={cn("font-Averta-Regular h-[50px] text-[16px] placeholder:text-[#88939D] text-[#47494b] border-2",
                         error ? "border-red-500 focus:ring-red-500" : "border-[#E5E7EB]", className)}
                     type={inputType}
                     

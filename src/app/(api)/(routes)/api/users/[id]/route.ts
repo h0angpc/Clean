@@ -55,20 +55,38 @@ export async function PUT(
         );
     }
 
-    const userUpdatedInfo = await prisma.user.update({
-        where: {
-            id: id,
-        },
-        data: {
-            fullName: data.fullName,
-            gender: data.gender,
-            email: data.email,
-            dateOfBirth: data.dateOfBirth,
-            identifyCard: data.idCard,
-            address: address,
-            phoneNumber: data.phoneNumber,
-        }
-    })
+    let userUpdatedInfo
+    if (data.email){
+        userUpdatedInfo = await prisma.user.update({
+            where: {
+                id: id,
+            },
+            data: {
+                fullName: data.fullName,
+                gender: data.gender,
+                email: data.email,
+                dateOfBirth: data.dateOfBirth,
+                identifyCard: data.idCard,
+                address: address,
+                phoneNumber: data.phoneNumber,
+            }
+        })
+    }
+    else{
+        userUpdatedInfo = await prisma.user.update({
+            where: {
+                id: id,
+            },
+            data: {
+                fullName: data.fullName,
+                gender: data.gender,
+                dateOfBirth: data.dateOfBirth,
+                identifyCard: data.idCard,
+                address: address,
+                phoneNumber: data.phoneNumber,
+            }
+        })
+    }
 
     return NextResponse.json(userUpdatedInfo);
   }

@@ -9,14 +9,21 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { createHelperInfoData, helperInfoSchema } from '@/schema/helperInfoSchema';
-import { setId } from '@material-tailwind/react/components/Tabs/TabsContext';
 import FileDownloadCard from '@/components/card/FileDownloadCard';
+import { useRouter } from 'next/navigation';
+import { LuArrowLeft } from 'react-icons/lu';
 
 const genderOptions = ["Female", "Male", "Other"]
 
 
 const UpdateStaffInfo = () => {
+  const router = useRouter();
   const [serviceCategory, setServiceCategory] = useState<ServiceCategory[]>([]);
+
+  const [idCard, setIdCard] = useState<File | null>(null);
+  const [idCardUrl, setidCardUrl] = useState<string | null>(null);
+  const [resume, setResume] = useState<File | null>(null);
+  const [resumeUrl, setResumeUrl] = useState<string | null>(null);
 
   const form = useForm<createHelperInfoData>({
     mode: "onSubmit",
@@ -44,26 +51,6 @@ const UpdateStaffInfo = () => {
     id: serviceCategory.id,
     name: serviceCategory.name,
   }));
-
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [selectedAvatar, setSelectedAvatar] = useState<File | null>(null);
-  const [idCard, setIdCard] = useState<File | null>(null);
-  const [idCardUrl, setidCardUrl] = useState<string | null>(null);
-  const [resume, setResume] = useState<File | null>(null);
-  const [resumeUrl, setResumeUrl] = useState<string | null>(null);
-
-  const inputAvatarRef = useRef<HTMLInputElement>(null);
-
-  // Handle file selection
-  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setSelectedAvatar(file);
-
-      const objectUrl = URL.createObjectURL(file);
-      setAvatarUrl(objectUrl);
-    }
-  };
 
   const handleIdCardChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -148,9 +135,9 @@ const UpdateStaffInfo = () => {
     event.preventDefault();
     const droppedFile = event.dataTransfer.files?.[0];
     if (droppedFile) {
-      const allowedFormats = ["application/pdf"];
+      const allowedFormats = ["image/jpeg", "image/png", "application/pdf"];
       if (!allowedFormats.includes(droppedFile.type)) {
-        alert("Only PDF files are allowed!");
+        alert("Only JPG, PNG, or PDF files are allowed!");
         return;
       }
 
@@ -232,14 +219,13 @@ const UpdateStaffInfo = () => {
   const onSubmitHandle = async (data: createHelperInfoData) => {
     try {
       // Upload các file song song
-      const [avatarUrl, idCardUrl, resumeUrl] = await Promise.all([
-        uploadFile(selectedAvatar),
+      const [idCardUrl, resumeUrl] = await Promise.all([
         uploadFile(idCard),
         uploadFile(resume),
       ]);
 
       // Kiểm tra nếu có file nào không upload được
-      if (!avatarUrl || !idCardUrl || !resumeUrl) {
+      if (!idCardUrl || !resumeUrl) {
         alert("Failed to upload one or more files. Please try again.");
         return;
       }
@@ -247,7 +233,6 @@ const UpdateStaffInfo = () => {
       // Cập nhật URL vào form data
       const formData = {
         ...data,
-        avatar: avatarUrl,
         idCard: idCardUrl,
         resume: resumeUrl,
       };
@@ -270,12 +255,12 @@ const UpdateStaffInfo = () => {
       onSubmit={handleSubmit(onSubmitHandle)}>
       {/* Section-Left */}
       <div className="md:w-2/3 pb-10 bg-white min-h-screen">
-        <Image
-          src="/images/x-button.png"
-          alt="X-button"
-          width={70}
-          height={70}
-        />
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className='p-6 hover:bg-slate-200 border-r-[1px] '>
+          <LuArrowLeft className='h-[19px] text-neutral-300 text-xl font-bold' />
+        </button>
         <div className="justify-center h-max">
           <p className="text-4xl text-center font-Averta-Bold mb-2  mx-auto md:w-[41.53vw]">
             Update Your Info to Continue
@@ -357,7 +342,7 @@ const UpdateStaffInfo = () => {
                   <InputWithLabel
                     className="min-w-[290px]"
                     labelText="EMAIL ADDRESS" inputType="email"
-                    inputPlaceholder="Enter your email address" inputId="contactEmail"
+                    inputPlaceholder="Enter your email address" inputId="email"
                     inputWidth="18.125vw" plusPX='8px'
                     value={field.value ?? ""}
                     onChange={field.onChange}
@@ -482,64 +467,11 @@ const UpdateStaffInfo = () => {
       </div>
       {/* Section-Right */}
       <div className="md:w-1/3 bg-gray-100 min-h-screen">
-        {/* Avatar */}
-        <div>
-          <p className="text-3xl font-Averta-Bold mb-4 mt-[4.7vw] ml-[2.2vw]">Avatar</p>
-
-          <div className="mb-6">
-            <div className="w-[160px] h-[160px] rounded-full overflow-hidden flex mx-auto justify-center bg-gray-200 cursor-pointer">
-              {avatarUrl ? (
-                <Image
-                  src={avatarUrl}
-                  alt="avatar"
-                  width={160}
-                  height={160}
-                  className="cursor-pointer flex items-center justify-center mx-auto rounded-full"
-                  onClick={() => {
-                    if (inputAvatarRef.current) {
-                      inputAvatarRef.current.click();
-                    }
-                  }}
-                />
-              ) : (
-                <Image
-                  src="/images/Dashboard/Personal/camera.svg"
-                  alt="camera"
-                  width={160}
-                  height={160}
-                  className="cursor-pointer flex items-center justify-center mx-auto transition-transform duration-300 hover:scale-110"
-                  onClick={() => {
-                    if (inputAvatarRef.current) {
-                      inputAvatarRef.current.click();
-                    }
-                  }}
-                />
-              )}
-            </div>
-
-            <input
-              ref={inputAvatarRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              id="avatar-upload"
-              onChange={handleAvatarChange}
-            />
-            <label
-              htmlFor="avatar-upload"
-              className="block hover:underline w-fit mx-auto mt-2 text-[#1A78F2] cursor-pointer font-Averta-Semibold"
-            >
-              Upload Your Avatar
-            </label>
-          </div>
-        </div>
 
         {/* ID Card */}
         <div
-          onDrop={handleIdCardDrop}
-          onDragOver={handleDragOver}
         >
-          <p className="text-3xl font-Averta-Bold mb-4 ml-[2.2vw] mt-[1vw]">ID Card</p>
+          <p className="text-3xl font-Averta-Bold mb-4 mt-[4.7vw] ml-[2.2vw]">ID Card</p>
           <input
             id="indentifyCard"
             type="file"
@@ -548,7 +480,9 @@ const UpdateStaffInfo = () => {
             onChange={handleIdCardChange}
           />
 
-          <div>
+          <div
+            onDrop={handleIdCardDrop}
+            onDragOver={handleDragOver}>
             {idCardUrl ? (
               <>
                 <div className="text-center">
@@ -611,7 +545,7 @@ const UpdateStaffInfo = () => {
           </div>
 
         </div>
-        
+
         {/* Resume */}
         <div>
           <p className="text-3xl font-Averta-Bold mb-4 ml-[2.2vw] mt-[1vw]">Résumé</p>
