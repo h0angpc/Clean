@@ -1,22 +1,28 @@
 import { stripe } from "@/lib/stripe";
-import { absoluteUrl } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
+        const { searchParams } = new URL(request.url);
+        const unitAmount = searchParams.get('unit_amount');
+
+        if (!unitAmount) {
+            return new NextResponse("Unit amount is required", { status: 400 });
+        }
+
         const user = await currentUser();
 
         if (!user) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        const homepageUrl = "http://localhost:3000/";
+        const homepageUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
         const stripeSession = await stripe.checkout.sessions.create({
             success_url: homepageUrl,
             cancel_url: homepageUrl,
             payment_method_types: ["card"],
-            mode: "payment", // Ensure this matches the price type
+            mode: "payment",
             billing_address_collection: "auto",
             line_items: [
                 {
@@ -26,8 +32,7 @@ export async function GET() {
                             name: "Cleaning Service",
                             description: "An example product",
                         },
-                        unit_amount: 10_000,
-                        // Removed recurring property
+                        unit_amount: parseInt(unitAmount),
                     },
                     quantity: 1
                 }

@@ -4,7 +4,7 @@ import { helperAvailabilitySchema } from "./helper_availability.shema";
 
 // Get all helper_availability
 export async function GET(req: Request) {
-  const url = new URL(req.url); 
+  const url = new URL(req.url);
   const helperId = url.searchParams.get("helperId");
 
   try {
@@ -12,9 +12,9 @@ export async function GET(req: Request) {
 
     if (helperId) {
       leaveRequests = await prisma.helperAvailability.findMany({
-        where: { 
-          helperId: helperId
-         },
+        where: {
+          helperId: helperId,
+        },
         include: {
           helper: {
             select: {
@@ -43,12 +43,12 @@ export async function GET(req: Request) {
       });
     }
 
-    return NextResponse.json(leaveRequests); 
+    return NextResponse.json(leaveRequests);
   } catch (error) {
     console.error("Error fetching leave requests", error);
     return NextResponse.json(
       { status: "error", error: "Failed to fetch leave requests" },
-      { status: 500 } // 
+      { status: 500 } //
     );
   }
 }
@@ -71,7 +71,7 @@ export async function POST(req: Request) {
         requestReason: data.requestReason,
       },
     });
-  return NextResponse.json(newHelperAvailability);
+    return NextResponse.json(newHelperAvailability);
   } catch (error) {
     console.error("Error creating leave request:", error);
     return NextResponse.json(

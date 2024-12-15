@@ -202,11 +202,11 @@ const Sidebar: React.FC = () => {
       label: "Refund",
       href: "/dashboard/refund",
     },
-    { 
-      icon: "/images/Dashboard/Sidebar/InActive/LeaveRequest.svg", 
-      activeIcon: "/images/Dashboard/Sidebar/Active/LeaveRequest.svg", 
-      label: "Leave Requests", 
-      href: "/dashboard/leave-request" 
+    {
+      icon: "/images/Dashboard/Sidebar/InActive/LeaveRequest.svg",
+      activeIcon: "/images/Dashboard/Sidebar/Active/LeaveRequest.svg",
+      label: "Leave Requests",
+      href: "/dashboard/leave-request",
     },
   ];
 

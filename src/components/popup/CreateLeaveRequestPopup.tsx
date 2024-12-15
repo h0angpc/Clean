@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import CustomInput from "../input/CustomInput";
-import Image from 'next/image';
+import Image from "next/image";
 import CustomSelect from "../select/CustomSelect";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,7 +26,7 @@ export function CreateLeaveRequestPopup() {
 
   const createLeaveRequest = async (data: createLeaveRequestData) => {
     try {
-      const response = await fetch('/api/helper_availability', {
+      const response = await fetch("/api/helper_availability", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,8 +89,14 @@ export function CreateLeaveRequestPopup() {
           className="flex flex-row gap-2 items-center justify-center px-8 h-[38px] bg-[#1b78f2] 
           hover:bg-opacity-90 rounded-[8px] text-xs font-Averta-Bold tracking-normal leading-loose 
           whitespace-nowrap text-center text-white"
-          onClick={() => setIsDialogOpen(true)}>
-          <Image src="/images/icons/outline_plus.svg" alt="" width={18} height={18} />
+          onClick={() => setIsDialogOpen(true)}
+        >
+          <Image
+            src="/images/icons/outline_plus.svg"
+            alt=""
+            width={18}
+            height={18}
+          />
           Create LeaveRequest
         </button>
       </DialogTrigger>
