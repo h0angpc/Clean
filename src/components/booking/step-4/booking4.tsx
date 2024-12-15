@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { ToggleButton } from "@/components/button/togglebutton";
 import { ToggleButtonGroup } from "@/components/button/togglebuttongroup";
 import { InputWithLabel } from "@/components/input/inputwithlabel";
@@ -42,8 +42,8 @@ const yesNoOptionsButtons = [
 ];
 
 const Booking4 = () => {
-  const bookingData = bookingStore((state: any) => state.bookingData)
-  const bookingUpdate = bookingStore((state: any) => state.updateBookingData)
+  const bookingData = bookingStore((state: any) => state.bookingData);
+  const bookingUpdate = bookingStore((state: any) => state.updateBookingData);
   const route = useRouter();
   const handleRoute = () => {
     route.push("/booking/step-5");
@@ -72,7 +72,9 @@ const Booking4 = () => {
                 inputPlaceholder="Enter a Location"
                 inputId="location"
                 inputWidth="40vw"
-                onChange={(e) => bookingUpdate({ bookingAdress: e.target.value })}
+                onChange={(e) =>
+                  bookingUpdate({ bookingAdress: e.target.value })
+                }
               />
               <div className="md:ml-2 mt-2 md:mt-0">
                 <InputWithLabel
@@ -161,12 +163,17 @@ const Booking4 = () => {
                 inputId="notes"
                 inputHeight="h-[100px]"
                 inputWidth="w-full md:w-[56.25vw] min-w-[325px]"
-                onChange={(e) => bookingUpdate({ additionalNote: e.target.value })}
+                onChange={(e) =>
+                  bookingUpdate({ additionalNote: e.target.value })
+                }
               />
             </div>
 
             <div className="flex justify-center items-center mt-[55px] pb-[50px]">
-              <Button className="max-sm:hidden md:w-[12.5vw] h-[60px] bg-[#1A78F2] font-Averta-Semibold text-[16px]" onClick={handleRoute}>
+              <Button
+                className="max-sm:hidden md:w-[12.5vw] h-[60px] bg-[#1A78F2] font-Averta-Semibold text-[16px]"
+                onClick={handleRoute}
+              >
                 Next
               </Button>
             </div>

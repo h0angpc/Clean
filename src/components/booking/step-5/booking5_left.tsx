@@ -5,7 +5,7 @@ import React from "react";
 import { bookingStore } from "@/utils/store/booking.store";
 
 const Booking5Left = () => {
-  const bookingUpdate = bookingStore((state: any) => state.updateBookingData)
+  const bookingUpdate = bookingStore((state: any) => state.updateBookingData);
   return (
     <div className="w-full md:w-2/3 p-4 bg-white min-h-screen">
       <div className="justify-center h-max">
@@ -37,7 +37,9 @@ const Booking5Left = () => {
                 inputPlaceholder="Enter your email address"
                 inputId="email"
                 inputWidth="25vw"
-                onChange={(e) => bookingUpdate({ emailAddress: e.target.value })}
+                onChange={(e) =>
+                  bookingUpdate({ emailAddress: e.target.value })
+                }
               />
             </div>
           </div>
@@ -75,27 +77,61 @@ const Booking5Left = () => {
           >
             <span className="font-bold">Payment and Refund Policy</span>
             <br />
-            1. Payment Terms<br />
-            All payments must be made in full at the time of purchase, unless otherwise agreed upon.<br />
-            Accepted payment methods include [insert payment methods: e.g., credit card, debit card, PayPal, bank transfer, etc.].<br />
-            Any additional taxes, fees, or charges are the responsibility of the customer.<br />
-            2. Refund Policy<br />
-            Eligibility for Refunds:<br />
-            Refund requests will only be considered under the following conditions:<br />
-            The product is defective or damaged upon delivery.<br />
-            The service provided does not match the description or agreement.<br />
-            Refund Process:<br />
-            Customers must submit a refund request within [insert time frame, e.g., 14 days] of purchase.<br />
-            Proof of purchase (e.g., receipt, order confirmation) and, if applicable, evidence of the issue (e.g., photos, videos) must be provided.<br />
-            Non-Refundable Items:<br />
-            Certain products or services may not be eligible for a refund, including [list non-refundable items or services].<br />
-            3. Exchanges<br />
-            Exchanges are allowed for eligible products if requested within [insert time frame, e.g., 14 days] of receipt. Products must be unused, in original packaging, and accompanied by proof of purchase.<br />
-            4. Processing Time<br />
-            Refunds and exchanges will be processed within [insert time frame, e.g., 7–14 business days] after approval of the request.<br />
-            5. Contact Information<br />
-            For any inquiries regarding payments or refunds, please contact us at [insert contact information, e.g., email or phone number].<br />
-            Note: This policy is subject to change without prior notice. Please review our terms and conditions regularly.<br />
+            1. Payment Terms
+            <br />
+            All payments must be made in full at the time of purchase, unless
+            otherwise agreed upon.
+            <br />
+            Accepted payment methods include [insert payment methods: e.g.,
+            credit card, debit card, PayPal, bank transfer, etc.].
+            <br />
+            Any additional taxes, fees, or charges are the responsibility of the
+            customer.
+            <br />
+            2. Refund Policy
+            <br />
+            Eligibility for Refunds:
+            <br />
+            Refund requests will only be considered under the following
+            conditions:
+            <br />
+            The product is defective or damaged upon delivery.
+            <br />
+            The service provided does not match the description or agreement.
+            <br />
+            Refund Process:
+            <br />
+            Customers must submit a refund request within [insert time frame,
+            e.g., 14 days] of purchase.
+            <br />
+            Proof of purchase (e.g., receipt, order confirmation) and, if
+            applicable, evidence of the issue (e.g., photos, videos) must be
+            provided.
+            <br />
+            Non-Refundable Items:
+            <br />
+            Certain products or services may not be eligible for a refund,
+            including [list non-refundable items or services].
+            <br />
+            3. Exchanges
+            <br />
+            Exchanges are allowed for eligible products if requested within
+            [insert time frame, e.g., 14 days] of receipt. Products must be
+            unused, in original packaging, and accompanied by proof of purchase.
+            <br />
+            4. Processing Time
+            <br />
+            Refunds and exchanges will be processed within [insert time frame,
+            e.g., 7–14 business days] after approval of the request.
+            <br />
+            5. Contact Information
+            <br />
+            For any inquiries regarding payments or refunds, please contact us
+            at [insert contact information, e.g., email or phone number].
+            <br />
+            Note: This policy is subject to change without prior notice. Please
+            review our terms and conditions regularly.
+            <br />
           </ScrollArea>
           <CheckboxWithText />
         </div>

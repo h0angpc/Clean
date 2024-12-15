@@ -2,6 +2,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import { bookingStore } from "@/utils/store/booking.store";
+import { useRouter } from "next/navigation";
 
 const Booking5Right = () => {
   const bookingData = bookingStore((state: any) => state.bookingData);
@@ -14,6 +15,21 @@ const Booking5Right = () => {
       return true;
     }
     return false;
+  };
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const handlePayment = async () => {
+    try {
+      setLoading(true);
+      const unitAmount = 12_00; 
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/stripe?unit_amount=${unitAmount}`);
+      const data = await response.json();
+      router.push(data.url);
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
   }
   useEffect(() => {
     handleDiscount() && setDiscount(8.1);
@@ -43,19 +59,24 @@ const Booking5Right = () => {
           </div>
           <div className="mb-4 border-t pt-4 flex">
             <p className="text-gray-600 font-Averta-Semibold">
-              {bookingData.bookingDate || '-'} at {bookingData.bookingTiming || '-'}
+              {bookingData.bookingDate || "-"} at{" "}
+              {bookingData.bookingTiming || "-"}
             </p>
           </div>
           <div className="mb-4 border-t pt-4">
             <p className=" text-gray-600 font-Averta-Semibold">
-            {bookingData.bookingAddress || '-'}
+              {bookingData.bookingAddress || "-"}
             </p>
           </div>
           <div className="border-t border-gray-200 pt-4">
             <p className=" text-gray-600 font-Averta-Semibold">
-            Add-on: {Array.isArray(bookingData.anySpecificSpot) && bookingData.anySpecificSpot.length > 0
-              ? bookingData.anySpecificSpot.map((spot: string) => spot).join(', ')
-              : '-'}
+              Add-on:{" "}
+              {Array.isArray(bookingData.anySpecificSpot) &&
+              bookingData.anySpecificSpot.length > 0
+                ? bookingData.anySpecificSpot
+                    .map((spot: string) => spot)
+                    .join(", ")
+                : "-"}
             </p>
           </div>
         </div>
@@ -69,7 +90,9 @@ const Booking5Right = () => {
                 Appointment Value
               </p>
             </div>
-            <p className="text-gray-600 font-Averta-Semibold ">$ {bookingData.totalPrice || 0}</p>
+            <p className="text-gray-600 font-Averta-Semibold ">
+              $ {bookingData.totalPrice || 0}
+            </p>
           </div>
           <div className="mb-4 flex justify-between items-center">
             <div className="flex">
@@ -79,7 +102,9 @@ const Booking5Right = () => {
           </div>
           <div className="mb-4 border-t pt-4 flex justify-between items-center">
             <p className=" text-gray-600 font-Averta-Semibold">Subtotal</p>
-            <p className="text-gray-600 font-Averta-Semibold ">$ {subTotalPrice}</p>
+            <p className="text-gray-600 font-Averta-Semibold ">
+              $ {subTotalPrice}
+            </p>
           </div>
           <div className="mb-4 border-t pt-4 flex justify-between items-center">
             <p className=" text-gray-600 font-Averta-Semibold">Tax</p>
@@ -95,7 +120,7 @@ const Booking5Right = () => {
       </div>
 
       <div className="flex justify-center items-center ">
-        <Button className="md:w-1/3 h-[60px] bg-[#1A78F2] font-Averta-Semibold text-[16px]">
+        <Button onClick={handlePayment} className="md:w-1/3 h-[60px] bg-[#1A78F2] font-Averta-Semibold text-[16px]">
           Place order
         </Button>
       </div>

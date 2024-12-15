@@ -11,7 +11,7 @@ interface ToggleButtonProps {
   imageSrc: string;
   imageSrc2: string;
   className: string;
-  bookingData: BookingData
+  bookingData: BookingData;
 }
 
 export function ToggleButton({
@@ -22,16 +22,28 @@ export function ToggleButton({
   className,
   bookingData,
 }: ToggleButtonProps) {
-  const bookingUpdate = bookingStore((state: any) => state.updateBookingData)
+  const bookingUpdate = bookingStore((state: any) => state.updateBookingData);
   const isIncluded = bookingData.anySpecificSpot?.includes(contentText);
 
   const handleToggle = () => {
     if (!isIncluded) {
-      bookingUpdate({ anySpecificSpot: [...(bookingData.anySpecificSpot || []), contentText] });
-      bookingUpdate({ totalPrice: bookingData.totalPrice ? bookingData.totalPrice + price : price });
+      bookingUpdate({
+        anySpecificSpot: [...(bookingData.anySpecificSpot || []), contentText],
+      });
+      bookingUpdate({
+        totalPrice: bookingData.totalPrice
+          ? bookingData.totalPrice + price
+          : price,
+      });
     } else {
-      bookingUpdate({ anySpecificSpot: bookingData.anySpecificSpot?.filter((item: string) => item !== contentText) });
-      bookingUpdate({ totalPrice: bookingData.totalPrice ? bookingData.totalPrice - price : 0 });
+      bookingUpdate({
+        anySpecificSpot: bookingData.anySpecificSpot?.filter(
+          (item: string) => item !== contentText
+        ),
+      });
+      bookingUpdate({
+        totalPrice: bookingData.totalPrice ? bookingData.totalPrice - price : 0,
+      });
     }
   };
 
@@ -40,7 +52,7 @@ export function ToggleButton({
       onClick={handleToggle}
       className={`${className} p-4 inline-grid items-center justify-center
              ${
-              isIncluded
+               isIncluded
                  ? "border-[#1A78F2] text-[#1A78F2]"
                  : "border-[#d3d8dd] text-[#4f6071]"
              }`}

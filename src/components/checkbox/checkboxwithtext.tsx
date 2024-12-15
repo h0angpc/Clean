@@ -5,17 +5,21 @@ import { bookingStore } from "@/utils/store/booking.store";
 import { useState } from "react";
 
 export function CheckboxWithText() {
-  const bookingUpdate = bookingStore((state: any) => state.updateBookingData)
+  const bookingUpdate = bookingStore((state: any) => state.updateBookingData);
   const [checked, setChecked] = useState(false);
 
   const handleCheckboxChange = () => {
     setChecked(!checked);
     bookingUpdate({ checked: checked });
-  }
+  };
 
   return (
     <div className="items-top flex space-x-2 mt-[30px]">
-      <Checkbox checked={checked || false} onCheckedChange={handleCheckboxChange} id="terms1"/>
+      <Checkbox
+        checked={checked || false}
+        onCheckedChange={handleCheckboxChange}
+        id="terms1"
+      />
       <div className="grid gap-1.5 leading-none">
         <label
           htmlFor="terms1"
