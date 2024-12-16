@@ -31,9 +31,6 @@ const Booking5Right = () => {
       setLoading(false)
     }
   }
-  const handleRoute = () => {
-    router.push("/payment-success");
-  }
   const mappingValue = (value: number) => {
     switch (value) {
       case 1:
@@ -141,7 +138,7 @@ const Booking5Right = () => {
       </div>
 
       <div className="flex justify-center items-center ">
-        <Button className="md:w-1/3 h-[60px] bg-[#1A78F2] font-Averta-Semibold text-[16px]" disabled={bookingData.checked === undefined || bookingData.checked} onClick={handleRoute}>
+        <Button className="md:w-1/3 h-[60px] bg-[#1A78F2] font-Averta-Semibold text-[16px]" disabled={bookingData.checked === undefined || bookingData.checked} onClick={handlePayment}>
           Place order
         </Button>
       </div>
