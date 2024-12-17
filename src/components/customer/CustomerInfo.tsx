@@ -256,7 +256,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({ userId }) => {
                         <button
                             type="button"
                             onClick={() => router.back()}
-                            className='h-full p-6 hover:bg-slate-200 border-r-[1px] '>
+                            className='h-full p-6 hover:bg-gray-100 border-r-[1px] '>
                             <LuArrowLeft className='h-[19px] text-neutral-300 text-xl font-bold' />
                         </button>
                         <p className="font-Averta-Bold text-4xl text-center my-auto ml-[10px]">User Info</p>

@@ -23,14 +23,14 @@ interface HelperInfoProps {
 const EmployeeInfo: React.FC<HelperInfoProps> = ({ helperId }) => {
     const router = useRouter();
     const queryClient = useQueryClient();
-    const [serviceCategory, setServiceCategory] = useState<ServiceCategory[]>([]);
 
+    const [serviceCategory, setServiceCategory] = useState<ServiceCategory[]>([]);
     const [idCard, setIdCard] = useState<File | null>(null);
     const [idCardUrl, setidCardUrl] = useState<string | null>(null);
     const [resume, setResume] = useState<File | null>(null);
     const [resumeUrl, setResumeUrl] = useState<string | null>(null);
 
-    const form = useForm<createHelperInfoData>({
+    const form = useForm<updateHelperInfoData>({
         mode: "onSubmit",
         resolver: zodResolver(helperInfoSchema),
 
@@ -366,7 +366,7 @@ const EmployeeInfo: React.FC<HelperInfoProps> = ({ helperId }) => {
                         <button
                             type="button"
                             onClick={() => router.back()}
-                            className='h-full p-6 hover:bg-slate-200 border-r-[1px] '>
+                            className='h-full p-6 hover:bg-gray-100 border-r-[1px] '>
                             <LuArrowLeft className='h-[19px] text-neutral-300 text-xl font-bold' />
                         </button>
                         <p className="font-Averta-Bold text-4xl text-center my-auto ml-[10px]">User Info</p>
@@ -662,7 +662,7 @@ const EmployeeInfo: React.FC<HelperInfoProps> = ({ helperId }) => {
                                                 src={resumeUrl || ''}
                                                 alt="resume"
                                                 width={400}
-                                                height={300}
+                                                height={200}
                                                 className='mx-auto'
                                                 unoptimized
                                             />
