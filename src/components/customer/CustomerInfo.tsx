@@ -21,6 +21,7 @@ interface CustomerInfoProps {
 
 const CustomerInfo: React.FC<CustomerInfoProps> = ({ userId }) => {
     const router = useRouter();
+    const queryClient = useQueryClient();
     const [idCard, setIdCard] = useState<File | null>(null);
     const [idCardUrl, setidCardUrl] = useState<string | null>(null);
 
@@ -43,7 +44,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({ userId }) => {
     };
 
     const { data: customerData, isPending: isFetchCustomerPending } = useQuery({
-        queryKey: ["serviceDetail", userId],
+        queryKey: ["customerInfo", userId],
         queryFn: fetchCustomerInfo,
     });
 
@@ -222,7 +223,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({ userId }) => {
 
             console.log("Final Form Data:", formData);
 
-            //Tam thoi xai cung
             await fetch(`/api/users/${userId}`, {
                 method: "PUT",
                 headers: {
@@ -232,6 +232,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({ userId }) => {
             });
 
             alert("Form submitted successfully!");
+            queryClient.invalidateQueries({ queryKey: ["customerInfo"] });
         } catch (error) {
             console.error("Failed to submit data:", error);
             alert("Something went wrong during form submission.");
@@ -451,20 +452,23 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({ userId }) => {
                         />
 
                         <div
+                            className='min-w-[390px] xl:min-w-0'
                             onDrop={handleIdCardDrop}
                             onDragOver={handleDragOver}
                         >
                             {idCard ? (
                                 idCard.type.startsWith('image/') ? (
                                     <div className="text-center">
-                                        <Image
-                                            src={idCardUrl || ''}
-                                            alt="identity"
-                                            width={400}
-                                            height={200}
-                                            className='mx-auto'
-                                            unoptimized
-                                        />
+                                        <div className="max-w-[26.5vw] h-[250px] mx-auto border-2 border-gray-500 rounded-md overflow-hidden flex items-center justify-center">
+                                            <Image
+                                                src={idCardUrl || ''}
+                                                alt="identity"
+                                                width={400}
+                                                height={200}
+                                                className="object-contain"
+                                                unoptimized
+                                            />
+                                        </div>
                                         <div className="flex flex-wrap justify-center gap-[10px] mt-4">
                                             <Button
                                                 className="w-[170px] h-[40px] bg-[#1A78F2] font-Averta-Semibold text-[16px]"
@@ -497,9 +501,12 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({ userId }) => {
                             )}
                         </div>
                     </div>
+                    <div className="justify-center items-center py-[20px] flex 2xl:hidden">
+                        <Button className="lg:w-1/5 min-w-[160px] h-[60px] bg-[#1A78F2] font-Averta-Semibold text-[16px] mx-auto">Save</Button>
+                    </div>
                 </div>
-                <div className="flex justify-center items-center py-[20px]">
-                    <Button type="submit" className="md:w-1/5 min-w-[150px] h-[60px] bg-[#1A78F2] font-Averta-Semibold text-[16px]">Save</Button>
+                <div className="justify-center items-center py-[20px] hidden 2xl:block">
+                    <Button className="lg:w-1/5 min-w-[160px] h-[60px] bg-[#1A78F2] font-Averta-Semibold text-[16px]">Save</Button>
                 </div>
             </form>
         </div>

@@ -35,8 +35,11 @@ const EmployeeTable = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
+        // const response = await fetch(
+        //   `${process.env.NEXT_PUBLIC_API_URL}/api/helpers`
+        // );
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/helpers`
+          `/api/helpers`
         );
 
         if (response.ok) {
