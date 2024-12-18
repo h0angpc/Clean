@@ -16,10 +16,10 @@ import { LuArrowLeft } from 'react-icons/lu';
 const genderOptions = ["Female", "Male", "Other"]
 
 interface CustomerInfoProps {
-    userId: string,
+    customerId: string,
 }
 
-const CustomerInfo: React.FC<CustomerInfoProps> = ({ userId }) => {
+const CustomerInfo: React.FC<CustomerInfoProps> = ({ customerId }) => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const [idCard, setIdCard] = useState<File | null>(null);
@@ -32,7 +32,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({ userId }) => {
 
     const fetchCustomerInfo = async (): Promise<Customer> => {
         try {
-            const response = await fetch(`/api/users/${userId}`);
+            const response = await fetch(`/api/users/${customerId}`);
             if (!response.ok) {
                 throw new Error("Error fetching user info");
             }
@@ -44,7 +44,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({ userId }) => {
     };
 
     const { data: customerData, isPending: isFetchCustomerPending } = useQuery({
-        queryKey: ["customerInfo", userId],
+        queryKey: ["customerInfo", customerId],
         queryFn: fetchCustomerInfo,
     });
 
@@ -56,7 +56,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({ userId }) => {
     } = form;
 
     useEffect(() => {
-        if (!userId) {
+        if (!customerId) {
             reset();
             return;
         }
@@ -92,7 +92,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({ userId }) => {
                     .catch((error) => console.error('Error fetching the identity card:', error));
             }
         }
-    }, [userId, customerData, reset]);
+    }, [customerId, customerData, reset]);
 
 
     const handleIdCardChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -223,7 +223,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({ userId }) => {
 
             console.log("Final Form Data:", formData);
 
-            await fetch(`/api/users/${userId}`, {
+            await fetch(`/api/users/${customerId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
