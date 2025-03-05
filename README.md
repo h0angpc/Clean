@@ -1,6 +1,6 @@
 <br />
 <div align="center">
-  <a href="https://github.com/lvakhoa/clean_service_fe">
+  <a href="https://github.com/h0angpc/Clean">
     <img src="public\images\Header\Logo.svg" alt="Logo" width="150" height="150">
   </a>
 
@@ -9,12 +9,8 @@
   <p align="center">
     The repository "Cleaning Service" is an application designed to support a Cleaning Service Provided System. This system designed to simplify the process of connecting customers with professional cleaning providers . It is built with Next.js, a framework based on React, which supports server-side rendering, API integrations, and client-side features.
     <br />
-    <a href="https://github.com/lvakhoa/clean_service_fe"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/h0angpc/Clean"><strong>Explore the docs »</strong></a>
     <br />
-    <br />
-    <a href="https://github.com/lvakhoa/clean_service_fe/issues/new?labels=bug">Report Bug</a>
-    ·
-    <a href="https://github.com/lvakhoa/clean_service_fe/issues/new?labels=enhancement">Request Feature</a>
   </p>
 </div>
 
